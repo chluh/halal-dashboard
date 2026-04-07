@@ -114,7 +114,9 @@ body{background:var(--bg);color:var(--t);font-family:var(--sans);font-size:13px;
 
 .ftr{border-top:1px solid var(--b);padding:10px 24px;display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--t3)}
 
-::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--bg3);border-radius:2px}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--bg3);border-radius:2px}
 
 @media(max-width:900px){.mg,.tc{grid-template-columns:1fr 1fr}.sg{grid-template-columns:repeat(2,1fr)}.jf{grid-template-columns:1fr 1fr}}
 @media(max-width:600px){.main{padding:10px 12px}.mg{grid-template-columns:repeat(2,1fr);gap:6px}.tc{grid-template-columns:1fr}.ar{grid-template-columns:23px 1fr 58px 53px}.as{display:none}.scg{grid-template-columns:repeat(3,1fr)}}
@@ -223,316 +225,281 @@ body{background:var(--bg);color:var(--t);font-family:var(--sans);font-size:13px;
 
 <div class="ftr">
   <span>Portefeuille Halal Robuste · Stratégie Hormuz 2026</span>
-  <span id="src">Données : Yahoo Finance · Délai ~15 min</span>
+  <span id="src">Données : FMP via Google Apps Script · Délai ~15 min</span>
   <span>⚠ Simulation uniquement — pas de conseil financier</span>
 </div>
 
 <script>
 // ── CONFIG ──
+// Proxy Google Apps Script — pas de CORS, tourne côté serveur Google
+const PROXY = 'https://script.google.com/macros/s/AKfycbxEQoxuNhyYRZyuzbF5w0WeYWRIvuwgflkrWbsiIamgWb5ovvGaKdWhpsYY9i80hus/exec';
 const REFRESH = 15 * 60 * 1000;
-// Proxy pour contourner le CORS de Yahoo Finance
-const PROXY = 'https://corsproxy.io/?';
-const YF = 'https://query1.finance.yahoo.com/v8/finance/chart/';
 
-// Tickers Yahoo Finance
-const TICKERS = {
-  GLD:  {label:'Or (GLD)',    mult:9.3,   id:'gold'},
-  SLV:  {label:'Argent (SLV)',mult:14.0,  id:'silver'},
-  ICLN: {label:'ICLN',       mult:1,     id:'icln'},
-  XLE:  {label:'XLE',        mult:1,     id:'xle'},
-  'BZ=F':{label:'Brent',     mult:1,     id:'brent'},
-  '^VIX':{label:'VIX',       mult:1,     id:'vix'},
-  SPY:  {label:'SPY→SP500',  mult:10,    id:'sp'},
-  UUP:  {label:'DXY(UUP)',   mult:3.9,   id:'dxy'},
-  IGDA: {label:'IGDA',       mult:1,     id:'IGDA'},
-  ISWD: {label:'ISWD',       mult:1,     id:'ISWD'},
-  SPUS: {label:'SPUS',       mult:1,     id:'SPUS'},
-  ISDE: {label:'ISDE',       mult:1,     id:'ISDE'},
-};
-
-let BASE = JSON.parse(localStorage.getItem('hbase')||'{}');
+let BASE = JSON.parse(localStorage.getItem('hbase4') || '{}');
 let PRICES = {};
 
 // ── FORMAT ──
-const fN=(v,d=2)=>v==null||isNaN(v)?'—':new Intl.NumberFormat('fr-FR',{minimumFractionDigits:d,maximumFractionDigits:d}).format(v);
-const fP=v=>v==null||isNaN(v)?'—':(v>=0?'+':'')+v.toFixed(2)+'%';
-const fE=v=>v==null||isNaN(v)?'—':new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR',minimumFractionDigits:0}).format(v);
+const fN = (v,d=2) => v==null||isNaN(v) ? '—' : new Intl.NumberFormat('fr-FR',{minimumFractionDigits:d,maximumFractionDigits:d}).format(v);
+const fP = v => v==null||isNaN(v) ? '—' : (v>=0?'+':'')+v.toFixed(2)+'%';
+const fE = v => v==null||isNaN(v) ? '—' : new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR',minimumFractionDigits:0}).format(v);
 
-// ── FETCH ONE TICKER ──
-async function fetchOne(ticker) {
-  try {
-    const encoded = encodeURIComponent(YF + ticker + '?interval=1d&range=2d');
-    const url = PROXY + encoded;
-    const r = await fetch(url, {headers:{'User-Agent':'Mozilla/5.0'}});
-    if (!r.ok) throw new Error(r.status);
-    const d = await r.json();
-    const res = d?.chart?.result?.[0];
-    if (!res) throw new Error('no result');
-    const meta = res.meta;
-    const price = meta.regularMarketPrice || meta.previousClose;
-    const prev = meta.previousClose || meta.chartPreviousClose;
-    const pct = prev ? ((price - prev) / prev * 100) : 0;
-    return { price, pct, prev };
-  } catch(e) {
-    console.warn('fetch error', ticker, e.message);
-    return null;
-  }
-}
-
-// ── SET HELPERS ──
+// ── UI HELPERS ──
 function setEl(id, v) { const e=document.getElementById(id); if(e) e.textContent=v; }
 function setChg(id, pct) {
   const e=document.getElementById(id);
   if(!e) return;
-  e.textContent=fP(pct);
-  e.className='ach '+(pct>0.05?'up':pct<-0.05?'dn':'neu');
+  e.textContent = fP(pct);
+  e.className = 'ach ' + (pct>0.05?'up':pct<-0.05?'dn':'neu');
 }
 function setMC(id, pct) {
   const e=document.getElementById(id);
   if(!e) return;
-  e.textContent=fP(pct);
-  e.className='mch '+(pct>0.05?'up':pct<-0.05?'dn':'neu');
+  e.textContent = fP(pct);
+  e.className = 'mch ' + (pct>0.05?'up':pct<-0.05?'dn':'neu');
 }
 function setAlert(id, level) {
   const e=document.getElementById(id);
   if(!e) return;
-  e.className='mc '+(level>=3?'hi':level>=1?'mid':'ok');
+  e.className = 'mc ' + (level>=3?'hi':level>=1?'mid':'ok');
 }
 function setSig(id, sig) {
   const e=document.getElementById(id);
   if(!e) return;
-  const M={acheter:['sb-buy','acheter'],conserver:['sb-hold','conserver'],vendre:['sb-sell','vendre'],surveiller:['sb-watch','surveiller']};
-  const[c,l]=M[sig]||['sb-watch',sig];
-  e.className='sig '+c; e.textContent=l;
+  const M = {acheter:['sb-buy','acheter'],conserver:['sb-hold','conserver'],vendre:['sb-sell','vendre'],surveiller:['sb-watch','surveiller']};
+  const [c,l] = M[sig] || ['sb-watch', sig];
+  e.className = 'sig '+c;
+  e.textContent = l;
 }
 
 // ── SITUATION ──
 function applyScenario(brent, vix) {
-  const sc = brent<80?0:brent<130?1:brent<170?2:3;
+  const sc = brent<80 ? 0 : brent<130 ? 1 : brent<170 ? 2 : 3;
   const sit = document.getElementById('sit');
   const desc = document.getElementById('sit-desc');
-  const labs=['Désescalade ✓','Blocage prolongé ⚡','Escalade majeure ⚠','Guerre totale 🔴'];
-  const cls=['s0','s1','s2','s3'];
-  const ds=[
+  const labs = ['Désescalade ✓','Blocage prolongé ⚡','Escalade majeure ⚠','Guerre totale 🔴'];
+  const cls = ['s0','s1','s2','s3'];
+  const ds = [
     `Brent ${fN(brent)}$ — Désescalade possible · Envisager rotation indices halal`,
     `Brent ${fN(brent)}$ · VIX ${fN(vix,0)} — Crise active · Maintenir actifs tangibles`,
     `Brent ${fN(brent)}$ — Escalade · Privilégier or et liquidité`,
     `Brent ${fN(brent)}$ — Crise extrême · Conservation du capital priorité absolue`
   ];
-  sit.className='sbadge '+cls[sc];
-  sit.textContent='⬡ '+labs[sc];
-  desc.textContent=ds[sc];
+  sit.className = 'sbadge ' + cls[sc];
+  sit.textContent = '⬡ ' + labs[sc];
+  desc.textContent = ds[sc];
 
-  const sigs=[
+  const sigs = [
     {GLD:'conserver',SLV:'conserver',ICLN:'conserver',XLE:'vendre',IGDA:'acheter',ISWD:'acheter',SPUS:'acheter',ISDE:'surveiller'},
     {GLD:'acheter',SLV:'acheter',ICLN:'acheter',XLE:'acheter',IGDA:'surveiller',ISWD:'surveiller',SPUS:'vendre',ISDE:'vendre'},
     {GLD:'acheter',SLV:'acheter',ICLN:'acheter',XLE:'acheter',IGDA:'surveiller',ISWD:'vendre',SPUS:'vendre',ISDE:'vendre'},
     {GLD:'acheter',SLV:'conserver',ICLN:'conserver',XLE:'acheter',IGDA:'vendre',ISWD:'vendre',SPUS:'vendre',ISDE:'vendre'}
   ][sc];
-  for(const[t,s] of Object.entries(sigs)) setSig('s-'+t,s);
+  for(const [t,s] of Object.entries(sigs)) setSig('s-'+t, s);
 }
 
 // ── SIMULATION ──
 function updateSim() {
-  const AR={GLD:.35,SLV:.10,ICLN:.25,XLE:.20};
-  const AI={IGDA:.40,ISWD:.30,SPUS:.20,ISDE:.10};
-  
-  let rv=10000*.10; // cash
-  for(const[t,a] of Object.entries(AR)){
+  const AR = {GLD:.35, SLV:.10, ICLN:.25, XLE:.20};
+  const AI = {IGDA:.40, ISWD:.30, SPUS:.20, ISDE:.10};
+
+  let rv = 10000 * .10; // cash
+  for(const [t,a] of Object.entries(AR)) {
     const p=PRICES[t], b=BASE[t];
     rv += p&&b ? 10000*a*(1+(p-b)/b) : 10000*a;
   }
-  const rp=(rv-10000)/10000*100;
-  setEl('sv-rob',fE(rv)); setEl('rob-tot',fE(rv));
-  const re=document.getElementById('rob-prf');
-  if(re){re.textContent=fP(rp);re.className='pbp '+(rp>=0?'up':'dn')}
-  const sre=document.getElementById('sp-rob');
-  if(sre){sre.textContent=fP(rp);sre.style.color=rp>=0?'var(--green)':'var(--red)'}
+  const rp = (rv-10000)/10000*100;
+  setEl('sv-rob', fE(rv));
+  setEl('rob-tot', fE(rv));
+  const re = document.getElementById('rob-prf');
+  if(re) { re.textContent=fP(rp); re.className='pbp '+(rp>=0?'up':'dn'); }
+  const sre = document.getElementById('sp-rob');
+  if(sre) { sre.textContent=fP(rp); sre.style.color=rp>=0?'var(--green)':'var(--red)'; }
 
-  let iv=0;
-  for(const[t,a] of Object.entries(AI)){
+  let iv = 0;
+  for(const [t,a] of Object.entries(AI)) {
     const p=PRICES[t], b=BASE[t];
     iv += p&&b ? 10000*a*(1+(p-b)/b) : 10000*a;
   }
-  const ip=(iv-10000)/10000*100;
-  setEl('sv-idx',fE(iv)); setEl('idx-tot',fE(iv));
-  const ie=document.getElementById('idx-prf');
-  if(ie){ie.textContent=fP(ip);ie.className='pbp '+(ip>=0?'up':'dn')}
-  const sie=document.getElementById('sp-idx');
-  if(sie){sie.textContent=fP(ip);sie.style.color=ip>=0?'var(--green)':'var(--red)'}
+  const ip = (iv-10000)/10000*100;
+  setEl('sv-idx', fE(iv));
+  setEl('idx-tot', fE(iv));
+  const ie = document.getElementById('idx-prf');
+  if(ie) { ie.textContent=fP(ip); ie.className='pbp '+(ip>=0?'up':'dn'); }
+  const sie = document.getElementById('sp-idx');
+  if(sie) { sie.textContent=fP(ip); sie.style.color=ip>=0?'var(--green)':'var(--red)'; }
 
-  const alp=rp-ip;
-  const ae=document.getElementById('sv-alp');
-  if(ae){ae.textContent=fP(alp);ae.style.color=alp>=0?'var(--green)':'var(--red)'}
+  const alp = rp - ip;
+  const ae = document.getElementById('sv-alp');
+  if(ae) { ae.textContent=fP(alp); ae.style.color=alp>=0?'var(--green)':'var(--red)'; }
 }
 
 // ── MAIN REFRESH ──
-let retries = 0;
-
 async function refresh() {
-  const dot=document.getElementById('dot');
-  dot.className='dot loading';
-  setEl('upd','Chargement...');
+  const dot = document.getElementById('dot');
+  dot.className = 'dot loading';
+  setEl('upd', 'Chargement...');
 
-  const results = {};
-  let success = 0;
+  try {
+    const r = await fetch(PROXY);
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    const json = await r.json();
 
-  // Fetch en parallèle par petits groupes
-  const keys = Object.keys(TICKERS);
-  for(let i=0; i<keys.length; i+=3) {
-    const batch = keys.slice(i, i+3);
-    const proms = batch.map(t => fetchOne(t).then(r => ({t, r})));
-    const rs = await Promise.allSettled(proms);
-    for(const res of rs) {
-      if(res.status==='fulfilled' && res.value.r) {
-        results[res.value.t] = res.value.r;
-        success++;
+    if(json.status !== 'ok') throw new Error(json.message || 'Erreur API');
+
+    const data = json.data || [];
+    const brentData = json.brent;
+
+    // Map des données
+    const bySymbol = {};
+    for(const item of data) {
+      if(item && item.symbol) bySymbol[item.symbol] = item;
+    }
+
+    // Stocker les prix
+    for(const [sym, item] of Object.entries(bySymbol)) {
+      if(item.price) PRICES[sym] = item.price;
+    }
+
+    // Init base si premier chargement
+    let changed = false;
+    for(const [sym, price] of Object.entries(PRICES)) {
+      if(!BASE[sym]) { BASE[sym]=price; changed=true; }
+    }
+    if(changed) localStorage.setItem('hbase4', JSON.stringify(BASE));
+
+    // ── BRENT ──
+    const brent = brentData;
+    const brentPrice = brent?.price || 108;
+    const brentPct = brent?.changesPercentage || 0;
+    setEl('v-brent', '$'+fN(brentPrice));
+    setMC('d-brent', brentPct);
+    setAlert('c-brent', brentPrice>130?4:brentPrice>100?3:brentPrice>80?1:0);
+    setEl('n-brent', brentPrice>130?'🔴 Escalade critique':brentPrice>100?'⚠ Seuil crise':brentPrice>80?'→ Tension':'✓ Zone normale');
+
+    // ── OR (GLD) ──
+    const gld = bySymbol['GLD'];
+    if(gld) {
+      const gPrice = gld.price * 9.3;
+      setEl('v-gold', '$'+fN(gPrice,0));
+      setMC('d-gold', gld.changesPercentage||0);
+      setAlert('c-gold', gld.changesPercentage>2?3:1);
+      setEl('n-gold', gPrice>4000?'⚠ Niveau crise extrême':gPrice>3000?'⚠ Niveau crise':'→ Refuge actif');
+      setEl('p-GLD', '$'+fN(gld.price));
+      setChg('c-GLD', gld.changesPercentage||0);
+    }
+
+    // ── ARGENT (SLV) ──
+    const slv = bySymbol['SLV'];
+    if(slv) {
+      setEl('v-silver', '$'+fN(slv.price*14,1));
+      setMC('d-silver', slv.changesPercentage||0);
+      setAlert('c-silver', Math.abs(slv.changesPercentage||0)>2?2:1);
+      setEl('p-SLV', '$'+fN(slv.price));
+      setChg('c-SLV', slv.changesPercentage||0);
+    }
+
+    // ── ICLN ──
+    const icln = bySymbol['ICLN'];
+    if(icln) {
+      setEl('v-icln', '$'+fN(icln.price));
+      setMC('d-icln', icln.changesPercentage||0);
+      setAlert('c-icln', Math.abs(icln.changesPercentage||0)>2?2:1);
+      setEl('p-ICLN', '$'+fN(icln.price));
+      setChg('c-ICLN', icln.changesPercentage||0);
+    }
+
+    // ── XLE ──
+    const xle = bySymbol['XLE'];
+    if(xle) {
+      setEl('v-xle', '$'+fN(xle.price));
+      setMC('d-xle', xle.changesPercentage||0);
+      setAlert('c-xle', Math.abs(xle.changesPercentage||0)>2?2:1);
+      setEl('p-XLE', '$'+fN(xle.price));
+      setChg('c-XLE', xle.changesPercentage||0);
+    }
+
+    // ── VIX (VIXY proxy) ──
+    const vixy = bySymbol['VIXY'];
+    if(vixy) {
+      const vix = vixy.price * 3.2;
+      setEl('v-vix', fN(vix,1));
+      setMC('d-vix', vixy.changesPercentage||0);
+      setAlert('c-vix', vix>40?4:vix>25?2:0);
+      setEl('n-vix', vix>40?'🔴 Régime crise':vix>25?'⚠ Tension élevée':'✓ Marché calme');
+    }
+
+    // ── S&P 500 (SPY proxy) ──
+    const spy = bySymbol['SPY'];
+    if(spy) {
+      setEl('v-sp', fN(spy.price*10,0));
+      setMC('d-sp', spy.changesPercentage||0);
+      setAlert('c-sp', spy.changesPercentage<-2?3:0);
+    }
+
+    // ── DXY (UUP proxy) ──
+    const uup = bySymbol['UUP'];
+    if(uup) {
+      setEl('v-dxy', fN(uup.price*3.9,1));
+      setMC('d-dxy', uup.changesPercentage||0);
+      setAlert('c-dxy', Math.abs(uup.changesPercentage||0)>1?2:0);
+    }
+
+    // ── INDICES HALAL ──
+    for(const t of ['IGDA','ISWD','SPUS','ISDE']) {
+      const item = bySymbol[t];
+      if(item) {
+        setEl('p-'+t, '$'+fN(item.price));
+        setChg('c-'+t, item.changesPercentage||0);
       }
     }
-    // Petite pause entre les batches pour éviter le rate limiting
-    if(i+3 < keys.length) await new Promise(r=>setTimeout(r,300));
-  }
 
-  if(success === 0) {
-    dot.className='dot error';
-    setEl('upd','Erreur · Retry dans 3 min');
-    retries++;
+    // ── SITUATION ──
+    const vixVal = vixy ? vixy.price*3.2 : 35;
+    applyScenario(brentPrice, vixVal);
+
+    // ── SIMULATION ──
+    updateSim();
+
+    // Status OK
+    dot.className = 'dot live';
+    const now = new Date();
+    const loaded = Object.keys(bySymbol).length;
+    setEl('upd', 'Màj '+now.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})+' · '+loaded+' actifs');
+    setEl('src', 'FMP via Google Apps Script · '+now.toLocaleDateString('fr-FR'));
+
+  } catch(err) {
+    console.error('Erreur:', err);
+    dot.className = 'dot error';
+    setEl('upd', 'Erreur · Retry dans 3 min');
     setTimeout(refresh, 3*60*1000);
     return;
   }
-
-  retries = 0;
-
-  // Stocker les prix
-  for(const[t,v] of Object.entries(results)) {
-    PRICES[t] = v.price;
-    if(!BASE[t]) BASE[t] = v.price;
-  }
-  localStorage.setItem('hbase', JSON.stringify(BASE));
-
-  // ── BRENT ──
-  const brent = results['BZ=F'];
-  if(brent) {
-    setEl('v-brent','$'+fN(brent.price));
-    setMC('d-brent',brent.pct);
-    setAlert('c-brent',brent.price>130?4:brent.price>100?3:brent.price>80?1:0);
-    setEl('n-brent',brent.price>130?'🔴 Escalade critique':brent.price>100?'⚠ Seuil crise':brent.price>80?'→ Tension':'✓ Zone normale');
-  }
-
-  // ── OR ──
-  const gld = results['GLD'];
-  if(gld) {
-    const goldPrice = gld.price * 9.3;
-    setEl('v-gold','$'+fN(goldPrice,0));
-    setMC('d-gold',gld.pct);
-    setAlert('c-gold',gld.pct>2?3:gld.pct>0?1:0);
-    setEl('n-gold',goldPrice>4000?'⚠ Niveau crise extrême':goldPrice>3000?'⚠ Niveau crise':'→ Refuge actif');
-    setEl('p-GLD','$'+fN(gld.price));
-    setChg('c-GLD',gld.pct);
-  }
-
-  // ── ARGENT ──
-  const slv = results['SLV'];
-  if(slv) {
-    const silverPrice = slv.price * 14;
-    setEl('v-silver','$'+fN(silverPrice,1));
-    setMC('d-silver',slv.pct);
-    setAlert('c-silver',Math.abs(slv.pct)>2?2:1);
-    setEl('p-SLV','$'+fN(slv.price));
-    setChg('c-SLV',slv.pct);
-  }
-
-  // ── ICLN ──
-  const icln = results['ICLN'];
-  if(icln) {
-    setEl('v-icln','$'+fN(icln.price));
-    setMC('d-icln',icln.pct);
-    setAlert('c-icln',Math.abs(icln.pct)>2?2:1);
-    setEl('p-ICLN','$'+fN(icln.price));
-    setChg('c-ICLN',icln.pct);
-  }
-
-  // ── XLE ──
-  const xle = results['XLE'];
-  if(xle) {
-    setEl('v-xle','$'+fN(xle.price));
-    setMC('d-xle',xle.pct);
-    setAlert('c-xle',Math.abs(xle.pct)>2?2:1);
-    setEl('p-XLE','$'+fN(xle.price));
-    setChg('c-XLE',xle.pct);
-  }
-
-  // ── VIX ──
-  const vix = results['^VIX'];
-  if(vix) {
-    setEl('v-vix',fN(vix.price,1));
-    setMC('d-vix',vix.pct);
-    setAlert('c-vix',vix.price>40?4:vix.price>25?2:0);
-    setEl('n-vix',vix.price>40?'🔴 Régime crise':vix.price>25?'⚠ Tension élevée':'✓ Marché calme');
-  }
-
-  // ── S&P 500 ──
-  const spy = results['SPY'];
-  if(spy) {
-    setEl('v-sp',fN(spy.price*10,0));
-    setMC('d-sp',spy.pct);
-    setAlert('c-sp',spy.pct<-2?3:spy.pct<0?1:0);
-  }
-
-  // ── DXY ──
-  const uup = results['UUP'];
-  if(uup) {
-    setEl('v-dxy',fN(uup.price*3.9,1));
-    setMC('d-dxy',uup.pct);
-    setAlert('c-dxy',Math.abs(uup.pct)>1?2:0);
-  }
-
-  // ── INDICES HALAL ──
-  for(const t of ['IGDA','ISWD','SPUS','ISDE']) {
-    const r = results[t];
-    if(r) {
-      setEl('p-'+t,'$'+fN(r.price));
-      setChg('c-'+t,r.pct);
-    }
-  }
-
-  // ── SITUATION ──
-  const brentPrice = brent?.price || 108;
-  const vixPrice = vix?.price || 35;
-  applyScenario(brentPrice, vixPrice);
-
-  // ── SIMULATION ──
-  updateSim();
-
-  // Status
-  dot.className='dot live';
-  const now=new Date();
-  setEl('upd','Màj '+now.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})+' · '+success+'/'+keys.length+' actifs');
-  setEl('src','Données : Yahoo Finance via proxy · '+now.toLocaleDateString('fr-FR'));
 
   setTimeout(refresh, REFRESH);
 }
 
 // ── JOURNAL ──
-let decisions = JSON.parse(localStorage.getItem('hdec')||'[]');
+let decisions = JSON.parse(localStorage.getItem('hdec4') || '[]');
 
 function toggleForm() {
-  const f=document.getElementById('jf');
+  const f = document.getElementById('jf');
   f.classList.toggle('open');
-  if(f.classList.contains('open')) document.getElementById('f-date').value=new Date().toISOString().split('T')[0];
+  if(f.classList.contains('open')) {
+    document.getElementById('f-date').value = new Date().toISOString().split('T')[0];
+  }
 }
 
 function saveD() {
-  const date=document.getElementById('f-date').value;
-  const asset=document.getElementById('f-asset').value;
-  const action=document.getElementById('f-action').value;
-  const amount=parseFloat(document.getElementById('f-amount').value);
-  const signal=document.getElementById('f-signal').value;
-  const sit=document.getElementById('f-sit').value;
-  const note=document.getElementById('f-note').value;
-  if(!asset||!amount||!date){alert('Merci de remplir date, actif et montant.');return}
+  const date = document.getElementById('f-date').value;
+  const asset = document.getElementById('f-asset').value;
+  const action = document.getElementById('f-action').value;
+  const amount = parseFloat(document.getElementById('f-amount').value);
+  const signal = document.getElementById('f-signal').value;
+  const sit = document.getElementById('f-sit').value;
+  const note = document.getElementById('f-note').value;
+  if(!asset||!amount||!date) { alert('Merci de remplir date, actif et montant.'); return; }
   decisions.unshift({id:Date.now(),date,asset,action,amount,signal,sit,note});
-  localStorage.setItem('hdec',JSON.stringify(decisions));
+  localStorage.setItem('hdec4', JSON.stringify(decisions));
   document.getElementById('f-asset').value='';
   document.getElementById('f-amount').value='';
   document.getElementById('f-note').value='';
@@ -541,12 +508,12 @@ function saveD() {
 }
 
 function renderJ() {
-  const c=document.getElementById('je');
-  const empty=document.getElementById('jempty');
-  if(!decisions.length){empty.style.display='block';return}
-  empty.style.display='none';
-  const colors={achat:'var(--green)',renforcement:'var(--teal)',allegement:'var(--amber)',sortie:'var(--red)'};
-  c.innerHTML=decisions.slice(0,20).map(d=>`
+  const c = document.getElementById('je');
+  const empty = document.getElementById('jempty');
+  if(!decisions.length) { empty.style.display='block'; return; }
+  empty.style.display = 'none';
+  const colors = {achat:'var(--green)',renforcement:'var(--teal)',allegement:'var(--amber)',sortie:'var(--red)'};
+  c.innerHTML = decisions.slice(0,20).map(d=>`
     <div class="jrow">
       <div class="jdate">${d.date}</div>
       <div class="jasset">${d.asset.split('(')[0].trim()}</div>
@@ -558,7 +525,7 @@ function renderJ() {
 }
 
 // ── INIT ──
-document.addEventListener('DOMContentLoaded',()=>{
+document.addEventListener('DOMContentLoaded', () => {
   renderJ();
   refresh();
 });

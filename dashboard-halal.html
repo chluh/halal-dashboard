@@ -1,1 +1,547 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portefeuille Halal Robuste</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080c12;--bg2:#0f1520;--bg3:#161e2e;--bg4:#1c2638;--b:rgba(255,255,255,0.06);--b2:rgba(255,255,255,0.10);--b3:rgba(255,255,255,0.16);--t:#dde2ec;--t2:#7d8a9e;--t3:#3d4a5c;--gold:#c9a84c;--gold2:#e8c870;--gold3:rgba(201,168,76,0.12);--green:#27c47a;--green2:rgba(39,196,122,0.12);--red:#d94f4f;--red2:rgba(217,79,79,0.12);--amber:#d4862a;--amber2:rgba(212,134,42,0.12);--blue:#3d7fc4;--blue2:rgba(61,127,196,0.12);--purple:#7a5fc4;--teal:#1fa8a8;--mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans',sans-serif;--r:6px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:var(--sans);font-size:13px;line-height:1.6}
+.hdr{background:var(--bg2);border-bottom:1px solid var(--b2);padding:0 28px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.ht{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--gold);letter-spacing:.1em;text-transform:uppercase}
+.hs{font-size:11px;color:var(--t3);font-family:var(--mono)}
+.hdr-left{display:flex;align-items:center;gap:16px}
+.sep{width:1px;height:20px;background:var(--b2)}
+.hdr-right{display:flex;align-items:center;gap:10px}
+.last-upd{font-family:var(--mono);font-size:10px;color:var(--t3)}
+.btn-p{background:var(--gold);color:#080c12;border:none;border-radius:var(--r);padding:7px 16px;font-family:var(--mono);font-size:11px;font-weight:700;cursor:pointer;transition:opacity .15s}
+.btn-p:hover{opacity:.85}
+/* MODAL */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.ov.open{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--b2);border-radius:10px;padding:26px;width:560px;max-width:96vw;max-height:90vh;overflow-y:auto}
+.mt{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px}
+.ms{font-size:11px;color:var(--t3);margin-bottom:16px}
+.src{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:16px;padding:10px 12px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--b)}
+.src a{font-family:var(--mono);font-size:10px;color:var(--blue);text-decoration:none;padding:2px 7px;background:var(--blue2);border-radius:3px}
+.src a:hover{color:var(--gold)}
+.msec{font-family:var(--mono);font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.1em;margin:14px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--b)}
+.mg2col{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ig{display:flex;flex-direction:column;gap:4px}
+.il{font-size:10px;color:var(--t2);font-family:var(--mono);display:flex;align-items:center;justify-content:space-between}
+.il span{color:var(--t3);font-size:9px}
+.ii{background:var(--bg3);border:1px solid var(--b2);border-radius:4px;color:var(--t);font-family:var(--mono);font-size:13px;font-weight:500;padding:8px 11px;outline:none;width:100%;transition:border-color .15s}
+.ii:focus{border-color:var(--gold)}
+.mftr{display:flex;gap:8px;justify-content:flex-end;margin-top:18px;padding-top:14px;border-top:1px solid var(--b)}
+.btn-sv{background:var(--gold);color:#080c12;border:none;border-radius:var(--r);padding:8px 22px;font-family:var(--mono);font-size:11px;font-weight:700;cursor:pointer}
+.btn-ca{background:transparent;color:var(--t3);border:1px solid var(--b2);border-radius:var(--r);padding:8px 14px;font-family:var(--mono);font-size:11px;cursor:pointer}
+/* LAYOUT */
+.main{padding:20px 28px;max-width:1440px;margin:0 auto}
+.slbl{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--t3);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--b);display:flex;align-items:center;justify-content:space-between}
+/* MARKET */
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:8px}
+.mc{background:var(--bg2);border:1px solid var(--b);border-radius:var(--r);padding:12px 14px;position:relative;overflow:hidden;cursor:pointer;transition:border-color .2s}
+.mc:hover{border-color:var(--b2)}
+.mc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--b);transition:background .3s}
+.mc.hi::before{background:var(--red)}.mc.mid::before{background:var(--amber)}.mc.ok::before{background:var(--green)}.mc.neu::before{background:var(--blue)}
+.ml{font-family:var(--mono);font-size:9px;color:var(--t3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px}
+.mv{font-family:var(--mono);font-size:20px;font-weight:600;margin-bottom:2px;line-height:1.2}
+.mch{font-family:var(--mono);font-size:11px}
+.mch.up{color:var(--green)}.mch.dn{color:var(--red)}.mch.neu{color:var(--t3)}
+.mn{font-size:10px;color:var(--t3);margin-top:3px}
+.mc-ed{position:absolute;top:8px;right:8px;font-size:9px;color:var(--t3);opacity:0;transition:opacity .15s;font-family:var(--mono)}
+.mc:hover .mc-ed{opacity:1}
+/* WORKFLOW */
+.wf{background:var(--bg2);border:1px solid var(--b2);border-radius:8px;margin-bottom:20px;overflow:hidden}
+.wfh{padding:13px 18px;border-bottom:1px solid var(--b);background:var(--bg3);display:flex;align-items:center;justify-content:space-between}
+.wft{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.08em}
+.wfsg{font-family:var(--mono);font-size:11px;color:var(--t2)}
+.wfsg strong{color:var(--t);font-size:14px}
+.sit-bar{padding:13px 18px;border-bottom:1px solid var(--b);display:flex;align-items:center;justify-content:space-between;gap:16px}
+.sbadge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:4px;font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.04em}
+.s0{background:rgba(39,196,122,.1);color:var(--green);border:1px solid rgba(39,196,122,.3)}
+.s1{background:rgba(212,134,42,.1);color:var(--amber);border:1px solid rgba(212,134,42,.3)}
+.s2{background:rgba(217,79,79,.12);color:var(--red);border:1px solid rgba(217,79,79,.3)}
+.s3{background:rgba(122,95,196,.12);color:var(--purple);border:1px solid rgba(122,95,196,.3)}
+.sit-dt{font-size:11px;color:var(--t2);text-align:right;max-width:520px}
+.crit-grid{display:grid;grid-template-columns:repeat(5,1fr);border-bottom:1px solid var(--b)}
+.crit{padding:12px 14px;border-right:1px solid var(--b)}
+.crit:last-child{border-right:none}
+.cn{font-family:var(--mono);font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px}
+.cv{font-family:var(--mono);font-size:16px;font-weight:600;margin-bottom:3px}
+.cbar{height:3px;background:var(--bg3);border-radius:2px;margin:4px 0;overflow:hidden}
+.cfill{height:100%;border-radius:2px;transition:width .5s}
+.cdesc{font-size:9px;color:var(--t3);font-family:var(--mono)}
+.dec-grid{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--b)}
+.dc{border-right:1px solid var(--b)}
+.dc:last-child{border-right:none}
+.dct{padding:8px 16px;font-family:var(--mono);font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.1em;border-bottom:1px solid var(--b);background:rgba(255,255,255,.02)}
+.dr{display:grid;grid-template-columns:24px 1fr 60px 58px 84px 46px;align-items:center;padding:8px 16px;border-bottom:1px solid var(--b);gap:8px;transition:background .15s}
+.dr:last-child{border-bottom:none}
+.dr:hover{background:rgba(255,255,255,.02)}
+.di{width:22px;height:22px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;font-family:var(--mono)}
+.dn{font-size:12px;font-weight:500}
+.dtk{font-family:var(--mono);font-size:9px;color:var(--t3)}
+.dp{font-family:var(--mono);font-size:11px;text-align:right}
+.dc2{font-family:var(--mono);font-size:10px;text-align:right}
+.dc2.up{color:var(--green)}.dc2.dn{color:var(--red)}.dc2.neu{color:var(--t3)}
+.da{text-align:center}
+.badge{display:inline-flex;align-items:center;justify-content:center;padding:3px 8px;border-radius:3px;font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;min-width:70px}
+.bb{background:var(--green2);color:var(--green)}
+.brf{background:rgba(39,196,122,.18);color:#3de89a}
+.bh{background:var(--amber2);color:var(--amber)}
+.bse{background:var(--red2);color:var(--red)}
+.bw{background:var(--blue2);color:var(--blue)}
+.dsc{font-family:var(--mono);font-size:10px;color:var(--t3);text-align:right}
+.syn{padding:13px 18px;background:var(--bg3);display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.sy-l{font-family:var(--mono);font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.sy-v{font-family:var(--mono);font-size:13px;font-weight:600}
+/* SIM */
+.sg{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+.sc{background:var(--bg2);border:1px solid var(--b);border-radius:var(--r);padding:11px 13px}
+.scl{font-size:10px;color:var(--t3);margin-bottom:4px;font-family:var(--mono)}
+.scv{font-family:var(--mono);font-size:17px;font-weight:600}
+/* TWO COL */
+.tc{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px}
+.pb{background:var(--bg2);border:1px solid var(--b);border-radius:8px;overflow:hidden}
+.pbh{padding:11px 16px;border-bottom:1px solid var(--b);display:flex;align-items:center;justify-content:space-between}
+.pbt{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.rob{color:var(--gold)}.idx{color:var(--blue)}
+.pbtot{font-family:var(--mono);font-size:16px;font-weight:600}
+.pbp{font-family:var(--mono);font-size:11px}
+.pbp.up{color:var(--green)}.pbp.dn{color:var(--red)}
+/* SCORE */
+.scb{background:var(--bg2);border:1px solid var(--b);border-radius:8px;padding:16px;margin-bottom:18px}
+.scg{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.sci{text-align:center}
+.sciv{font-family:var(--mono);font-size:14px;font-weight:600}
+.scibw{height:4px;background:var(--bg3);border-radius:2px;margin:5px 0 4px;overflow:hidden}
+.scibr{height:100%;border-radius:2px}
+.scin{font-size:10px;color:var(--t3)}
+/* JOURNAL */
+.jnl{background:var(--bg2);border:1px solid var(--b);border-radius:8px;overflow:hidden;margin-bottom:18px}
+.jh{padding:11px 16px;border-bottom:1px solid var(--b);display:flex;align-items:center;justify-content:space-between}
+.badd{background:var(--gold3);color:var(--gold);border:1px solid rgba(201,168,76,.3);border-radius:4px;padding:5px 11px;font-family:var(--mono);font-size:10px;cursor:pointer}
+.badd:hover{background:rgba(201,168,76,.2)}
+.jf{padding:16px;border-bottom:1px solid var(--b);display:none;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px}
+.jf.open{display:grid}
+.fg{display:flex;flex-direction:column;gap:4px}
+.fg.full{grid-column:1/-1}
+.fl{font-size:9px;color:var(--t3);font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase}
+.fi,.fsl,.ftx{background:var(--bg3);border:1px solid var(--b2);border-radius:4px;color:var(--t);font-family:var(--mono);font-size:12px;padding:7px 10px;outline:none}
+.fi:focus,.fsl:focus,.ftx:focus{border-color:var(--gold)}
+.ftx{resize:none;height:52px}
+.fsl option{background:var(--bg3)}
+.fac{display:flex;gap:8px;align-items:flex-end}
+.bsj{background:var(--gold);color:#080c12;border:none;border-radius:4px;padding:7px 16px;font-family:var(--mono);font-size:10px;font-weight:700;cursor:pointer}
+.bcj{background:transparent;color:var(--t3);border:1px solid var(--b2);border-radius:4px;padding:7px 11px;font-family:var(--mono);font-size:10px;cursor:pointer}
+.je{max-height:260px;overflow-y:auto}
+.jempty{padding:24px;text-align:center;color:var(--t3);font-family:var(--mono);font-size:11px}
+.jrow{display:grid;grid-template-columns:82px 90px 72px 72px 1fr 90px 52px;gap:8px;padding:9px 16px;border-bottom:1px solid var(--b);align-items:center;font-size:11px}
+.jrow:last-child{border-bottom:none}
+.jdate{font-family:var(--mono);color:var(--t3);font-size:10px}
+.jasset{font-weight:500}
+.jact{font-family:var(--mono);font-size:10px}
+.jamt{font-family:var(--mono);color:var(--gold)}
+.jnote{color:var(--t2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.jctx{font-family:var(--mono);font-size:10px;color:var(--t3)}
+.jscore{font-family:var(--mono);font-size:10px;color:var(--purple);text-align:right}
+.ftr{border-top:1px solid var(--b);padding:10px 28px;display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--t3)}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--bg3);border-radius:2px}
+@media(max-width:1100px){.grid4,.crit-grid{grid-template-columns:repeat(2,1fr)}.dec-grid{grid-template-columns:1fr}.dc{border-right:none;border-bottom:1px solid var(--b)}.tc{grid-template-columns:1fr}}
+@media(max-width:700px){.main{padding:12px 14px}.sg,.scg{grid-template-columns:1fr 1fr}.syn{grid-template-columns:1fr}.jf{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
 
+<!-- MODAL -->
+<div class="ov" id="modal">
+<div class="modal">
+  <div class="mt">📊 Saisie quotidienne — 2 min</div>
+  <div class="ms">Données sauvegardées localement · Workflow calculé automatiquement après saisie</div>
+  <div class="src">
+    <a href="https://finance.yahoo.com/quote/BZ=F" target="_blank">Brent BZ=F</a>
+    <a href="https://finance.yahoo.com/quote/CL=F" target="_blank">WTI CL=F</a>
+    <a href="https://finance.yahoo.com/quote/GLD" target="_blank">Or GLD</a>
+    <a href="https://finance.yahoo.com/quote/%5EVIX" target="_blank">VIX ^VIX</a>
+    <a href="https://finance.yahoo.com/quote/%5EGSPC" target="_blank">S&P ^GSPC</a>
+    <a href="https://finance.yahoo.com/quote/SLV" target="_blank">SLV Argent</a>
+    <a href="https://finance.yahoo.com/quote/ICLN" target="_blank">ICLN</a>
+    <a href="https://finance.yahoo.com/quote/XLE" target="_blank">XLE</a>
+    <a href="https://finance.yahoo.com/quote/IGDA.L" target="_blank">IGDA.L</a>
+    <a href="https://finance.yahoo.com/quote/ISWD.L" target="_blank">ISWD.L</a>
+    <a href="https://finance.yahoo.com/quote/SPUS" target="_blank">SPUS</a>
+    <a href="https://finance.yahoo.com/quote/%5ETNX" target="_blank">T10Y ^TNX</a>
+    <a href="https://finance.yahoo.com/quote/EURUSD=X" target="_blank">EUR/USD</a>
+  </div>
+  <div class="msec">Macro — Géopolitique &amp; Marché</div>
+  <div class="mg2col">
+    <div class="ig"><label class="il">Brent Crude <span>$/bbl · BZ=F</span></label><input type="number" step="0.1" class="ii" id="i-brent" placeholder="ex: 103.4"></div>
+    <div class="ig"><label class="il">WTI Crude <span>$/bbl · CL=F</span></label><input type="number" step="0.1" class="ii" id="i-wti" placeholder="ex: 97.8"></div>
+    <div class="ig"><label class="il">VIX <span>^VIX</span></label><input type="number" step="0.1" class="ii" id="i-vix" placeholder="ex: 25.8"></div>
+    <div class="ig"><label class="il">S&amp;P 500 <span>pts · ^GSPC</span></label><input type="number" step="1" class="ii" id="i-sp" placeholder="ex: 6664"></div>
+    <div class="ig"><label class="il">Taux 10 ans US <span>% · ^TNX</span></label><input type="number" step="0.01" class="ii" id="i-t10y" placeholder="ex: 4.35"></div>
+    <div class="ig"><label class="il">EUR/USD <span>EURUSD=X</span></label><input type="number" step="0.001" class="ii" id="i-eurusd" placeholder="ex: 1.082"></div>
+    <div class="ig"><label class="il">Transits Hormuz <span>navires/jour</span></label><input type="number" step="1" class="ii" id="i-hormuz" placeholder="ex: 13 (normal ~21)"></div>
+  </div>
+  <div class="msec">Actifs — Robustesse</div>
+  <div class="mg2col">
+    <div class="ig"><label class="il">Or spot <span>$/oz</span></label><input type="number" step="1" class="ii" id="i-gold" placeholder="ex: 4767"></div>
+    <div class="ig"><label class="il">GLD ETF <span>$</span></label><input type="number" step="0.01" class="ii" id="i-gld" placeholder="ex: 289.50"></div>
+    <div class="ig"><label class="il">Argent spot <span>$/oz</span></label><input type="number" step="0.1" class="ii" id="i-silver" placeholder="ex: 73.1"></div>
+    <div class="ig"><label class="il">ICLN <span>$ ETF</span></label><input type="number" step="0.01" class="ii" id="i-icln" placeholder="ex: 17.85"></div>
+    <div class="ig"><label class="il">XLE <span>$ ETF</span></label><input type="number" step="0.01" class="ii" id="i-xle" placeholder="ex: 60.16"></div>
+  </div>
+  <div class="msec">Actifs — Indices Halal</div>
+  <div class="mg2col">
+    <div class="ig"><label class="il">IGDA.L <span>$ DJ Islamic Global</span></label><input type="number" step="0.01" class="ii" id="i-igda" placeholder="ex: 33.35"></div>
+    <div class="ig"><label class="il">ISWD.L <span>$ MSCI World Islamic</span></label><input type="number" step="0.01" class="ii" id="i-iswd" placeholder="ex: 28.50"></div>
+    <div class="ig"><label class="il">SPUS <span>$ S&amp;P 500 Sharia</span></label><input type="number" step="0.01" class="ii" id="i-spus" placeholder="ex: 48.79"></div>
+    <div class="ig"><label class="il">ISDE <span>$ EM Islamic</span></label><input type="number" step="0.01" class="ii" id="i-isde" placeholder="ex: 22.40"></div>
+  </div>
+  <div class="mftr">
+    <button class="btn-ca" onclick="closeModal()">Annuler</button>
+    <button class="btn-sv" onclick="savePrices()">Enregistrer &amp; Calculer →</button>
+  </div>
+</div>
+</div>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-left">
+    <div class="ht">⬡ Portefeuille Halal Robuste</div>
+    <div class="sep"></div>
+    <div class="hs">Stratégie de résilience · Finance islamique · Crise Hormuz 2026</div>
+  </div>
+  <div class="hdr-right">
+    <span class="last-upd" id="last-upd">Aucune donnée</span>
+    <button class="btn-p" onclick="openModal()">📊 Mettre à jour</button>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- MARCHÉ ROW 1 -->
+<div class="slbl">Indicateurs de marché</div>
+<div class="grid4" style="margin-bottom:8px">
+  <div class="mc" id="c-brent" onclick="openModal()"><div class="mc-ed">✏</div><div class="ml">Brent Crude ($/bbl)</div><div class="mv" id="v-brent" style="color:var(--amber)">—</div><div class="mch neu" id="d-brent">—</div><div class="mn" id="n-brent">Cliquer pour saisir</div></div>
+  <div class="mc" id="c-wti" onclick="openModal()"><div class="mc-ed">✏</div><div class="ml">WTI ($/bbl)</div><div class="mv" id="v-wti" style="color:var(--amber)">—</div><div class="mch neu" id="d-wti">—</div><div class="mn" id="n-spread">Spread B-W : —</div></div>
+  <div class="mc" id="c-gold" onclick="openModal()"><div class="mc-ed">✏</div><div class="ml">Or spot ($/oz)</div><div class="mv" id="v-gold" style="color:var(--gold)">—</div><div class="mch neu" id="d-gold">—</div><div class="mn" id="n-gold-eur">Or en € : —</div></div>
+  <div class="mc" id="c-silver" onclick="openModal()"><div class="mc-ed">✏</div><div class="ml">Argent spot ($/oz)</div><div class="mv" id="v-silver" style="color:#a8b0c0">—</div><div class="mch neu" id="d-silver">—</div><div class="mn">Refuge + industriel</div></div>
+</div>
+<div class="grid4" style="margin-bottom:18px">
+  <div class="mc" id="c-vix" onclick="openModal()"><div class="mc-ed">✏</div><div class="ml">VIX (volatilité)</div><div class="mv" id="v-vix" style="color:var(--red)">—</div><div class="mch neu" id="d-vix">—</div><div class="mn" id="n-vix">Indice de peur</div></div>
+  <div class="mc" id="c-t10y" onclick="openModal()"><div class="mc-ed">✏</div><div class="ml">Taux 10 ans US (%)</div><div class="mv" id="v-t10y" style="color:var(--purple)">—</div><div class="mch neu" id="d-t10y">—</div><div class="mn" id="n-t10y">Pression sur l'or</div></div>
+  <div class="mc" id="c-eurusd" onclick="openModal()"><div class="mc-ed">✏</div><div class="ml">EUR/USD</div><div class="mv" id="v-eurusd" style="color:var(--blue)">—</div><div class="mch neu" id="d-eurusd">—</div><div class="mn" id="n-eurusd">Impact portefeuille €</div></div>
+  <div class="mc" id="c-hormuz" onclick="openModal()"><div class="mc-ed">✏</div><div class="ml">Transits Hormuz/j</div><div class="mv" id="v-hormuz" style="color:var(--teal)">—</div><div class="mch neu" id="d-hormuz">—</div><div class="mn" id="n-hormuz">Référence : ~21/j</div></div>
+</div>
+
+<!-- WORKFLOW -->
+<div class="slbl">Workflow de décision automatique <span style="text-transform:none;letter-spacing:0;font-size:9px;color:var(--t3)">5 critères pondérés → signal par actif</span></div>
+<div class="wf">
+  <div class="wfh">
+    <div class="wft">⬡ Chaîne de décision multicritères</div>
+    <div class="wfsg">Score global : <strong id="wf-glob">—</strong> / 10</div>
+  </div>
+  <div class="sit-bar">
+    <div>
+      <div style="font-size:9px;color:var(--t3);font-family:var(--mono);margin-bottom:5px;text-transform:uppercase;letter-spacing:.08em">Scénario géopolitique détecté</div>
+      <div class="sbadge s1" id="sit">⬡ En attente de données...</div>
+    </div>
+    <div class="sit-dt" id="sit-desc">Saisir les données de marché pour activer le workflow</div>
+  </div>
+  <div class="crit-grid">
+    <div class="crit"><div class="cn">1 · Scénario Hormuz <span style="color:var(--gold)">35%</span></div><div class="cv" id="c1v" style="color:var(--amber)">—</div><div class="cbar"><div class="cfill" id="c1b" style="background:var(--amber);width:0"></div></div><div class="cdesc" id="c1d">Brent + transits</div></div>
+    <div class="crit"><div class="cn">2 · Momentum or <span style="color:var(--gold)">25%</span></div><div class="cv" id="c2v" style="color:var(--blue)">—</div><div class="cbar"><div class="cfill" id="c2b" style="background:var(--blue);width:0"></div></div><div class="cdesc" id="c2d">Or vs base</div></div>
+    <div class="crit"><div class="cn">3 · Spread B-WTI <span style="color:var(--gold)">15%</span></div><div class="cv" id="c3v" style="color:var(--teal)">—</div><div class="cbar"><div class="cfill" id="c3b" style="background:var(--teal);width:0"></div></div><div class="cdesc" id="c3d">Disruption maritime</div></div>
+    <div class="crit"><div class="cn">4 · Taux 10 ans US <span style="color:var(--gold)">15%</span></div><div class="cv" id="c4v" style="color:var(--purple)">—</div><div class="cbar"><div class="cfill" id="c4b" style="background:var(--purple);width:0"></div></div><div class="cdesc" id="c4d">Pression sur l'or</div></div>
+    <div class="crit"><div class="cn">5 · EUR/USD <span style="color:var(--gold)">10%</span></div><div class="cv" id="c5v" style="color:var(--green)">—</div><div class="cbar"><div class="cfill" id="c5b" style="background:var(--green);width:0"></div></div><div class="cdesc" id="c5d">Impact €</div></div>
+  </div>
+  <div class="dec-grid">
+    <div class="dc">
+      <div class="dct">★ Robustesse — Actifs Tangibles Halal</div>
+      <div class="dr"><div class="di" style="background:rgba(201,168,76,.15);color:var(--gold)">Au</div><div><div class="dn">Or physique</div><div class="dtk">GLD · 35% · 3 500€</div></div><div class="dp" id="p-GLD">—</div><div class="dc2 neu" id="c-GLD">—</div><div class="da"><span class="badge" id="s-GLD">—</span></div><div class="dsc" id="sc-GLD">—</div></div>
+      <div class="dr"><div class="di" style="background:rgba(168,176,192,.15);color:#a8b0c0">Ag</div><div><div class="dn">Argent physique</div><div class="dtk">SLV · 10% · 1 000€</div></div><div class="dp" id="p-SLV">—</div><div class="dc2 neu" id="c-SLV">—</div><div class="da"><span class="badge" id="s-SLV">—</span></div><div class="dsc" id="sc-SLV">—</div></div>
+      <div class="dr"><div class="di" style="background:rgba(39,196,122,.15);color:var(--green)">☀</div><div><div class="dn">Énergie renouvelable</div><div class="dtk">ICLN · 25% · 2 500€</div></div><div class="dp" id="p-ICLN">—</div><div class="dc2 neu" id="c-ICLN">—</div><div class="da"><span class="badge" id="s-ICLN">—</span></div><div class="dsc" id="sc-ICLN">—</div></div>
+      <div class="dr"><div class="di" style="background:rgba(212,134,42,.15);color:var(--amber)">⬡</div><div><div class="dn">Énergie US (filtré)</div><div class="dtk">XLE · 20% · 2 000€</div></div><div class="dp" id="p-XLE">—</div><div class="dc2 neu" id="c-XLE">—</div><div class="da"><span class="badge" id="s-XLE">—</span></div><div class="dsc" id="sc-XLE">—</div></div>
+      <div class="dr"><div class="di" style="background:rgba(61,127,196,.15);color:var(--blue)">€</div><div><div class="dn">Liquidité CHF/EUR</div><div class="dtk">CASH · 10% · 1 000€</div></div><div class="dp" style="color:var(--t2)">1 000 €</div><div class="dc2 neu">—</div><div class="da"><span class="badge bh">CONSERVER</span></div><div class="dsc">—</div></div>
+    </div>
+    <div class="dc">
+      <div class="dct">◈ Indices Halal Mondiaux — Passif</div>
+      <div class="dr"><div class="di" style="background:rgba(61,127,196,.15);color:var(--blue)">DJ</div><div><div class="dn">Invesco DJ Islamic Global</div><div class="dtk">IGDA · 40% · 4 000€ · ✓ Sharia</div></div><div class="dp" id="p-IGDA">—</div><div class="dc2 neu" id="c-IGDA">—</div><div class="da"><span class="badge" id="s-IGDA">—</span></div><div class="dsc" id="sc-IGDA">—</div></div>
+      <div class="dr"><div class="di" style="background:rgba(61,127,196,.12);color:var(--blue)">MS</div><div><div class="dn">iShares MSCI World Islamic</div><div class="dtk">ISWD · 30% · 3 000€ · ✓ Sharia</div></div><div class="dp" id="p-ISWD">—</div><div class="dc2 neu" id="c-ISWD">—</div><div class="da"><span class="badge" id="s-ISWD">—</span></div><div class="dsc" id="sc-ISWD">—</div></div>
+      <div class="dr"><div class="di" style="background:rgba(61,127,196,.10);color:var(--blue)">SP</div><div><div class="dn">SP Funds S&amp;P 500 Sharia</div><div class="dtk">SPUS · 20% · 2 000€ · ✓ Sharia</div></div><div class="dp" id="p-SPUS">—</div><div class="dc2 neu" id="c-SPUS">—</div><div class="da"><span class="badge" id="s-SPUS">—</span></div><div class="dsc" id="sc-SPUS">—</div></div>
+      <div class="dr"><div class="di" style="background:rgba(31,168,168,.12);color:var(--teal)">EM</div><div><div class="dn">iShares MSCI EM Islamic</div><div class="dtk">ISDE · 10% · 1 000€ · ✓ Sharia</div></div><div class="dp" id="p-ISDE">—</div><div class="dc2 neu" id="c-ISDE">—</div><div class="da"><span class="badge" id="s-ISDE">—</span></div><div class="dsc" id="sc-ISDE">—</div></div>
+      <div style="padding:8px 16px;background:rgba(61,127,196,.04);border-top:1px solid var(--b)"><div style="font-size:10px;color:var(--t3);font-family:var(--mono)">Certifiés Sharia · MSCI / Dow Jones Islamic / FTSE Shariah · Révision trimestrielle</div></div>
+    </div>
+  </div>
+  <div class="syn">
+    <div><div class="sy-l">Biais de marché détecté</div><div class="sy-v" id="syn-biais" style="color:var(--amber)">—</div></div>
+    <div><div class="sy-l">Action prioritaire recommandée</div><div class="sy-v" id="syn-action" style="color:var(--green)">—</div></div>
+    <div><div class="sy-l">Allocation recommandée</div><div class="sy-v" id="syn-alloc" style="color:var(--t)">—</div></div>
+  </div>
+</div>
+
+<!-- SIMULATION -->
+<div class="slbl">Simulation 10 000 €</div>
+<div class="sg">
+  <div class="sc"><div class="scl">Portefeuille Robustesse</div><div class="scv" id="sv-rob" style="color:var(--gold)">10 000 €</div><div style="font-family:var(--mono);font-size:11px;color:var(--t3);margin-top:2px" id="sp-rob">Base</div></div>
+  <div class="sc"><div class="scl">Indices Halal Passifs</div><div class="scv" id="sv-idx" style="color:var(--blue)">10 000 €</div><div style="font-family:var(--mono);font-size:11px;color:var(--t3);margin-top:2px" id="sp-idx">Base</div></div>
+  <div class="sc"><div class="scl">Alpha généré</div><div class="scv" id="sv-alp" style="color:var(--teal)">0.00%</div><div style="font-size:10px;color:var(--t3);margin-top:2px">Robustesse vs Indices</div></div>
+  <div class="sc"><div class="scl">Score robustesse</div><div class="scv" style="color:var(--purple)">8.8/10</div><div style="font-size:10px;color:var(--t3);margin-top:2px">Hamant/Taleb</div></div>
+</div>
+
+<!-- SCORE -->
+<div class="scb">
+  <div class="slbl" style="margin-bottom:12px;border:none">Score de robustesse — Critères Hamant/Taleb</div>
+  <div class="scg">
+    <div class="sci"><div class="sciv" style="color:var(--gold)">7.0</div><div class="scibw"><div class="scibr" style="background:var(--gold);width:70%"></div></div><div class="scin">Actifs réels</div></div>
+    <div class="sci"><div class="sciv" style="color:var(--green)">10.0</div><div class="scibw"><div class="scibr" style="background:var(--green);width:100%"></div></div><div class="scin">Diversification</div></div>
+    <div class="sci"><div class="sciv" style="color:var(--blue)">10.0</div><div class="scibw"><div class="scibr" style="background:var(--blue);width:100%"></div></div><div class="scin">Liquidité</div></div>
+    <div class="sci"><div class="sciv" style="color:var(--teal)">9.2</div><div class="scibw"><div class="scibr" style="background:var(--teal);width:92%"></div></div><div class="scin">Conformité Sharia</div></div>
+    <div class="sci"><div class="sciv" style="color:var(--purple)">9.9</div><div class="scibw"><div class="scibr" style="background:var(--purple);width:99%"></div></div><div class="scin">Antifragilité</div></div>
+  </div>
+</div>
+
+<!-- JOURNAL -->
+<div class="jnl">
+  <div class="jh">
+    <div><div class="slbl" style="margin-bottom:0;border:none">Journal de décision</div><div style="font-size:10px;color:var(--t3);margin-top:2px">Contexte de marché &amp; score workflow archivés automatiquement</div></div>
+    <button class="badd" onclick="toggleForm()">+ Nouvelle décision</button>
+  </div>
+  <div class="jf" id="jf">
+    <div class="fg"><label class="fl">Date</label><input type="date" class="fi" id="f-date"></div>
+    <div class="fg"><label class="fl">Actif</label><select class="fsl" id="f-asset"><option value="">Choisir...</option><optgroup label="★ Robustesse"><option>Or physique (GLD)</option><option>Argent physique (SLV)</option><option>Énergie renouv. (ICLN)</option><option>Énergie US (XLE)</option><option>Liquidité CHF</option></optgroup><optgroup label="◈ Indices Halal"><option>IGDA — DJ Islamic Global</option><option>ISWD — MSCI World Islamic</option><option>SPUS — S&P 500 Sharia</option><option>ISDE — MSCI EM Islamic</option></optgroup></select></div>
+    <div class="fg"><label class="fl">Action</label><select class="fsl" id="f-action"><option value="achat">Achat</option><option value="renforcement">Renforcement</option><option value="allegement">Allègement</option><option value="sortie">Sortie totale</option></select></div>
+    <div class="fg"><label class="fl">Montant (€)</label><input type="number" class="fi" id="f-amount" placeholder="ex: 500"></div>
+    <div class="fg full"><label class="fl">Justification</label><textarea class="ftx" id="f-note" placeholder="Ton raisonnement..."></textarea></div>
+    <div class="fg fac"><button class="bsj" onclick="saveD()">Enregistrer</button><button class="bcj" onclick="toggleForm()">Annuler</button></div>
+  </div>
+  <div class="je" id="je"><div class="jempty" id="jempty">Aucune décision — commence ta première simulation</div></div>
+</div>
+
+</div>
+<div class="ftr">
+  <span>Portefeuille Halal Robuste · Stratégie Hormuz 2026</span>
+  <span>Workflow multicritères · 5 critères pondérés · Données locales</span>
+  <span>⚠ Simulation uniquement — pas de conseil financier</span>
+</div>
+
+<script>
+const SK='hv7p',BK='hv7b',DK='hv7d';
+let P=JSON.parse(localStorage.getItem(SK)||'{}');
+let B=JSON.parse(localStorage.getItem(BK)||'{}');
+let decisions=JSON.parse(localStorage.getItem(DK)||'[]');
+
+const fN=(v,d=2)=>v==null||isNaN(v)?'—':new Intl.NumberFormat('fr-FR',{minimumFractionDigits:d,maximumFractionDigits:d}).format(v);
+const fP=v=>v==null||isNaN(v)?'—':(v>=0?'+':'')+v.toFixed(2)+'%';
+const fE=v=>v==null||isNaN(v)?'—':new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR',minimumFractionDigits:0}).format(v);
+const $=id=>document.getElementById(id);
+const setEl=(id,v)=>{const e=$(id);if(e)e.textContent=v};
+
+function setChgDec(id,c,b){
+  const e=$(id);if(!e)return;
+  if(!c||!b){e.textContent='—';e.className='dc2 neu';return}
+  const p=(c-b)/b*100;e.textContent=fP(p);
+  e.className='dc2 '+(p>0.1?'up':p<-0.1?'dn':'neu');
+}
+function setMktChg(id,c,b){
+  const e=$(id);if(!e)return;
+  if(!c||!b){e.textContent='—';e.className='mch neu';return}
+  const p=(c-b)/b*100;e.textContent=fP(p);
+  e.className='mch '+(p>0.1?'up':p<-0.1?'dn':'neu');
+}
+function setAlert(id,lv){const e=$(id);if(!e)return;e.className='mc '+(lv>=3?'hi':lv>=1?'mid':lv===0?'ok':'neu')}
+function setBadge(id,action,score){
+  const e=$(id);if(!e)return;
+  const M={acheter:['bb','ACHETER'],renforcer:['brf','RENFORCER'],conserver:['bh','CONSERVER'],alleger:['bse','ALLÉGER'],vendre:['bse','VENDRE'],surveiller:['bw','SURVEILLER']};
+  const[c,l]=M[action]||['bw','—'];
+  e.className='badge '+c;e.textContent=l;
+  if(score!==undefined){const s=$(id.replace('s-','sc-'));if(s)s.textContent=score+'/10'}
+}
+
+// ═══ WORKFLOW MULTICRITÈRES ═══
+function computeWorkflow(){
+  const p=P,b=B;
+  if(!p.brent&&!p.gold)return;
+  const brent=p.brent||108;
+
+  // C1 — Scénario Hormuz (35%)
+  let c1=5;
+  if(brent>160)c1=10;else if(brent>130)c1=8.5;else if(brent>110)c1=7;
+  else if(brent>100)c1=6;else if(brent>85)c1=4;else if(brent>70)c1=2.5;else c1=1;
+  if(p.hormuz){if(p.hormuz<5)c1=Math.min(10,c1+2);else if(p.hormuz<10)c1=Math.min(10,c1+1);else if(p.hormuz>18)c1=Math.max(0,c1-1.5)}
+
+  // C2 — Momentum or (25%)
+  let c2=5;
+  const gold=p.gold||0,goldB=b.gold||gold;
+  if(gold&&goldB){const g=(gold-goldB)/goldB*100;if(g>10)c2=9.5;else if(g>5)c2=8;else if(g>2)c2=6.5;else if(g>0)c2=5.5;else if(g>-3)c2=4;else c2=2}
+
+  // C3 — Spread Brent-WTI (15%)
+  let c3=5,spread=null;
+  if(p.wti){spread=+(brent-p.wti).toFixed(1);if(spread>15)c3=10;else if(spread>10)c3=8;else if(spread>6)c3=6.5;else if(spread>3)c3=5;else if(spread>0)c3=4;else c3=2}
+
+  // C4 — Taux 10 ans US (15%) — inversé
+  let c4=5;
+  if(p.t10y){if(p.t10y>5.5)c4=1;else if(p.t10y>4.5)c4=3;else if(p.t10y>4.0)c4=5;else if(p.t10y>3.0)c4=7;else c4=9}
+
+  // C5 — EUR/USD (10%)
+  let c5=5;
+  if(p.eurusd&&b.eurusd){const f=(p.eurusd-b.eurusd)/b.eurusd*100;if(f>3)c5=8.5;else if(f>1)c5=7;else if(f>0)c5=5.5;else if(f>-2)c5=4;else c5=2}
+
+  const sg=+(c1*.35+c2*.25+c3*.15+c4*.15+c5*.10).toFixed(1);
+  setEl('wf-glob',fN(sg,1));
+
+  // Scénario géo
+  const sc=brent<80?0:brent<130?1:brent<170?2:3;
+  const sLabels=['Désescalade ✓','Blocage prolongé ⚡','Escalade majeure ⚠','Guerre totale 🔴'];
+  const sCls=['s0','s1','s2','s3'];
+  const sDesc=[
+    `Brent ${fN(brent,1)}$ — Désescalade possible · Rotation vers indices halal à envisager`,
+    `Brent ${fN(brent,1)}$ · Spread ${spread!=null?spread+'$':'—'} — Blocage confirmé · Maintenir actifs tangibles`,
+    `Brent ${fN(brent,1)}$ — Escalade critique · Surpondérer or et liquidité · Réduire indices`,
+    `Brent ${fN(brent,1)}$ — Crise extrême · Conservation absolue du capital`
+  ];
+  const sit=$('sit');sit.className='sbadge '+sCls[sc];sit.textContent='⬡ '+sLabels[sc];
+  setEl('sit-desc',sDesc[sc]);
+
+  // Afficher critères
+  [{id:1,v:c1,d:`Brent ${fN(brent,1)}$${p.hormuz?' · '+p.hormuz+' transits':''}`,col:'var(--amber)'},
+   {id:2,v:c2,d:`Or ${gold?fN(gold,0)+'$ ('+fP((gold-goldB)/goldB*100)+')':'—'}`,col:'var(--blue)'},
+   {id:3,v:c3,d:spread!=null?`Spread ${spread}$ → ${spread>8?'disruption':'normal'}`:' WTI non saisi',col:'var(--teal)'},
+   {id:4,v:c4,d:p.t10y?`T10Y ${fN(p.t10y,2)}% → ${p.t10y>4.5?'pression':'favorable'}`:' Non saisi',col:'var(--purple)'},
+   {id:5,v:c5,d:p.eurusd?`EUR/USD ${fN(p.eurusd,3)}`:' Non saisi',col:'var(--green)'}
+  ].forEach(cr=>{
+    setEl(`c${cr.id}v`,fN(cr.v,1)+'/10');setEl(`c${cr.id}d`,cr.d);
+    const bar=$(`c${cr.id}b`);if(bar){bar.style.width=cr.v*10+'%';bar.style.background=cr.col}
+  });
+
+  // Décisions actifs
+  const vix=p.vix||25;
+  const scores={
+    GLD:+((c1*.40+c2*.35+(10-c4)*.25)).toFixed(1),
+    SLV:+((c1*.45+c2*.30+c3*.25)).toFixed(1),
+    ICLN:+((c1*.40+c2*.20+c3*.20+(vix<30?7:vix<40?5:3)*.20)).toFixed(1),
+    XLE:+((c1*.35+c3*.35+(sc<3?6:3)*.30)).toFixed(1),
+    IGDA:+(((10-c1)*.40+c4*.30+c5*.30)).toFixed(1),
+    ISWD:+(((10-c1)*.35+c4*.30+c5*.35)).toFixed(1),
+    SPUS:+(((10-c1)*.40+(10-c2)*.20+c4*.20+c5*.20)).toFixed(1),
+    ISDE:+(((10-c1)*.30+c5*.40+(10-c4)*.30)).toFixed(1),
+  };
+  const action=s=>s>=7.5?'acheter':s>=6.5?'renforcer':s>=5?'conserver':s>=3.5?'alleger':'vendre';
+  const actionIdx=s=>s>=7.5?'acheter':s>=5.5?'conserver':s>=4?'surveiller':'vendre';
+  setBadge('s-GLD',action(scores.GLD),scores.GLD);
+  setBadge('s-SLV',action(scores.SLV),scores.SLV);
+  setBadge('s-ICLN',action(scores.ICLN),scores.ICLN);
+  setBadge('s-XLE',action(scores.XLE),scores.XLE);
+  setBadge('s-IGDA',actionIdx(scores.IGDA),scores.IGDA);
+  setBadge('s-ISWD',actionIdx(scores.ISWD),scores.ISWD);
+  setBadge('s-SPUS',actionIdx(scores.SPUS),scores.SPUS);
+  setBadge('s-ISDE',actionIdx(scores.ISDE),scores.ISDE);
+
+  // Synthèse
+  const biais=sg>=7?'Crise confirmée — Défensif':sg>=5.5?'Tension — Mixte':sg>=4?'Modéré — Équilibré':'Détente — Croissance';
+  const bColor=sg>=7?'var(--red)':sg>=5.5?'var(--amber)':sg>=4?'var(--blue)':'var(--green)';
+  const sb=$('syn-biais');if(sb){sb.textContent=biais;sb.style.color=bColor}
+  const top=sg>=7?'Renforcer Or + XLE':sg>=5.5?'Maintenir actifs tangibles':sg>=4?'Rééquilibrer vers indices':'Rotation IGDA + ISWD';
+  const sa=$('syn-action');if(sa){sa.textContent=top;sa.style.color=sg>=5.5?'var(--amber)':'var(--green)'}
+  setEl('syn-alloc',sg>=7?'80% Rob / 20% Idx':sg>=5?'65% Rob / 35% Idx':'50% Rob / 50% Idx');
+  return {sg,scores,sc};
+}
+
+// ═══ RENDER MARCHÉ ═══
+function render(){
+  const p=P,b=B;
+  if(!p.brent&&!p.gold)return;
+  if(p.brent){setEl('v-brent','$'+fN(p.brent,1));setMktChg('d-brent',p.brent,b.brent);setAlert('c-brent',p.brent>130?4:p.brent>100?3:p.brent>80?1:0);setEl('n-brent',p.brent>130?'🔴 Escalade critique':p.brent>100?'⚠ Seuil crise':p.brent>80?'→ Tension':'✓ Normal')}
+  if(p.wti){setEl('v-wti','$'+fN(p.wti,1));setMktChg('d-wti',p.wti,b.wti);setAlert('c-wti',1);if(p.brent){const sp=+(p.brent-p.wti).toFixed(1);setEl('n-spread','Spread B-W : $'+fN(sp,1)+(sp>8?' ⚠ disruption':sp>4?' → tension':' ✓ normal'))}}
+  if(p.gold){setEl('v-gold','$'+fN(p.gold,0));setMktChg('d-gold',p.gold,b.gold);setAlert('c-gold',p.gold>4500?4:p.gold>3500?3:2);if(p.eurusd)setEl('n-gold-eur','Or en € : '+fN(p.gold/p.eurusd,0)+'€/oz')}
+  if(p.silver){setEl('v-silver','$'+fN(p.silver,1));setMktChg('d-silver',p.silver,b.silver);setAlert('c-silver',1)}
+  if(p.vix){setEl('v-vix',fN(p.vix,1));setMktChg('d-vix',p.vix,b.vix);setAlert('c-vix',p.vix>40?4:p.vix>25?2:0);setEl('n-vix',p.vix>40?'🔴 Panique':p.vix>25?'⚠ Tension':'✓ Calme')}
+  if(p.t10y){setEl('v-t10y',fN(p.t10y,2)+'%');setMktChg('d-t10y',p.t10y,b.t10y);setAlert('c-t10y',p.t10y>5?4:p.t10y>4.5?2:0);setEl('n-t10y',p.t10y>5?'🔴 Très élevé':p.t10y>4.5?'⚠ Pression or':'→ Modéré')}
+  if(p.eurusd){setEl('v-eurusd',fN(p.eurusd,3));setMktChg('d-eurusd',p.eurusd,b.eurusd);setAlert('c-eurusd',1);setEl('n-eurusd',p.eurusd>1.1?'EUR fort → actifs $ moins chers':p.eurusd<1.0?'USD fort → actifs $ plus chers':'→ Parité équilibrée')}
+  if(p.hormuz){setEl('v-hormuz',p.hormuz);setAlert('c-hormuz',p.hormuz<5?4:p.hormuz<10?3:p.hormuz<15?1:0);setEl('n-hormuz',p.hormuz<5?'🔴 Quasi-fermé':p.hormuz<12?'⚠ Fortement réduit':p.hormuz<18?'→ Réduit':'✓ Quasi-normal');const dh=$('d-hormuz');const pct=Math.round((p.hormuz-21)/21*100);if(dh){dh.textContent=(pct>=0?'+':'')+pct+'% vs normal';dh.className='mch '+(pct<-20?'dn':'neu')}}
+  // Actifs
+  if(p.gld||p.gold){setEl('p-GLD','$'+fN(p.gld||p.gold/9.3));setChgDec('c-GLD',p.gld||p.gold/9.3,b.gld||b.gold/9.3)}
+  if(p.silver){setEl('p-SLV','$'+fN(p.silver/14,2));setChgDec('c-SLV',p.silver,b.silver)}
+  if(p.icln){setEl('p-ICLN','$'+fN(p.icln));setChgDec('c-ICLN',p.icln,b.icln)}
+  if(p.xle){setEl('p-XLE','$'+fN(p.xle));setChgDec('c-XLE',p.xle,b.xle)}
+  if(p.igda){setEl('p-IGDA','$'+fN(p.igda));setChgDec('c-IGDA',p.igda,b.igda)}
+  if(p.iswd){setEl('p-ISWD','$'+fN(p.iswd));setChgDec('c-ISWD',p.iswd,b.iswd)}
+  if(p.spus){setEl('p-SPUS','$'+fN(p.spus));setChgDec('c-SPUS',p.spus,b.spus)}
+  if(p.isde){setEl('p-ISDE','$'+fN(p.isde));setChgDec('c-ISDE',p.isde,b.isde)}else{setEl('p-ISDE','N/D')}
+  updateSim();
+  if(p.updatedAt){const d=new Date(p.updatedAt);setEl('last-upd','Màj '+d.toLocaleDateString('fr-FR')+' '+d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}))}
+  computeWorkflow();
+}
+
+// ═══ SIMULATION ═══
+function updateSim(){
+  const p=P,b=B;
+  const pm={GLD:p.gld||p.gold/9.3,SLV:p.silver/14,ICLN:p.icln,XLE:p.xle};
+  const bm={GLD:b.gld||b.gold/9.3,SLV:b.silver/14,ICLN:b.icln,XLE:b.xle};
+  let rv=10000*.10;
+  for(const[t,a] of Object.entries({GLD:.35,SLV:.10,ICLN:.25,XLE:.20})){rv+=pm[t]&&bm[t]?10000*a*(1+(pm[t]-bm[t])/bm[t]):10000*a}
+  const rp=(rv-10000)/10000*100;
+  setEl('sv-rob',fE(rv));const sre=$('sp-rob');if(sre){sre.textContent=fP(rp);sre.style.color=rp>=0?'var(--green)':'var(--red)'}
+  const im={IGDA:p.igda,ISWD:p.iswd,SPUS:p.spus,ISDE:p.isde};
+  const ib={IGDA:b.igda,ISWD:b.iswd,SPUS:b.spus,ISDE:b.isde};
+  let iv=0;for(const[t,a] of Object.entries({IGDA:.40,ISWD:.30,SPUS:.20,ISDE:.10})){iv+=im[t]&&ib[t]?10000*a*(1+(im[t]-ib[t])/ib[t]):10000*a}
+  const ip=(iv-10000)/10000*100;
+  setEl('sv-idx',fE(iv));const spi=$('sp-idx');if(spi){spi.textContent=fP(ip);spi.style.color=ip>=0?'var(--green)':'var(--red)'}
+  const ae=$('sv-alp');const alp=rp-ip;if(ae){ae.textContent=fP(alp);ae.style.color=alp>=0?'var(--green)':'var(--red)'}
+}
+
+// ═══ MODAL ═══
+function openModal(){
+  const fs=['brent','wti','vix','sp','t10y','eurusd','hormuz','gld','gold','silver','icln','xle','igda','iswd','spus','isde'];
+  fs.forEach(f=>{const e=$('i-'+f);if(e&&P[f])e.value=P[f]});
+  $('modal').classList.add('open');
+}
+function closeModal(){$('modal').classList.remove('open')}
+function savePrices(){
+  const fs=['brent','wti','vix','sp','t10y','eurusd','hormuz','gld','gold','silver','icln','xle','igda','iswd','spus','isde'];
+  const np={};fs.forEach(f=>{const v=parseFloat($('i-'+f)?.value);if(!isNaN(v)&&v>0)np[f]=v});
+  if(!Object.keys(B).length){B={...np};localStorage.setItem(BK,JSON.stringify(B))}
+  P={...P,...np,updatedAt:new Date().toISOString()};localStorage.setItem(SK,JSON.stringify(P));
+  closeModal();render();
+}
+
+// ═══ JOURNAL ═══
+function toggleForm(){const f=$('jf');f.classList.toggle('open');if(f.classList.contains('open'))$('f-date').value=new Date().toISOString().split('T')[0]}
+function saveD(){
+  const date=$('f-date').value,asset=$('f-asset').value,action=$('f-action').value;
+  const amount=parseFloat($('f-amount').value),note=$('f-note').value;
+  if(!asset||!amount||!date){alert('Date, actif et montant requis.');return}
+  const wfs=parseFloat($('wf-glob')?.textContent)||null;
+  const spread=P.brent&&P.wti?+(P.brent-P.wti).toFixed(1):null;
+  decisions.unshift({id:Date.now(),date,asset,action,amount,note,brent:P.brent,gold:P.gold,vix:P.vix,spread,eurusd:P.eurusd,t10y:P.t10y,scenario:$('sit')?.textContent,wfScore:wfs});
+  localStorage.setItem(DK,JSON.stringify(decisions));
+  $('f-asset').value='';$('f-amount').value='';$('f-note').value='';
+  toggleForm();renderJ();
+}
+function renderJ(){
+  const c=$('je'),empty=$('jempty');
+  if(!decisions.length){empty.style.display='block';return}
+  empty.style.display='none';
+  const col={achat:'var(--green)',renforcement:'var(--teal)',allegement:'var(--amber)',sortie:'var(--red)'};
+  c.innerHTML=decisions.slice(0,30).map(d=>`
+    <div class="jrow">
+      <div class="jdate">${d.date}</div>
+      <div class="jasset">${d.asset.split('(')[0].trim()}</div>
+      <div class="jact" style="color:${col[d.action]||'var(--t2)'}">${d.action.toUpperCase()}</div>
+      <div class="jamt">${fE(d.amount)}</div>
+      <div class="jnote" title="${d.note||''}">${d.note||'—'}</div>
+      <div class="jctx">${d.brent?'B:$'+fN(d.brent,0):''} ${d.spread?'S:'+d.spread+'$':''}</div>
+      <div class="jscore">${d.wfScore?d.wfScore+'/10':'—'}</div>
+    </div>`).join('');
+}
+
+// ═══ INIT ═══
+document.addEventListener('DOMContentLoaded',()=>{renderJ();if(Object.keys(P).length)render();else setTimeout(openModal,400)});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+</script>
+</body>
+</html>

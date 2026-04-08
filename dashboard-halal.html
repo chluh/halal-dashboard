@@ -217,6 +217,13 @@ body{background:var(--bg);color:var(--t);font-family:var(--sans);font-size:13px;
   </div>
   <div class="hdr-right">
     <span class="last-upd" id="last-upd">Aucune donnée</span>
+    <div style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:4px 10px">
+      <span style="font-family:var(--mono);font-size:10px;color:var(--t3)">Simulation</span>
+      <input type="number" id="sim-amount" value="10000" min="100" step="500"
+        style="background:transparent;border:none;color:var(--gold);font-family:var(--mono);font-size:13px;font-weight:700;width:80px;outline:none;text-align:right"
+        oninput="updateSimAmount()" />
+      <span style="font-family:var(--mono);font-size:11px;color:var(--t2)">€</span>
+    </div>
     <button class="btn-p" onclick="openModal()">📊 Mettre à jour</button>
   </div>
 </div>
@@ -314,7 +321,7 @@ body{background:var(--bg);color:var(--t);font-family:var(--sans);font-size:13px;
   <div class="jf" id="jf">
     <div class="fg"><label class="fl">Date</label><input type="date" class="fi" id="f-date"></div>
     <div class="fg"><label class="fl">Actif</label><select class="fsl" id="f-asset"><option value="">Choisir...</option><optgroup label="★ Robustesse"><option>Or physique (GLD)</option><option>Argent physique (SLV)</option><option>Énergie renouv. (ICLN)</option><option>Énergie US (XLE)</option><option>Liquidité CHF</option></optgroup><optgroup label="◈ Indices Halal"><option>IGDA — DJ Islamic Global</option><option>ISWD — MSCI World Islamic</option><option>SPUS — S&P 500 Sharia</option><option>ISDE — MSCI EM Islamic</option></optgroup></select></div>
-    <div class="fg"><label class="fl">Action</label><select class="fsl" id="f-action"><option value="achat">Achat</option><option value="renforcement">Renforcement</option><option value="allegement">Allègement</option><option value="sortie">Sortie totale</option></select></div>
+    <div class="fg"><label class="fl">Action</label><select class="fsl" id="f-action"><option value="observation">Observation</option><option value="achat">Achat</option><option value="renforcement">Renforcement</option><option value="allegement">Allègement</option><option value="sortie">Sortie totale</option></select></div>
     <div class="fg"><label class="fl">Montant (€)</label><input type="number" class="fi" id="f-amount" placeholder="ex: 500"></div>
     <div class="fg full"><label class="fl">Justification</label><textarea class="ftx" id="f-note" placeholder="Ton raisonnement..."></textarea></div>
     <div class="fg fac"><button class="bsj" onclick="saveD()">Enregistrer</button><button class="bcj" onclick="toggleForm()">Annuler</button></div>
@@ -480,21 +487,24 @@ function render(){
 // ═══ SIMULATION ═══
 function updateSim(){
   const p=P,b=B;
-  const pm={GLD:p.gld||p.gold/9.3,SLV:p.silver/14,ICLN:p.icln,XLE:p.xle};
-  const bm={GLD:b.gld||b.gold/9.3,SLV:b.silver/14,ICLN:b.icln,XLE:b.xle};
-  let rv=10000*.10;
-  for(const[t,a] of Object.entries({GLD:.35,SLV:.10,ICLN:.25,XLE:.20})){rv+=pm[t]&&bm[t]?10000*a*(1+(pm[t]-bm[t])/bm[t]):10000*a}
-  const rp=(rv-10000)/10000*100;
+  const S=getSimAmount();
+  const pm={GLD:p.gld||(p.gold?p.gold/9.3:null),SLV:p.silver?p.silver/14:null,ICLN:p.icln,XLE:p.xle};
+  const bm={GLD:b.gld||(b.gold?b.gold/9.3:null),SLV:b.silver?b.silver/14:null,ICLN:b.icln,XLE:b.xle};
+  let rv=S*.10;
+  for(const[t,a] of Object.entries({GLD:.35,SLV:.10,ICLN:.25,XLE:.20})){rv+=pm[t]&&bm[t]?S*a*(1+(pm[t]-bm[t])/bm[t]):S*a}
+  const rp=(rv-S)/S*100;
   setEl('sv-rob',fE(rv));const sre=$('sp-rob');if(sre){sre.textContent=fP(rp);sre.style.color=rp>=0?'var(--green)':'var(--red)'}
   const im={IGDA:p.igda,ISWD:p.iswd,SPUS:p.spus,ISDE:p.isde};
   const ib={IGDA:b.igda,ISWD:b.iswd,SPUS:b.spus,ISDE:b.isde};
-  let iv=0;for(const[t,a] of Object.entries({IGDA:.40,ISWD:.30,SPUS:.20,ISDE:.10})){iv+=im[t]&&ib[t]?10000*a*(1+(im[t]-ib[t])/ib[t]):10000*a}
-  const ip=(iv-10000)/10000*100;
+  let iv=0;for(const[t,a] of Object.entries({IGDA:.40,ISWD:.30,SPUS:.20,ISDE:.10})){iv+=im[t]&&ib[t]?S*a*(1+(im[t]-ib[t])/ib[t]):S*a}
+  const ip=(iv-S)/S*100;
   setEl('sv-idx',fE(iv));const spi=$('sp-idx');if(spi){spi.textContent=fP(ip);spi.style.color=ip>=0?'var(--green)':'var(--red)'}
   const ae=$('sv-alp');const alp=rp-ip;if(ae){ae.textContent=fP(alp);ae.style.color=alp>=0?'var(--green)':'var(--red)'}
 }
 
 // ═══ MODAL ═══
+function getSimAmount(){return parseFloat(document.getElementById('sim-amount')?.value)||10000}
+function updateSimAmount(){updateSim()}
 function openModal(){
   const fs=['brent','wti','vix','sp','t10y','eurusd','hormuz','gld','gold','silver','icln','xle','igda','iswd','spus','isde'];
   fs.forEach(f=>{const e=$('i-'+f);if(e&&P[f])e.value=P[f]});
@@ -514,7 +524,9 @@ function toggleForm(){const f=$('jf');f.classList.toggle('open');if(f.classList.
 function saveD(){
   const date=$('f-date').value,asset=$('f-asset').value,action=$('f-action').value;
   const amount=parseFloat($('f-amount').value),note=$('f-note').value;
-  if(!asset||!amount||!date){alert('Date, actif et montant requis.');return}
+  const action2=document.getElementById('f-action').value;
+  if(!asset||!date){alert('Date et actif requis.');return}
+  if(action2!=='observation'&&(!amount||isNaN(amount))){alert('Montant requis pour cette action.');return}
   const wfs=parseFloat($('wf-glob')?.textContent)||null;
   const spread=P.brent&&P.wti?+(P.brent-P.wti).toFixed(1):null;
   decisions.unshift({id:Date.now(),date,asset,action,amount,note,brent:P.brent,gold:P.gold,vix:P.vix,spread,eurusd:P.eurusd,t10y:P.t10y,scenario:$('sit')?.textContent,wfScore:wfs});
@@ -526,7 +538,7 @@ function renderJ(){
   const c=$('je'),empty=$('jempty');
   if(!decisions.length){empty.style.display='block';return}
   empty.style.display='none';
-  const col={achat:'var(--green)',renforcement:'var(--teal)',allegement:'var(--amber)',sortie:'var(--red)'};
+  const col={observation:'var(--t3)',achat:'var(--green)',renforcement:'var(--teal)',allegement:'var(--amber)',sortie:'var(--red)'};
   c.innerHTML=decisions.slice(0,30).map(d=>`
     <div class="jrow">
       <div class="jdate">${d.date}</div>

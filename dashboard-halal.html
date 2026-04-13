@@ -3,207 +3,798 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portefeuille Halal Robuste</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Portefeuille Halal — Briefing</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#080c12;--bg2:#0f1520;--bg3:#161e2e;--bg4:#1c2638;--b:rgba(255,255,255,0.06);--b2:rgba(255,255,255,0.10);--b3:rgba(255,255,255,0.16);--t:#dde2ec;--t2:#7d8a9e;--t3:#3d4a5c;--gold:#c9a84c;--gold2:#e8c870;--gold3:rgba(201,168,76,0.12);--green:#27c47a;--green2:rgba(39,196,122,0.12);--red:#d94f4f;--red2:rgba(217,79,79,0.12);--amber:#d4862a;--amber2:rgba(212,134,42,0.12);--blue:#3d7fc4;--blue2:rgba(61,127,196,0.12);--purple:#7a5fc4;--teal:#1fa8a8;--mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans',sans-serif;--r:6px}
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--t);font-family:var(--sans);font-size:13px;line-height:1.6}
-.hdr{background:var(--bg2);border-bottom:1px solid var(--b2);padding:0 28px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.ht{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--gold);letter-spacing:.1em;text-transform:uppercase}
-.hs{font-size:11px;color:var(--t3);font-family:var(--mono)}
-.hdr-left{display:flex;align-items:center;gap:16px}
-.sep{width:1px;height:20px;background:var(--b2)}
-.hdr-right{display:flex;align-items:center;gap:10px}
-.last-upd{font-family:var(--mono);font-size:10px;color:var(--t3)}
-.btn-p{background:var(--gold);color:#080c12;border:none;border-radius:var(--r);padding:7px 16px;font-family:var(--mono);font-size:11px;font-weight:700;cursor:pointer;transition:opacity .15s}
-.btn-p:hover{opacity:.85}
-/* MODAL */
-.ov{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
-.ov.open{display:flex}
-.modal{background:var(--bg2);border:1px solid var(--b2);border-radius:10px;padding:26px;width:560px;max-width:96vw;max-height:90vh;overflow-y:auto}
-.mt{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px}
-.ms{font-size:11px;color:var(--t3);margin-bottom:16px}
-.src{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:16px;padding:10px 12px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--b)}
-.src a{font-family:var(--mono);font-size:10px;color:var(--blue);text-decoration:none;padding:2px 7px;background:var(--blue2);border-radius:3px}
-.src a:hover{color:var(--gold)}
-.msec{font-family:var(--mono);font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.1em;margin:14px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--b)}
-.mg2col{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.ig{display:flex;flex-direction:column;gap:4px}
-.il{font-size:10px;color:var(--t2);font-family:var(--mono);display:flex;align-items:center;justify-content:space-between}
-.il span{color:var(--t3);font-size:9px}
-.ii{background:var(--bg3);border:1px solid var(--b2);border-radius:4px;color:var(--t);font-family:var(--mono);font-size:13px;font-weight:500;padding:8px 11px;outline:none;width:100%;transition:border-color .15s}
-.ii:focus{border-color:var(--gold)}
-.mftr{display:flex;gap:8px;justify-content:flex-end;margin-top:18px;padding-top:14px;border-top:1px solid var(--b)}
-.btn-sv{background:var(--gold);color:#080c12;border:none;border-radius:var(--r);padding:8px 22px;font-family:var(--mono);font-size:11px;font-weight:700;cursor:pointer}
-.btn-ca{background:transparent;color:var(--t3);border:1px solid var(--b2);border-radius:var(--r);padding:8px 14px;font-family:var(--mono);font-size:11px;cursor:pointer}
-/* LAYOUT */
-.main{padding:20px 28px;max-width:1440px;margin:0 auto}
-.slbl{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--t3);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--b);display:flex;align-items:center;justify-content:space-between}
-/* MARKET */
-.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:8px}
-.mc{background:var(--bg2);border:1px solid var(--b);border-radius:var(--r);padding:12px 14px;position:relative;overflow:hidden;cursor:pointer;transition:border-color .2s}
-.mc:hover{border-color:var(--b2)}
-.mc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--b);transition:background .3s}
-.mc.hi::before{background:var(--red)}.mc.mid::before{background:var(--amber)}.mc.ok::before{background:var(--green)}.mc.neu::before{background:var(--blue)}
-.ml{font-family:var(--mono);font-size:9px;color:var(--t3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px}
-.mv{font-family:var(--mono);font-size:20px;font-weight:600;margin-bottom:2px;line-height:1.2}
-.mch{font-family:var(--mono);font-size:11px}
-.mch.up{color:var(--green)}.mch.dn{color:var(--red)}.mch.neu{color:var(--t3)}
-.mn{font-size:10px;color:var(--t3);margin-top:3px}
-.mc-ed{position:absolute;top:8px;right:8px;font-size:9px;color:var(--t3);opacity:0;transition:opacity .15s;font-family:var(--mono)}
-.mc:hover .mc-ed{opacity:1}
-/* WORKFLOW */
-.wf{background:var(--bg2);border:1px solid var(--b2);border-radius:8px;margin-bottom:20px;overflow:hidden}
-.wfh{padding:13px 18px;border-bottom:1px solid var(--b);background:var(--bg3);display:flex;align-items:center;justify-content:space-between}
-.wft{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.08em}
-.wfsg{font-family:var(--mono);font-size:11px;color:var(--t2)}
-.wfsg strong{color:var(--t);font-size:14px}
-.sit-bar{padding:13px 18px;border-bottom:1px solid var(--b);display:flex;align-items:center;justify-content:space-between;gap:16px}
-.sbadge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:4px;font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.04em}
-.s0{background:rgba(39,196,122,.1);color:var(--green);border:1px solid rgba(39,196,122,.3)}
-.s1{background:rgba(212,134,42,.1);color:var(--amber);border:1px solid rgba(212,134,42,.3)}
-.s2{background:rgba(217,79,79,.12);color:var(--red);border:1px solid rgba(217,79,79,.3)}
-.s3{background:rgba(122,95,196,.12);color:var(--purple);border:1px solid rgba(122,95,196,.3)}
-.sit-dt{font-size:11px;color:var(--t2);text-align:right;max-width:520px}
-.crit-grid{display:grid;grid-template-columns:repeat(5,1fr);border-bottom:1px solid var(--b)}
-.crit{padding:12px 14px;border-right:1px solid var(--b)}
-.crit:last-child{border-right:none}
-.cn{font-family:var(--mono);font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px}
-.cv{font-family:var(--mono);font-size:16px;font-weight:600;margin-bottom:3px}
-.cbar{height:3px;background:var(--bg3);border-radius:2px;margin:4px 0;overflow:hidden}
-.cfill{height:100%;border-radius:2px;transition:width .5s}
-.cdesc{font-size:9px;color:var(--t3);font-family:var(--mono)}
-.dec-grid{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--b)}
-.dc{border-right:1px solid var(--b)}
-.dc:last-child{border-right:none}
-.dct{padding:8px 16px;font-family:var(--mono);font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.1em;border-bottom:1px solid var(--b);background:rgba(255,255,255,.02)}
-.dr{display:grid;grid-template-columns:24px 1fr 60px 58px 84px 46px;align-items:center;padding:8px 16px;border-bottom:1px solid var(--b);gap:8px;transition:background .15s}
-.dr:last-child{border-bottom:none}
-.dr:hover{background:rgba(255,255,255,.02)}
-.di{width:22px;height:22px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;font-family:var(--mono)}
-.dn{font-size:12px;font-weight:500}
-.dtk{font-family:var(--mono);font-size:9px;color:var(--t3)}
-.dp{font-family:var(--mono);font-size:11px;text-align:right}
-.dc2{font-family:var(--mono);font-size:10px;text-align:right}
-.dc2.up{color:var(--green)}.dc2.dn{color:var(--red)}.dc2.neu{color:var(--t3)}
-.da{text-align:center}
-.badge{display:inline-flex;align-items:center;justify-content:center;padding:3px 8px;border-radius:3px;font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;min-width:70px}
-.bb{background:var(--green2);color:var(--green)}
-.brf{background:rgba(39,196,122,.18);color:#3de89a}
-.bh{background:var(--amber2);color:var(--amber)}
-.bse{background:var(--red2);color:var(--red)}
-.bw{background:var(--blue2);color:var(--blue)}
-.dsc{font-family:var(--mono);font-size:10px;color:var(--t3);text-align:right}
-.syn{padding:13px 18px;background:var(--bg3);display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
-.sy-l{font-family:var(--mono);font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
-.sy-v{font-family:var(--mono);font-size:13px;font-weight:600}
-/* SIM */
-.sg{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
-.sc{background:var(--bg2);border:1px solid var(--b);border-radius:var(--r);padding:11px 13px}
-.scl{font-size:10px;color:var(--t3);margin-bottom:4px;font-family:var(--mono)}
-.scv{font-family:var(--mono);font-size:17px;font-weight:600}
-/* TWO COL */
-.tc{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px}
-.pb{background:var(--bg2);border:1px solid var(--b);border-radius:8px;overflow:hidden}
-.pbh{padding:11px 16px;border-bottom:1px solid var(--b);display:flex;align-items:center;justify-content:space-between}
-.pbt{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
-.rob{color:var(--gold)}.idx{color:var(--blue)}
-.pbtot{font-family:var(--mono);font-size:16px;font-weight:600}
-.pbp{font-family:var(--mono);font-size:11px}
-.pbp.up{color:var(--green)}.pbp.dn{color:var(--red)}
-/* SCORE */
-.scb{background:var(--bg2);border:1px solid var(--b);border-radius:8px;padding:16px;margin-bottom:18px}
-.scg{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
-.sci{text-align:center}
-.sciv{font-family:var(--mono);font-size:14px;font-weight:600}
-.scibw{height:4px;background:var(--bg3);border-radius:2px;margin:5px 0 4px;overflow:hidden}
-.scibr{height:100%;border-radius:2px}
-.scin{font-size:10px;color:var(--t3)}
-/* JOURNAL */
-.jnl{background:var(--bg2);border:1px solid var(--b);border-radius:8px;overflow:hidden;margin-bottom:18px}
-.jh{padding:11px 16px;border-bottom:1px solid var(--b);display:flex;align-items:center;justify-content:space-between}
-.badd{background:var(--gold3);color:var(--gold);border:1px solid rgba(201,168,76,.3);border-radius:4px;padding:5px 11px;font-family:var(--mono);font-size:10px;cursor:pointer}
-.badd:hover{background:rgba(201,168,76,.2)}
-.jf{padding:16px;border-bottom:1px solid var(--b);display:none;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px}
-.jf.open{display:grid}
-.fg{display:flex;flex-direction:column;gap:4px}
-.fg.full{grid-column:1/-1}
-.fl{font-size:9px;color:var(--t3);font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase}
-.fi,.fsl,.ftx{background:var(--bg3);border:1px solid var(--b2);border-radius:4px;color:var(--t);font-family:var(--mono);font-size:12px;padding:7px 10px;outline:none}
-.fi:focus,.fsl:focus,.ftx:focus{border-color:var(--gold)}
-.ftx{resize:none;height:52px}
-.fsl option{background:var(--bg3)}
-.fac{display:flex;gap:8px;align-items:flex-end}
-.bsj{background:var(--gold);color:#080c12;border:none;border-radius:4px;padding:7px 16px;font-family:var(--mono);font-size:10px;font-weight:700;cursor:pointer}
-.bcj{background:transparent;color:var(--t3);border:1px solid var(--b2);border-radius:4px;padding:7px 11px;font-family:var(--mono);font-size:10px;cursor:pointer}
-.je{max-height:260px;overflow-y:auto}
-.jempty{padding:24px;text-align:center;color:var(--t3);font-family:var(--mono);font-size:11px}
-.jrow{display:grid;grid-template-columns:82px 90px 72px 72px 1fr 90px 52px;gap:8px;padding:9px 16px;border-bottom:1px solid var(--b);align-items:center;font-size:11px}
-.jrow:last-child{border-bottom:none}
-.jdate{font-family:var(--mono);color:var(--t3);font-size:10px}
-.jasset{font-weight:500}
-.jact{font-family:var(--mono);font-size:10px}
-.jamt{font-family:var(--mono);color:var(--gold)}
-.jnote{color:var(--t2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.jctx{font-family:var(--mono);font-size:10px;color:var(--t3)}
-.jscore{font-family:var(--mono);font-size:10px;color:var(--purple);text-align:right}
-.ftr{border-top:1px solid var(--b);padding:10px 28px;display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--t3)}
-::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--bg3);border-radius:2px}
-@media(max-width:1100px){.grid4,.crit-grid{grid-template-columns:repeat(2,1fr)}.dec-grid{grid-template-columns:1fr}.dc{border-right:none;border-bottom:1px solid var(--b)}.tc{grid-template-columns:1fr}}
-@media(max-width:700px){.main{padding:12px 14px}.sg,.scg{grid-template-columns:1fr 1fr}.syn{grid-template-columns:1fr}.jf{grid-template-columns:1fr 1fr}}
+:root {
+  --bg: #07090e;
+  --bg2: #0c1018;
+  --bg3: #111720;
+  --bg4: #161f2c;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --gold: #d4a843;
+  --gold2: rgba(212,168,67,0.15);
+  --gold3: rgba(212,168,67,0.08);
+  --green: #2ec97a;
+  --green2: rgba(46,201,122,0.12);
+  --red: #e04f4f;
+  --red2: rgba(224,79,79,0.12);
+  --amber: #e08c30;
+  --amber2: rgba(224,140,48,0.12);
+  --blue: #4a8fd4;
+  --blue2: rgba(74,143,212,0.12);
+  --purple: #8a6fd4;
+  --teal: #2eb8b8;
+  --t: #c8d4e4;
+  --t2: #6a7d94;
+  --t3: #3a4a5c;
+  --mono: 'Space Mono', monospace;
+  --sans: 'Syne', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--t);
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* Scan line overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* ── MODAL ── */
+.overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(6px);
+  z-index: 500;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.overlay.open { display: flex; }
+.modal {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  width: 580px;
+  max-width: 95vw;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.modal-hdr {
+  padding: 20px 24px 14px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal-title {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+}
+.modal-sub { font-size: 11px; color: var(--t2); margin-top: 2px; }
+.src-links {
+  padding: 10px 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg3);
+}
+.src-links a {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--blue);
+  text-decoration: none;
+  padding: 2px 8px;
+  background: var(--blue2);
+  border-radius: 3px;
+  border: 1px solid rgba(74,143,212,0.2);
+}
+.modal-body { padding: 18px 24px; }
+.msec {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--t3);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  margin: 16px 0 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--border);
+}
+.mgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.mfield { display: flex; flex-direction: column; gap: 3px; }
+.mlabel {
+  font-size: 9px;
+  color: var(--t2);
+  font-family: var(--mono);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.mlabel span { color: var(--t3); font-size: 9px; }
+.minput {
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  color: var(--t);
+  font-family: var(--mono);
+  font-size: 12px;
+  padding: 7px 10px;
+  outline: none;
+  width: 100%;
+  transition: border-color .15s;
+}
+.minput:focus { border-color: var(--gold); }
+.modal-ftr {
+  padding: 14px 24px;
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  border-top: 1px solid var(--border);
+}
+.btn-save {
+  background: var(--gold);
+  color: #07090e;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 22px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: .04em;
+  transition: opacity .15s;
+}
+.btn-save:hover { opacity: .85; }
+.btn-cancel {
+  background: transparent;
+  color: var(--t2);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  padding: 8px 14px;
+  font-family: var(--mono);
+  font-size: 11px;
+  cursor: pointer;
+}
+
+/* ── HEADER ── */
+.hdr {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.hdr-left { display: flex; align-items: center; gap: 12px; }
+.logo {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.hdot { width: 1px; height: 16px; background: var(--border2); }
+.hdr-sub { font-family: var(--mono); font-size: 10px; color: var(--t3); }
+.hdr-right { display: flex; align-items: center; gap: 8px; }
+.last-upd { font-family: var(--mono); font-size: 10px; color: var(--t3); }
+.sim-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 4px 10px;
+}
+.sim-row span { font-family: var(--mono); font-size: 10px; color: var(--t3); }
+.sim-row input {
+  background: transparent;
+  border: none;
+  color: var(--gold);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  width: 72px;
+  outline: none;
+  text-align: right;
+}
+.btn-update {
+  background: var(--gold);
+  color: #07090e;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 14px;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: .05em;
+  transition: opacity .15s;
+}
+.btn-update:hover { opacity: .85; }
+
+/* ── MAIN LAYOUT ── */
+.main {
+  padding: 16px 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 12px;
+}
+.col-left { display: flex; flex-direction: column; gap: 10px; }
+.col-right { display: flex; flex-direction: column; gap: 10px; }
+
+/* ── SECTION LABEL ── */
+.slbl {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--t3);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.slbl::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── DECISION HERO ── */
+.decision-hero {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.dh-top {
+  padding: 16px 20px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 20px;
+  align-items: start;
+  border-bottom: 1px solid var(--border);
+}
+.dh-scenario-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--t3);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  margin-bottom: 6px;
+}
+.scenario-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: 5px;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  margin-bottom: 8px;
+}
+.sc-crise { background: rgba(224,79,79,.1); color: var(--red); border: 1px solid rgba(224,79,79,.3); }
+.sc-trans { background: rgba(224,140,48,.1); color: var(--amber); border: 1px solid rgba(224,140,48,.3); }
+.sc-detente { background: rgba(46,201,122,.1); color: var(--green); border: 1px solid rgba(46,201,122,.3); }
+.sc-choc { background: rgba(138,111,212,.1); color: var(--purple); border: 1px solid rgba(138,111,212,.3); }
+.sc-wait { background: rgba(74,143,212,.1); color: var(--blue); border: 1px solid rgba(74,143,212,.3); }
+.dh-desc { font-size: 12px; color: var(--t2); line-height: 1.6; max-width: 500px; }
+.dh-score-wrap { text-align: right; }
+.dh-score-val {
+  font-family: var(--mono);
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+}
+.dh-score-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--t3);
+  margin-top: 3px;
+}
+
+/* Barre allocation */
+.alloc-bar-section { padding: 12px 20px; border-bottom: 1px solid var(--border); }
+.alloc-bar-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  font-family: var(--mono);
+  font-size: 10px;
+}
+.alloc-bar-outer {
+  height: 22px;
+  background: var(--bg3);
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+}
+.alloc-rob {
+  background: linear-gradient(90deg, rgba(212,168,67,.7), rgba(212,168,67,.4));
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 10px; font-weight: 700; color: var(--gold);
+  transition: width .7s cubic-bezier(.4,0,.2,1);
+}
+.alloc-idx {
+  background: linear-gradient(90deg, rgba(74,143,212,.4), rgba(74,143,212,.7));
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 10px; font-weight: 700; color: var(--blue);
+  transition: width .7s cubic-bezier(.4,0,.2,1);
+}
+
+/* Plan d'action */
+.action-section { padding: 14px 20px; }
+.action-col-title {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--t3);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  margin-bottom: 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+}
+.actions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.asset-row {
+  display: grid;
+  grid-template-columns: 26px 1fr 60px 54px 80px;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border);
+  transition: background .1s;
+}
+.asset-row:last-child { border-bottom: none; }
+.ai {
+  width: 24px; height: 24px;
+  border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; font-family: var(--mono);
+}
+.an { font-size: 12px; font-weight: 600; }
+.atk { font-family: var(--mono); font-size: 9px; color: var(--t3); }
+.ap {
+  font-family: var(--mono);
+  font-size: 11px;
+  text-align: right;
+}
+.apc {
+  font-family: var(--mono);
+  font-size: 10px;
+  text-align: right;
+}
+.apc.up { color: var(--green); }
+.apc.dn { color: var(--red); }
+.apc.neu { color: var(--t3); }
+.signal-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 7px;
+  border-radius: 3px;
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .03em;
+  min-width: 72px;
+}
+.sig-buy { background: var(--green2); color: var(--green); }
+.sig-reinf { background: rgba(46,184,184,.12); color: var(--teal); }
+.sig-hold { background: var(--amber2); color: var(--amber); }
+.sig-sell { background: var(--red2); color: var(--red); }
+.sig-wait { background: var(--blue2); color: var(--blue); }
+.sig-na { background: rgba(255,255,255,.05); color: var(--t3); }
+
+/* Synthèse actions */
+.syn-row {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  border-top: 1px solid var(--border);
+  margin-top: 12px;
+  padding-top: 12px;
+}
+.syn-item { text-align: center; padding: 0 10px; border-right: 1px solid var(--border); }
+.syn-item:last-child { border-right: none; }
+.syn-lbl { font-family: var(--mono); font-size: 9px; color: var(--t3); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 4px; }
+.syn-val { font-family: var(--mono); font-size: 12px; font-weight: 600; }
+
+/* Déclencheurs */
+.trigger-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.tc-hdr {
+  padding: 10px 14px;
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--t2);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.tc-body { padding: 12px 14px; }
+.trigger-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 11px;
+}
+.trigger-item:last-child { border-bottom: none; }
+.ti-cond { font-family: var(--mono); font-size: 9px; color: var(--blue); flex-shrink: 0; min-width: 24px; }
+.ti-act { color: var(--t2); flex: 1; }
+.ti-act strong { color: var(--t); }
+.ti-arr { color: var(--amber); flex-shrink: 0; }
+
+/* ── CRITÈRES COMPACTS ── */
+.criteria-bar {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  display: grid;
+  grid-template-columns: repeat(5,1fr);
+  overflow: hidden;
+}
+.crit { padding: 10px 12px; border-right: 1px solid var(--border); }
+.crit:last-child { border-right: none; }
+.cn {
+  font-family: var(--mono);
+  font-size: 8px;
+  color: var(--t3);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin-bottom: 3px;
+}
+.cv {
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+.cbar { height: 2px; background: var(--bg3); border-radius: 1px; margin: 3px 0; overflow: hidden; }
+.cfill { height: 100%; border-radius: 1px; transition: width .5s; }
+.cdesc { font-size: 9px; color: var(--t3); font-family: var(--mono); }
+
+/* ── INDICATEURS (accordion) ── */
+.accord-btn {
+  width: 100%;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--t2);
+  text-align: left;
+  transition: background .15s;
+}
+.accord-btn:hover { background: var(--bg3); }
+.accord-icon { font-size: 10px; transition: transform .2s; }
+.accord-icon.open { transform: rotate(90deg); }
+.accord-summary { color: var(--t3); margin-left: 6px; }
+.accord-body {
+  display: none;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  overflow: hidden;
+}
+.accord-body.open { display: block; }
+.ind-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--border); }
+.ic {
+  background: var(--bg2);
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: background .12s;
+  position: relative;
+  overflow: hidden;
+}
+.ic::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--border);
+  transition: background .2s;
+}
+.ic.hi::after { background: var(--red); }
+.ic.mid::after { background: var(--amber); }
+.ic.ok::after { background: var(--green); }
+.ic.neu::after { background: var(--blue); }
+.ic:hover { background: var(--bg3); }
+.ic-ed { position: absolute; top: 5px; right: 6px; font-size: 8px; color: var(--t3); opacity: 0; transition: opacity .15s; }
+.ic:hover .ic-ed { opacity: 1; }
+.ic-lbl { font-family: var(--mono); font-size: 8px; color: var(--t3); letter-spacing: .06em; text-transform: uppercase; margin-bottom: 3px; }
+.ic-val { font-family: var(--mono); font-size: 16px; font-weight: 700; margin-bottom: 2px; }
+.ic-chg { font-family: var(--mono); font-size: 10px; }
+.ic-chg.up { color: var(--green); }
+.ic-chg.dn { color: var(--red); }
+.ic-chg.neu { color: var(--t3); }
+.ic-note { font-size: 9px; color: var(--t3); margin-top: 2px; }
+
+/* ── SCORE ROBUSTESSE ── */
+.score-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+.score-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 8px; }
+.sc-item { text-align: center; }
+.sc-val { font-family: var(--mono); font-size: 12px; font-weight: 600; }
+.sc-bar-wrap { height: 3px; background: var(--bg3); border-radius: 2px; margin: 4px 0; overflow: hidden; }
+.sc-bar { height: 100%; border-radius: 2px; }
+.sc-lbl { font-size: 9px; color: var(--t3); }
+
+/* ── JOURNAL ── */
+.journal-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.jh {
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+}
+.btn-add {
+  background: var(--gold3);
+  color: var(--gold);
+  border: 1px solid rgba(212,168,67,.3);
+  border-radius: 3px;
+  padding: 4px 10px;
+  font-family: var(--mono);
+  font-size: 9px;
+  cursor: pointer;
+}
+.btn-add:hover { background: rgba(212,168,67,.2); }
+.jform {
+  display: none;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg3);
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 8px;
+}
+.jform.open { display: grid; }
+.fg { display: flex; flex-direction: column; gap: 3px; }
+.fg.full { grid-column: 1/-1; }
+.fl { font-size: 9px; color: var(--t3); font-family: var(--mono); text-transform: uppercase; letter-spacing: .06em; }
+.fi, .fsl, .ftx {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 3px;
+  color: var(--t);
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 6px 9px;
+  outline: none;
+}
+.fi:focus, .fsl:focus, .ftx:focus { border-color: var(--gold); }
+.ftx { resize: none; height: 46px; }
+.fsl option { background: var(--bg3); }
+.fbtns { display: flex; gap: 7px; align-items: flex-end; }
+.btn-jsave {
+  background: var(--gold);
+  color: #07090e;
+  border: none;
+  border-radius: 3px;
+  padding: 6px 14px;
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.btn-jcancel {
+  background: transparent;
+  color: var(--t3);
+  border: 1px solid var(--border2);
+  border-radius: 3px;
+  padding: 6px 10px;
+  font-family: var(--mono);
+  font-size: 9px;
+  cursor: pointer;
+}
+.jlist { max-height: 220px; overflow-y: auto; }
+.jempty { padding: 20px 14px; text-align: center; color: var(--t3); font-family: var(--mono); font-size: 10px; }
+.jrow {
+  display: grid;
+  grid-template-columns: 76px 86px 66px 68px 1fr 80px 44px;
+  gap: 6px;
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+  font-size: 11px;
+}
+.jrow:last-child { border-bottom: none; }
+.jdate { font-family: var(--mono); color: var(--t3); font-size: 10px; }
+.jasset { font-weight: 500; }
+.jact { font-family: var(--mono); font-size: 9px; }
+.jamt { font-family: var(--mono); color: var(--gold); }
+.jnote { color: var(--t2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.jctx { font-family: var(--mono); font-size: 9px; color: var(--t3); }
+.jscr { font-family: var(--mono); font-size: 9px; color: var(--purple); text-align: right; }
+
+/* ── RIGHT COLUMN ── */
+.q3-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.q3-hdr {
+  padding: 10px 14px;
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--t2);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.q3-body { padding: 14px; }
+.liquidity-val {
+  font-family: var(--mono);
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.liquidity-bar-wrap { height: 6px; background: var(--bg3); border-radius: 3px; margin: 8px 0; overflow: hidden; }
+.liquidity-bar { height: 100%; border-radius: 3px; transition: width .5s; }
+.liquidity-status { font-family: var(--mono); font-size: 10px; margin-top: 4px; }
+
+/* Sim card */
+.sim-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+.sim-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+.smc { }
+.smc-lbl { font-family: var(--mono); font-size: 9px; color: var(--t3); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 3px; }
+.smc-val { font-family: var(--mono); font-size: 15px; font-weight: 600; }
+.smc-sub { font-family: var(--mono); font-size: 10px; margin-top: 1px; }
+
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--bg3); border-radius: 2px; }
+
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 8px 20px;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--t3);
+}
+
+@media(max-width:1100px){
+  .main { grid-template-columns: 1fr; }
+  .criteria-bar { grid-template-columns: 1fr 1fr 1fr; }
+  .ind-grid { grid-template-columns: 1fr 1fr; }
+}
+@media(max-width:700px){
+  .main { padding: 8px 10px; }
+  .actions-grid { grid-template-columns: 1fr; }
+  .criteria-bar { grid-template-columns: 1fr 1fr; }
+}
 </style>
 </head>
 <body>
 
-<!-- MODAL -->
-<div class="ov" id="modal">
+<!-- MODAL SAISIE -->
+<div class="overlay" id="modal">
 <div class="modal">
-  <div class="mt">📊 Saisie quotidienne — 2 min</div>
-  <div class="ms">Données sauvegardées localement · Workflow calculé automatiquement après saisie</div>
-  <div class="src">
+  <div class="modal-hdr">
+    <div>
+      <div class="modal-title">Saisie des données · 3 min</div>
+      <div class="modal-sub">Données sauvegardées localement · Workflow calculé automatiquement</div>
+    </div>
+    <button class="btn-cancel" onclick="closeModal()" style="font-size:16px;border:none;background:transparent;color:var(--t2);cursor:pointer">✕</button>
+  </div>
+  <div class="src-links">
     <a href="https://finance.yahoo.com/quote/BZ=F" target="_blank">Brent BZ=F</a>
     <a href="https://finance.yahoo.com/quote/CL=F" target="_blank">WTI CL=F</a>
     <a href="https://finance.yahoo.com/quote/GC=F" target="_blank">Or GC=F</a>
-    <a href="https://finance.yahoo.com/quote/%5EVIX" target="_blank">VIX ^VIX</a>
-    <a href="https://finance.yahoo.com/quote/%5EGSPC" target="_blank">S&P ^GSPC</a>
     <a href="https://finance.yahoo.com/quote/SI=F" target="_blank">Argent SI=F</a>
-    <a href="https://finance.yahoo.com/quote/ICLN" target="_blank">ICLN</a>
+    <a href="https://finance.yahoo.com/quote/%5EVIX" target="_blank">VIX</a>
+    <a href="https://finance.yahoo.com/quote/%5EGSPC" target="_blank">S&P ^GSPC</a>
+    <a href="https://finance.yahoo.com/quote/%5ETNX" target="_blank">T10Y ^TNX</a>
+    <a href="https://finance.yahoo.com/quote/EURUSD=X" target="_blank">EUR/USD</a>
+    <a href="https://finance.yahoo.com/quote/GLD" target="_blank">GLD</a>
+    <a href="https://finance.yahoo.com/quote/SLV" target="_blank">SLV</a>
+    <a href="https://finance.yahoo.com/quote/COPX" target="_blank">COPX ★</a>
     <a href="https://finance.yahoo.com/quote/XLE" target="_blank">XLE</a>
+    <a href="https://finance.yahoo.com/quote/ICLN" target="_blank">ICLN</a>
     <a href="https://finance.yahoo.com/quote/IGDA.L" target="_blank">IGDA.L</a>
     <a href="https://finance.yahoo.com/quote/ISWD.L" target="_blank">ISWD.L</a>
     <a href="https://finance.yahoo.com/quote/SPUS" target="_blank">SPUS</a>
-    <a href="https://finance.yahoo.com/quote/%5ETNX" target="_blank">T10Y ^TNX</a>
-    <a href="https://finance.yahoo.com/quote/EURUSD=X" target="_blank">EUR/USD</a>
   </div>
-  <div class="msec">Macro — Géopolitique &amp; Marché</div>
-  <div class="mg2col">
-    <div class="ig"><label class="il">Brent Crude <span>$/bbl · BZ=F</span></label><input type="number" step="0.1" class="ii" id="i-brent" placeholder="ex: 103.4"></div>
-    <div class="ig"><label class="il">WTI Crude <span>$/bbl · CL=F</span></label><input type="number" step="0.1" class="ii" id="i-wti" placeholder="ex: 97.8"></div>
-    <div class="ig"><label class="il">VIX <span>^VIX</span></label><input type="number" step="0.1" class="ii" id="i-vix" placeholder="ex: 25.8"></div>
-    <div class="ig"><label class="il">S&amp;P 500 <span>pts · ^GSPC</span></label><input type="number" step="1" class="ii" id="i-sp" placeholder="ex: 6664"></div>
-    <div class="ig"><label class="il">Taux 10 ans US <span>% · ^TNX</span></label><input type="number" step="0.01" class="ii" id="i-t10y" placeholder="ex: 4.35"></div>
-    <div class="ig"><label class="il">EUR/USD <span>EURUSD=X</span></label><input type="number" step="0.001" class="ii" id="i-eurusd" placeholder="ex: 1.082"></div>
-    <div class="ig"><label class="il">Transits Hormuz <span>navires/jour</span></label><input type="number" step="1" class="ii" id="i-hormuz" placeholder="ex: 13 (normal ~21)"></div>
+  <div class="modal-body">
+    <div class="msec">Macro · Géopolitique &amp; Marché</div>
+    <div class="mgrid">
+      <div class="mfield"><label class="mlabel">Brent <span>$/bbl · BZ=F</span></label><input type="number" step="0.1" class="minput" id="i-brent" placeholder="ex: 102.4"></div>
+      <div class="mfield"><label class="mlabel">WTI <span>$/bbl · CL=F</span></label><input type="number" step="0.1" class="minput" id="i-wti" placeholder="ex: 98.2"></div>
+      <div class="mfield"><label class="mlabel">VIX <span>^VIX</span></label><input type="number" step="0.1" class="minput" id="i-vix" placeholder="ex: 21.3"></div>
+      <div class="mfield"><label class="mlabel">S&amp;P 500 <span>pts · ^GSPC</span></label><input type="number" step="1" class="minput" id="i-sp" placeholder="ex: 6817"></div>
+      <div class="mfield"><label class="mlabel">Taux 10 ans US <span>% · ^TNX</span></label><input type="number" step="0.01" class="minput" id="i-t10y" placeholder="ex: 4.32"></div>
+      <div class="mfield"><label class="mlabel">EUR/USD <span>EURUSD=X</span></label><input type="number" step="0.001" class="minput" id="i-eurusd" placeholder="ex: 1.172"></div>
+      <div class="mfield"><label class="mlabel">Transits Hormuz <span>navires/j (normal~21)</span></label><input type="number" step="1" class="minput" id="i-hormuz" placeholder="ex: 3 (bloqué)"></div>
+    </div>
+    <div class="msec">N1 · Socle Permanent</div>
+    <div class="mgrid">
+      <div class="mfield"><label class="mlabel">Or spot <span>$/oz · GC=F</span></label><input type="number" step="1" class="minput" id="i-gold" placeholder="ex: 4720"></div>
+      <div class="mfield"><label class="mlabel">GLD ETF <span>$</span></label><input type="number" step="0.01" class="minput" id="i-gld" placeholder="ex: 437"></div>
+      <div class="mfield"><label class="mlabel">Argent spot <span>$/oz · SI=F</span></label><input type="number" step="0.1" class="minput" id="i-silver" placeholder="ex: 74.5"></div>
+      <div class="mfield"><label class="mlabel">SLV ETF <span>$</span></label><input type="number" step="0.01" class="minput" id="i-slv" placeholder="ex: 69.1"></div>
+      <div class="mfield"><label class="mlabel">COPX <span>$ ★ Cuivre minier</span></label><input type="number" step="0.01" class="minput" id="i-copx" placeholder="ex: 44.2"></div>
+    </div>
+    <div class="msec">N2 · Tactique</div>
+    <div class="mgrid">
+      <div class="mfield"><label class="mlabel">XLE <span>$</span></label><input type="number" step="0.01" class="minput" id="i-xle" placeholder="ex: 56.9"></div>
+      <div class="mfield"><label class="mlabel">ICLN <span>$</span></label><input type="number" step="0.01" class="minput" id="i-icln" placeholder="ex: 18.9"></div>
+      <div class="mfield"><label class="mlabel">SPUS <span>$</span></label><input type="number" step="0.01" class="minput" id="i-spus" placeholder="ex: 50.4"></div>
+      <div class="mfield"><label class="mlabel">IGDA.L <span>$</span></label><input type="number" step="0.01" class="minput" id="i-igda" placeholder="ex: 34.8"></div>
+      <div class="mfield"><label class="mlabel">ISWD.L <span>GBp</span></label><input type="number" step="1" class="minput" id="i-iswd" placeholder="ex: 4431"></div>
+    </div>
   </div>
-  <div class="msec">Actifs — Robustesse</div>
-  <div class="mg2col">
-    <div class="ig"><label class="il">Or spot <span>$/oz · GC=F</span></label><input type="number" step="1" class="ii" id="i-gold" placeholder="ex: 3200"></div>
-    <div class="ig"><label class="il">GLD ETF <span>$ optionnel</span></label><input type="number" step="0.01" class="ii" id="i-gld" placeholder="ex: 289.50"></div>
-    <div class="ig"><label class="il">Argent spot <span>$/oz · SI=F</span></label><input type="number" step="0.1" class="ii" id="i-silver" placeholder="ex: 32.5"></div>
-    <div class="ig"><label class="il">ICLN <span>$ ETF</span></label><input type="number" step="0.01" class="ii" id="i-icln" placeholder="ex: 17.85"></div>
-    <div class="ig"><label class="il">XLE <span>$ ETF</span></label><input type="number" step="0.01" class="ii" id="i-xle" placeholder="ex: 60.16"></div>
-  </div>
-  <div class="msec">Actifs — Indices Halal</div>
-  <div class="mg2col">
-    <div class="ig"><label class="il">IGDA.L <span>$ DJ Islamic Global</span></label><input type="number" step="0.01" class="ii" id="i-igda" placeholder="ex: 33.35"></div>
-    <div class="ig"><label class="il">ISWD.L <span>$ MSCI World Islamic</span></label><input type="number" step="0.01" class="ii" id="i-iswd" placeholder="ex: 28.50"></div>
-    <div class="ig"><label class="il">SPUS <span>$ S&amp;P 500 Sharia</span></label><input type="number" step="0.01" class="ii" id="i-spus" placeholder="ex: 48.79"></div>
-    <div class="ig"><label class="il">ISDE <span>$ EM Islamic</span></label><input type="number" step="0.01" class="ii" id="i-isde" placeholder="ex: 22.40"></div>
-  </div>
-  <div class="mftr">
-    <button class="btn-ca" onclick="closeModal()">Annuler</button>
-    <button class="btn-sv" onclick="savePrices()">Enregistrer &amp; Calculer →</button>
+  <div class="modal-ftr">
+    <button class="btn-cancel" onclick="closeModal()">Annuler</button>
+    <button class="btn-save" onclick="savePrices()">Enregistrer &amp; Calculer →</button>
   </div>
 </div>
 </div>
@@ -211,349 +802,726 @@ body{background:var(--bg);color:var(--t);font-family:var(--sans);font-size:13px;
 <!-- HEADER -->
 <div class="hdr">
   <div class="hdr-left">
-    <div class="ht">⬡ Portefeuille Halal Robuste</div>
-    <div class="sep"></div>
-    <div class="hs">Stratégie de résilience · Finance islamique · Crise Hormuz 2026</div>
+    <div class="logo">⬡ Halal Robuste</div>
+    <div class="hdot"></div>
+    <div class="hdr-sub">Doctrine v2.0 · Hormuz 2026</div>
   </div>
   <div class="hdr-right">
     <span class="last-upd" id="last-upd">Aucune donnée</span>
-    <div style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:4px 10px">
-      <span style="font-family:var(--mono);font-size:10px;color:var(--t3)">Simulation</span>
-      <input type="number" id="sim-amount" value="10000" min="100" step="500"
-        style="background:transparent;border:none;color:var(--gold);font-family:var(--mono);font-size:13px;font-weight:700;width:80px;outline:none;text-align:right"
-        oninput="updateSimAmount()" />
-      <span style="font-family:var(--mono);font-size:11px;color:var(--t2)">€</span>
+    <div class="sim-row">
+      <span>Sim.</span>
+      <input type="number" id="sim-amount" value="10000" min="100" step="500" oninput="updateAll()" />
+      <span style="color:var(--t2);font-size:11px">€</span>
     </div>
-    <button class="btn-p" onclick="openModal()">📊 Mettre à jour</button>
+    <button class="btn-update" onclick="openModal()">↑ Mettre à jour</button>
   </div>
 </div>
 
 <div class="main">
+<div class="col-left">
 
-<!-- MARCHÉ ROW 1 -->
-<div class="slbl">Indicateurs de marché</div>
-<div class="grid4" style="margin-bottom:8px">
-  <div class="mc" id="c-brent" onclick="openModal()"><div class="mc-ed">✏</div><div class="ml">Brent Crude ($/bbl)</div><div class="mv" id="v-brent" style="color:var(--amber)">—</div><div class="mch neu" id="d-brent">—</div><div class="mn" id="n-brent">Cliquer pour saisir</div></div>
-  <div class="mc" id="c-wti" onclick="openModal()"><div class="mc-ed">✏</div><div class="ml">WTI ($/bbl)</div><div class="mv" id="v-wti" style="color:var(--amber)">—</div><div class="mch neu" id="d-wti">—</div><div class="mn" id="n-spread">Spread B-W : —</div></div>
-  <div class="mc" id="c-gold" onclick="openModal()"><div class="mc-ed">✏</div><div class="ml">Or spot ($/oz)</div><div class="mv" id="v-gold" style="color:var(--gold)">—</div><div class="mch neu" id="d-gold">—</div><div class="mn" id="n-gold-eur">Or en € : —</div></div>
-  <div class="mc" id="c-silver" onclick="openModal()"><div class="mc-ed">✏</div><div class="ml">Argent spot ($/oz)</div><div class="mv" id="v-silver" style="color:#a8b0c0">—</div><div class="mch neu" id="d-silver">—</div><div class="mn">Refuge + industriel</div></div>
-</div>
-<div class="grid4" style="margin-bottom:18px">
-  <div class="mc" id="c-vix" onclick="openModal()"><div class="mc-ed">✏</div><div class="ml">VIX (volatilité)</div><div class="mv" id="v-vix" style="color:var(--red)">—</div><div class="mch neu" id="d-vix">—</div><div class="mn" id="n-vix">Indice de peur</div></div>
-  <div class="mc" id="c-t10y" onclick="openModal()"><div class="mc-ed">✏</div><div class="ml">Taux 10 ans US (%)</div><div class="mv" id="v-t10y" style="color:var(--purple)">—</div><div class="mch neu" id="d-t10y">—</div><div class="mn" id="n-t10y">Pression sur l'or</div></div>
-  <div class="mc" id="c-eurusd" onclick="openModal()"><div class="mc-ed">✏</div><div class="ml">EUR/USD</div><div class="mv" id="v-eurusd" style="color:var(--blue)">—</div><div class="mch neu" id="d-eurusd">—</div><div class="mn" id="n-eurusd">Impact portefeuille €</div></div>
-  <div class="mc" id="c-hormuz" onclick="openModal()"><div class="mc-ed">✏</div><div class="ml">Transits Hormuz/j</div><div class="mv" id="v-hormuz" style="color:var(--teal)">—</div><div class="mch neu" id="d-hormuz">—</div><div class="mn" id="n-hormuz">Référence : ~21/j</div></div>
-</div>
+<!-- SECTION 1 : DÉCISION -->
+<div class="slbl">Décision d'allocation</div>
 
-<!-- WORKFLOW -->
-<div class="slbl">Workflow de décision automatique <span style="text-transform:none;letter-spacing:0;font-size:9px;color:var(--t3)">5 critères pondérés → signal par actif</span></div>
-<div class="wf">
-  <div class="wfh">
-    <div class="wft">⬡ Chaîne de décision multicritères</div>
-    <div class="wfsg">Score global : <strong id="wf-glob">—</strong> / 10</div>
-  </div>
-  <div class="sit-bar">
+<div class="decision-hero">
+  <div class="dh-top">
     <div>
-      <div style="font-size:9px;color:var(--t3);font-family:var(--mono);margin-bottom:5px;text-transform:uppercase;letter-spacing:.08em">Scénario géopolitique détecté</div>
-      <div class="sbadge s1" id="sit">⬡ En attente de données...</div>
+      <div class="dh-scenario-label">Scénario détecté</div>
+      <div class="scenario-badge sc-wait" id="scenario-badge">⬡ En attente de données</div>
+      <div class="dh-desc" id="scenario-desc">Saisir les données de marché pour activer le workflow de décision. Cliquer sur "Mettre à jour" en haut à droite.</div>
     </div>
-    <div class="sit-dt" id="sit-desc">Saisir les données de marché pour activer le workflow</div>
-  </div>
-  <div class="crit-grid">
-    <div class="crit"><div class="cn">1 · Scénario Hormuz <span style="color:var(--gold)">35%</span></div><div class="cv" id="c1v" style="color:var(--amber)">—</div><div class="cbar"><div class="cfill" id="c1b" style="background:var(--amber);width:0"></div></div><div class="cdesc" id="c1d">Brent + transits</div></div>
-    <div class="crit"><div class="cn">2 · Momentum or <span style="color:var(--gold)">25%</span></div><div class="cv" id="c2v" style="color:var(--blue)">—</div><div class="cbar"><div class="cfill" id="c2b" style="background:var(--blue);width:0"></div></div><div class="cdesc" id="c2d">Or vs base</div></div>
-    <div class="crit"><div class="cn">3 · Spread B-WTI <span style="color:var(--gold)">15%</span></div><div class="cv" id="c3v" style="color:var(--teal)">—</div><div class="cbar"><div class="cfill" id="c3b" style="background:var(--teal);width:0"></div></div><div class="cdesc" id="c3d">Disruption maritime</div></div>
-    <div class="crit"><div class="cn">4 · Taux 10 ans US <span style="color:var(--gold)">15%</span></div><div class="cv" id="c4v" style="color:var(--purple)">—</div><div class="cbar"><div class="cfill" id="c4b" style="background:var(--purple);width:0"></div></div><div class="cdesc" id="c4d">Pression sur l'or</div></div>
-    <div class="crit"><div class="cn">5 · EUR/USD <span style="color:var(--gold)">10%</span></div><div class="cv" id="c5v" style="color:var(--green)">—</div><div class="cbar"><div class="cfill" id="c5b" style="background:var(--green);width:0"></div></div><div class="cdesc" id="c5d">Impact €</div></div>
-  </div>
-  <div class="dec-grid">
-    <div class="dc">
-      <div class="dct">★ Robustesse — Actifs Tangibles Halal</div>
-      <div class="dr"><div class="di" style="background:rgba(201,168,76,.15);color:var(--gold)">Au</div><div><div class="dn">Or physique</div><div class="dtk">GLD · 35% · 3 500€</div></div><div class="dp" id="p-GLD">—</div><div class="dc2 neu" id="c-GLD">—</div><div class="da"><span class="badge" id="s-GLD">—</span></div><div class="dsc" id="sc-GLD">—</div></div>
-      <div class="dr"><div class="di" style="background:rgba(168,176,192,.15);color:#a8b0c0">Ag</div><div><div class="dn">Argent physique</div><div class="dtk">SLV · 10% · 1 000€</div></div><div class="dp" id="p-SLV">—</div><div class="dc2 neu" id="c-SLV">—</div><div class="da"><span class="badge" id="s-SLV">—</span></div><div class="dsc" id="sc-SLV">—</div></div>
-      <div class="dr"><div class="di" style="background:rgba(39,196,122,.15);color:var(--green)">☀</div><div><div class="dn">Énergie renouvelable</div><div class="dtk">ICLN · 25% · 2 500€</div></div><div class="dp" id="p-ICLN">—</div><div class="dc2 neu" id="c-ICLN">—</div><div class="da"><span class="badge" id="s-ICLN">—</span></div><div class="dsc" id="sc-ICLN">—</div></div>
-      <div class="dr"><div class="di" style="background:rgba(212,134,42,.15);color:var(--amber)">⬡</div><div><div class="dn">Énergie US (filtré)</div><div class="dtk">XLE · 20% · 2 000€</div></div><div class="dp" id="p-XLE">—</div><div class="dc2 neu" id="c-XLE">—</div><div class="da"><span class="badge" id="s-XLE">—</span></div><div class="dsc" id="sc-XLE">—</div></div>
-      <div class="dr"><div class="di" style="background:rgba(61,127,196,.15);color:var(--blue)">€</div><div><div class="dn">Liquidité CHF/EUR</div><div class="dtk">CASH · 10% · 1 000€</div></div><div class="dp" style="color:var(--t2)">1 000 €</div><div class="dc2 neu">—</div><div class="da"><span class="badge bh">CONSERVER</span></div><div class="dsc">—</div></div>
-    </div>
-    <div class="dc">
-      <div class="dct">◈ Indices Halal Mondiaux — Passif</div>
-      <div class="dr"><div class="di" style="background:rgba(61,127,196,.15);color:var(--blue)">DJ</div><div><div class="dn">Invesco DJ Islamic Global</div><div class="dtk">IGDA · 40% · 4 000€ · ✓ Sharia</div></div><div class="dp" id="p-IGDA">—</div><div class="dc2 neu" id="c-IGDA">—</div><div class="da"><span class="badge" id="s-IGDA">—</span></div><div class="dsc" id="sc-IGDA">—</div></div>
-      <div class="dr"><div class="di" style="background:rgba(61,127,196,.12);color:var(--blue)">MS</div><div><div class="dn">iShares MSCI World Islamic</div><div class="dtk">ISWD · 30% · 3 000€ · ✓ Sharia</div></div><div class="dp" id="p-ISWD">—</div><div class="dc2 neu" id="c-ISWD">—</div><div class="da"><span class="badge" id="s-ISWD">—</span></div><div class="dsc" id="sc-ISWD">—</div></div>
-      <div class="dr"><div class="di" style="background:rgba(61,127,196,.10);color:var(--blue)">SP</div><div><div class="dn">SP Funds S&amp;P 500 Sharia</div><div class="dtk">SPUS · 20% · 2 000€ · ✓ Sharia</div></div><div class="dp" id="p-SPUS">—</div><div class="dc2 neu" id="c-SPUS">—</div><div class="da"><span class="badge" id="s-SPUS">—</span></div><div class="dsc" id="sc-SPUS">—</div></div>
-      <div class="dr"><div class="di" style="background:rgba(31,168,168,.12);color:var(--teal)">EM</div><div><div class="dn">iShares MSCI EM Islamic</div><div class="dtk">ISDE · 10% · 1 000€ · ✓ Sharia</div></div><div class="dp" id="p-ISDE">—</div><div class="dc2 neu" id="c-ISDE">—</div><div class="da"><span class="badge" id="s-ISDE">—</span></div><div class="dsc" id="sc-ISDE">—</div></div>
-      <div style="padding:8px 16px;background:rgba(61,127,196,.04);border-top:1px solid var(--b)"><div style="font-size:10px;color:var(--t3);font-family:var(--mono)">Certifiés Sharia · MSCI / Dow Jones Islamic / FTSE Shariah · Révision trimestrielle</div></div>
+    <div class="dh-score-wrap">
+      <div class="dh-score-val" id="score-glob">—</div>
+      <div class="dh-score-label">Score / 10</div>
     </div>
   </div>
-  <div class="syn">
-    <div><div class="sy-l">Biais de marché détecté</div><div class="sy-v" id="syn-biais" style="color:var(--amber)">—</div></div>
-    <div><div class="sy-l">Action prioritaire recommandée</div><div class="sy-v" id="syn-action" style="color:var(--green)">—</div></div>
-    <div><div class="sy-l">Allocation recommandée</div><div class="sy-v" id="syn-alloc" style="color:var(--t)">—</div></div>
+
+  <div class="alloc-bar-section">
+    <div class="alloc-bar-labels">
+      <span style="color:var(--gold)">★ Robustesse (N1+énergie) <span id="alloc-rob-pct">—</span></span>
+      <span style="color:var(--blue)">◈ Indices halal <span id="alloc-idx-pct">—</span></span>
+    </div>
+    <div class="alloc-bar-outer">
+      <div class="alloc-rob" id="alloc-bar-rob" style="width:50%">—</div>
+      <div class="alloc-idx" id="alloc-bar-idx" style="width:50%">—</div>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-top:6px;font-family:var(--mono);font-size:10px;color:var(--t3)">
+      <span id="alloc-subtitle">—</span>
+      <span id="next-trigger" style="color:var(--amber)">—</span>
+    </div>
+  </div>
+
+  <div class="action-section">
+    <div class="actions-grid">
+      <div>
+        <div class="action-col-title">★ N1 — Socle Permanent</div>
+        <div class="asset-row">
+          <div class="ai" style="background:rgba(212,168,67,.15);color:var(--gold)">Au</div>
+          <div><div class="an">Or ETF</div><div class="atk">GLD · ~27%</div></div>
+          <div class="ap" id="p-GLD">—</div>
+          <div class="apc neu" id="c-GLD">—</div>
+          <div><span class="signal-badge" id="s-GLD">—</span></div>
+        </div>
+        <div class="asset-row">
+          <div class="ai" style="background:rgba(168,176,192,.12);color:#a8b0c0">Ag</div>
+          <div><div class="an">Argent ETF</div><div class="atk">SLV · ~8%</div></div>
+          <div class="ap" id="p-SLV">—</div>
+          <div class="apc neu" id="c-SLV">—</div>
+          <div><span class="signal-badge" id="s-SLV">—</span></div>
+        </div>
+        <div class="asset-row">
+          <div class="ai" style="background:rgba(224,140,48,.15);color:var(--amber)">Cu</div>
+          <div><div class="an">Cuivre <span style="font-size:9px;color:var(--purple);font-family:var(--mono)">★NEW</span></div><div class="atk">COPX · ~6%</div></div>
+          <div class="ap" id="p-COPX">—</div>
+          <div class="apc neu" id="c-COPX">—</div>
+          <div><span class="signal-badge" id="s-COPX">—</span></div>
+        </div>
+        <div class="asset-row">
+          <div class="ai" style="background:rgba(74,143,212,.12);color:var(--blue)">€</div>
+          <div><div class="an">Liquidité</div><div class="atk">Cash · min 15%</div></div>
+          <div class="ap" id="p-CASH" style="color:var(--t2)">—</div>
+          <div class="apc neu">—</div>
+          <div><span class="signal-badge sig-hold" id="s-CASH">CONSERVER</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="action-col-title">◈ N2 — Tactique · Régime-dépendant</div>
+        <div class="asset-row">
+          <div class="ai" style="background:rgba(224,140,48,.15);color:var(--amber)">⬡</div>
+          <div><div class="an">Énergie US</div><div class="atk">XLE · géopolit.</div></div>
+          <div class="ap" id="p-XLE">—</div>
+          <div class="apc neu" id="c-XLE">—</div>
+          <div><span class="signal-badge" id="s-XLE">—</span></div>
+        </div>
+        <div class="asset-row">
+          <div class="ai" style="background:rgba(46,201,122,.12);color:var(--green)">☀</div>
+          <div><div class="an">Renouvelable</div><div class="atk">ICLN · min 15%</div></div>
+          <div class="ap" id="p-ICLN">—</div>
+          <div class="apc neu" id="c-ICLN">—</div>
+          <div><span class="signal-badge" id="s-ICLN">—</span></div>
+        </div>
+        <div class="asset-row">
+          <div class="ai" style="background:rgba(74,143,212,.12);color:var(--blue)">SP</div>
+          <div><div class="an">S&amp;P Sharia</div><div class="atk">SPUS · halal US</div></div>
+          <div class="ap" id="p-SPUS">—</div>
+          <div class="apc neu" id="c-SPUS">—</div>
+          <div><span class="signal-badge" id="s-SPUS">—</span></div>
+        </div>
+        <div class="asset-row">
+          <div class="ai" style="background:rgba(74,143,212,.10);color:var(--blue)">DJ</div>
+          <div><div class="an">DJ / MSCI Islamic</div><div class="atk">IGDA · ISWD</div></div>
+          <div class="ap" id="p-IGDA">—</div>
+          <div class="apc neu" id="c-IGDA">—</div>
+          <div><span class="signal-badge" id="s-IGDA">—</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syn-row">
+      <div class="syn-item">
+        <div class="syn-lbl">Biais détecté</div>
+        <div class="syn-val" id="syn-biais" style="color:var(--amber)">—</div>
+      </div>
+      <div class="syn-item">
+        <div class="syn-lbl">Sim. Robustesse</div>
+        <div class="syn-val" id="sv-rob" style="color:var(--gold)">—</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--t3)" id="sp-rob">—</div>
+      </div>
+      <div class="syn-item">
+        <div class="syn-lbl">Sim. Indices halal</div>
+        <div class="syn-val" id="sv-idx" style="color:var(--blue)">—</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--t3)" id="sp-idx">—</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 2 : CRITÈRES -->
+<div class="slbl" style="margin-top:4px">Critères du workflow <span style="text-transform:none;letter-spacing:0;color:var(--t3);font-size:9px">5 signaux pondérés</span></div>
+<div class="criteria-bar">
+  <div class="crit"><div class="cn">1 · Hormuz <span style="color:var(--gold)">35%</span></div><div class="cv" id="c1v" style="color:var(--amber)">—</div><div class="cbar"><div class="cfill" id="c1b" style="background:var(--amber);width:0"></div></div><div class="cdesc" id="c1d">Brent + transits</div></div>
+  <div class="crit"><div class="cn">2 · Momentum or <span style="color:var(--gold)">25%</span></div><div class="cv" id="c2v" style="color:var(--blue)">—</div><div class="cbar"><div class="cfill" id="c2b" style="background:var(--blue);width:0"></div></div><div class="cdesc" id="c2d">Or vs base</div></div>
+  <div class="crit"><div class="cn">3 · Spread B-WTI <span style="color:var(--gold)">15%</span></div><div class="cv" id="c3v" style="color:var(--teal)">—</div><div class="cbar"><div class="cfill" id="c3b" style="background:var(--teal);width:0"></div></div><div class="cdesc" id="c3d">Disruption maritime</div></div>
+  <div class="crit"><div class="cn">4 · Taux 10Y US <span style="color:var(--gold)">15%</span></div><div class="cv" id="c4v" style="color:var(--purple)">—</div><div class="cbar"><div class="cfill" id="c4b" style="background:var(--purple);width:0"></div></div><div class="cdesc" id="c4d">Pression or</div></div>
+  <div class="crit"><div class="cn">5 · EUR/USD <span style="color:var(--gold)">10%</span></div><div class="cv" id="c5v" style="color:var(--green)">—</div><div class="cbar"><div class="cfill" id="c5b" style="background:var(--green);width:0"></div></div><div class="cdesc" id="c5d">Impact €</div></div>
+</div>
+
+<!-- SECTION 3 : INDICATEURS (accordion) -->
+<div style="position:relative">
+  <button class="accord-btn" onclick="toggleIndicators()" id="accord-btn">
+    <span class="accord-icon" id="accord-icon">▶</span>
+    <span style="font-weight:600">Indicateurs de marché</span>
+    <span class="accord-summary" id="accord-summary">Brent — · Or — · VIX — · T10Y — · EUR/USD —</span>
+  </button>
+  <div class="accord-body" id="accord-body">
+    <div class="ind-grid">
+      <div class="ic" onclick="openModal()"><div class="ic-ed">✏</div><div class="ic-lbl">Brent ($/bbl)</div><div class="ic-val" id="v-brent" style="color:var(--amber)">—</div><div class="ic-chg neu" id="d-brent">—</div><div class="ic-note" id="n-brent">BZ=F</div></div>
+      <div class="ic" onclick="openModal()"><div class="ic-ed">✏</div><div class="ic-lbl">WTI ($/bbl)</div><div class="ic-val" id="v-wti" style="color:var(--amber)">—</div><div class="ic-chg neu" id="d-wti">—</div><div class="ic-note" id="n-spread">Spread B-W : —</div></div>
+      <div class="ic" onclick="openModal()"><div class="ic-ed">✏</div><div class="ic-lbl">Or spot ($/oz)</div><div class="ic-val" id="v-gold" style="color:var(--gold)">—</div><div class="ic-chg neu" id="d-gold">—</div><div class="ic-note" id="n-gold-eur">Or en € : —</div></div>
+      <div class="ic" onclick="openModal()"><div class="ic-ed">✏</div><div class="ic-lbl">Argent ($/oz)</div><div class="ic-val" id="v-silver" style="color:#a8b0c0">—</div><div class="ic-chg neu" id="d-silver">—</div><div class="ic-note">SI=F · refuge + indus.</div></div>
+    </div>
+    <div class="ind-grid" style="border-top:1px solid var(--border)">
+      <div class="ic" onclick="openModal()"><div class="ic-ed">✏</div><div class="ic-lbl">VIX</div><div class="ic-val" id="v-vix" style="color:var(--red)">—</div><div class="ic-chg neu" id="d-vix">—</div><div class="ic-note" id="n-vix">Seuils : 25 · 35</div></div>
+      <div class="ic" onclick="openModal()"><div class="ic-ed">✏</div><div class="ic-lbl">Taux 10 ans US (%)</div><div class="ic-val" id="v-t10y" style="color:var(--purple)">—</div><div class="ic-chg neu" id="d-t10y">—</div><div class="ic-note">^TNX · pression or</div></div>
+      <div class="ic" onclick="openModal()"><div class="ic-ed">✏</div><div class="ic-lbl">EUR/USD</div><div class="ic-val" id="v-eurusd" style="color:var(--blue)">—</div><div class="ic-chg neu" id="d-eurusd">—</div><div class="ic-note">Impact portefeuille €</div></div>
+      <div class="ic" onclick="openModal()"><div class="ic-ed">✏</div><div class="ic-lbl">Transits Hormuz/j</div><div class="ic-val" id="v-hormuz" style="color:var(--teal)">—</div><div class="ic-chg neu" id="d-hormuz">—</div><div class="ic-note">Normal : ~21/j</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 4 : SCORE -->
+<div class="slbl" style="margin-top:4px">Score de robustesse <span style="text-transform:none;letter-spacing:0;color:var(--t3);font-size:9px">Hamant / Taleb</span></div>
+<div class="score-card">
+  <div class="score-grid">
+    <div class="sc-item"><div class="sc-val" style="color:var(--gold)">7.0</div><div class="sc-bar-wrap"><div class="sc-bar" style="background:var(--gold);width:70%"></div></div><div class="sc-lbl">Actifs réels</div></div>
+    <div class="sc-item"><div class="sc-val" style="color:var(--green)">10.0</div><div class="sc-bar-wrap"><div class="sc-bar" style="background:var(--green);width:100%"></div></div><div class="sc-lbl">Diversification</div></div>
+    <div class="sc-item"><div class="sc-val" style="color:var(--blue)">10.0</div><div class="sc-bar-wrap"><div class="sc-bar" style="background:var(--blue);width:100%"></div></div><div class="sc-lbl">Liquidité</div></div>
+    <div class="sc-item"><div class="sc-val" style="color:var(--teal)">9.2</div><div class="sc-bar-wrap"><div class="sc-bar" style="background:var(--teal);width:92%"></div></div><div class="sc-lbl">Sharia</div></div>
+    <div class="sc-item"><div class="sc-val" style="color:var(--purple)">9.9</div><div class="sc-bar-wrap"><div class="sc-bar" style="background:var(--purple);width:99%"></div></div><div class="sc-lbl">Antifragilité</div></div>
+  </div>
+</div>
+
+<!-- SECTION 5 : JOURNAL -->
+<div class="slbl" style="margin-top:4px">Journal de décision</div>
+<div class="journal-card">
+  <div class="jh">
+    <div>
+      <div style="font-family:var(--mono);font-size:9px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.08em">Décisions archivées</div>
+      <div style="font-size:10px;color:var(--t3);margin-top:2px">Contexte + score workflow sauvegardés automatiquement</div>
+    </div>
+    <button class="btn-add" onclick="toggleForm()">+ Nouvelle décision</button>
+  </div>
+  <div class="jform" id="jform">
+    <div class="fg"><label class="fl">Date</label><input type="date" class="fi" id="f-date"></div>
+    <div class="fg"><label class="fl">Actif</label>
+      <select class="fsl" id="f-asset">
+        <option value="">Choisir...</option>
+        <optgroup label="★ N1 Socle">
+          <option>Or (GLD)</option><option>Argent (SLV)</option><option>Cuivre (COPX)</option><option>Liquidité</option>
+        </optgroup>
+        <optgroup label="◈ N2 Tactique">
+          <option>Énergie US (XLE)</option><option>Renouvelable (ICLN)</option><option>SPUS</option><option>IGDA.L</option><option>ISWD.L</option>
+        </optgroup>
+        <optgroup label="📊"><option>Observation marché</option></optgroup>
+      </select>
+    </div>
+    <div class="fg"><label class="fl">Action</label>
+      <select class="fsl" id="f-action">
+        <option value="observation">Observation</option>
+        <option value="achat">Achat</option>
+        <option value="renforcement">Renforcement</option>
+        <option value="allegement">Allègement</option>
+        <option value="sortie">Sortie totale</option>
+      </select>
+    </div>
+    <div class="fg"><label class="fl">Montant (€)</label><input type="number" class="fi" id="f-amount" placeholder="ex: 500"></div>
+    <div class="fg full"><label class="fl">Justification</label><textarea class="ftx" id="f-note" placeholder="Raisonnement, contexte géopolitique, pourquoi cette décision..."></textarea></div>
+    <div class="fg fbtns"><button class="btn-jsave" onclick="saveDecision()">Enregistrer</button><button class="btn-jcancel" onclick="toggleForm()">Annuler</button></div>
+  </div>
+  <div class="jlist" id="jlist"><div class="jempty" id="jempty">Aucune décision enregistrée</div></div>
+</div>
+
+</div><!-- /col-left -->
+
+<!-- COL DROITE -->
+<div class="col-right">
+
+<!-- Q3 : LIQUIDITÉ -->
+<div class="slbl">Q3 · Liquidité</div>
+<div class="q3-card">
+  <div class="q3-hdr">
+    <span>Niveau de réserve</span>
+    <span id="q3-status" style="font-size:9px">—</span>
+  </div>
+  <div class="q3-body">
+    <div style="font-family:var(--mono);font-size:10px;color:var(--t3);margin-bottom:6px">Réserve disponible</div>
+    <div class="liquidity-val" id="liq-val" style="color:var(--green)">—</div>
+    <div class="liquidity-bar-wrap">
+      <div class="liquidity-bar" id="liq-bar" style="background:var(--green);width:0"></div>
+    </div>
+    <div class="liquidity-status" id="liq-status" style="color:var(--t3)">Saisir les données pour calculer</div>
+    <div style="margin-top:12px;border-top:1px solid var(--border);padding-top:10px">
+      <div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:6px">RÈGLE ABSOLUE</div>
+      <div style="font-size:11px;color:var(--t2);line-height:1.6">
+        <span style="color:var(--green)">▸ &gt; 20%</span> → Agir pleinement<br>
+        <span style="color:var(--amber)">▸ 15–20%</span> → Action limitée<br>
+        <span style="color:var(--red)">▸ &lt; 15%</span> → Reconstituer d'abord
+      </div>
+    </div>
   </div>
 </div>
 
 <!-- SIMULATION -->
-<div class="slbl">Simulation 10 000 €</div>
-<div class="sg">
-  <div class="sc"><div class="scl">Portefeuille Robustesse</div><div class="scv" id="sv-rob" style="color:var(--gold)">10 000 €</div><div style="font-family:var(--mono);font-size:11px;color:var(--t3);margin-top:2px" id="sp-rob">Base</div></div>
-  <div class="sc"><div class="scl">Indices Halal Passifs</div><div class="scv" id="sv-idx" style="color:var(--blue)">10 000 €</div><div style="font-family:var(--mono);font-size:11px;color:var(--t3);margin-top:2px" id="sp-idx">Base</div></div>
-  <div class="sc"><div class="scl">Alpha généré</div><div class="scv" id="sv-alp" style="color:var(--teal)">0.00%</div><div style="font-size:10px;color:var(--t3);margin-top:2px">Robustesse vs Indices</div></div>
-  <div class="sc"><div class="scl">Score robustesse</div><div class="scv" style="color:var(--purple)">8.8/10</div><div style="font-size:10px;color:var(--t3);margin-top:2px">Hamant/Taleb</div></div>
-</div>
-
-<!-- SCORE -->
-<div class="scb">
-  <div class="slbl" style="margin-bottom:12px;border:none">Score de robustesse — Critères Hamant/Taleb</div>
-  <div class="scg">
-    <div class="sci"><div class="sciv" style="color:var(--gold)">7.0</div><div class="scibw"><div class="scibr" style="background:var(--gold);width:70%"></div></div><div class="scin">Actifs réels</div></div>
-    <div class="sci"><div class="sciv" style="color:var(--green)">10.0</div><div class="scibw"><div class="scibr" style="background:var(--green);width:100%"></div></div><div class="scin">Diversification</div></div>
-    <div class="sci"><div class="sciv" style="color:var(--blue)">10.0</div><div class="scibw"><div class="scibr" style="background:var(--blue);width:100%"></div></div><div class="scin">Liquidité</div></div>
-    <div class="sci"><div class="sciv" style="color:var(--teal)">9.2</div><div class="scibw"><div class="scibr" style="background:var(--teal);width:92%"></div></div><div class="scin">Conformité Sharia</div></div>
-    <div class="sci"><div class="sciv" style="color:var(--purple)">9.9</div><div class="scibw"><div class="scibr" style="background:var(--purple);width:99%"></div></div><div class="scin">Antifragilité</div></div>
+<div class="slbl" style="margin-top:4px">Simulation</div>
+<div class="sim-card">
+  <div class="sim-row-2">
+    <div class="smc">
+      <div class="smc-lbl">Robustesse</div>
+      <div class="smc-val" id="sv-rob2" style="color:var(--gold)">—</div>
+      <div class="smc-sub" id="sp-rob2" style="color:var(--t3)">—</div>
+    </div>
+    <div class="smc">
+      <div class="smc-lbl">Indices Halal</div>
+      <div class="smc-val" id="sv-idx2" style="color:var(--blue)">—</div>
+      <div class="smc-sub" id="sp-idx2" style="color:var(--t3)">—</div>
+    </div>
+  </div>
+  <div style="border-top:1px solid var(--border);padding-top:8px;margin-top:4px">
+    <div class="smc-lbl">Alpha Robustesse vs Indices</div>
+    <div class="smc-val" id="sv-alpha" style="color:var(--t2)">—</div>
   </div>
 </div>
 
-<!-- JOURNAL -->
-<div class="jnl">
-  <div class="jh">
-    <div><div class="slbl" style="margin-bottom:0;border:none">Journal de décision</div><div style="font-size:10px;color:var(--t3);margin-top:2px">Contexte de marché &amp; score workflow archivés automatiquement</div></div>
-    <button class="badd" onclick="toggleForm()">+ Nouvelle décision</button>
+<!-- DÉCLENCHEURS -->
+<div class="slbl" style="margin-top:4px">Déclencheurs du prochain mouvement</div>
+<div class="trigger-card">
+  <div class="tc-hdr">Surveiller ces niveaux</div>
+  <div class="tc-body" id="triggers">
+    <div class="trigger-item">
+      <span class="ti-cond">SI</span>
+      <span class="ti-arr">▸</span>
+      <span class="ti-act"><strong>Brent &gt; $100</strong> ET hausse → Renforcer GLD + XLE</span>
+    </div>
+    <div class="trigger-item">
+      <span class="ti-cond">SI</span>
+      <span class="ti-arr">▸</span>
+      <span class="ti-act"><strong>Brent &lt; $80</strong> → Réduire XLE, rotation vers SPUS + IGDA</span>
+    </div>
+    <div class="trigger-item">
+      <span class="ti-cond">SI</span>
+      <span class="ti-arr">▸</span>
+      <span class="ti-act"><strong>VIX &gt; 35</strong> → GLD uniquement, tout le reste baisse d'abord</span>
+    </div>
+    <div class="trigger-item">
+      <span class="ti-cond">SI</span>
+      <span class="ti-arr">▸</span>
+      <span class="ti-act"><strong>Or &lt; $4400</strong> → Opportunité achat (cible JPM $6300)</span>
+    </div>
+    <div class="trigger-item">
+      <span class="ti-cond">SI</span>
+      <span class="ti-arr">▸</span>
+      <span class="ti-act"><strong>Hormuz rouvre</strong> → Rotation défensif → offensif en 4 sem.</span>
+    </div>
   </div>
-  <div class="jf" id="jf">
-    <div class="fg"><label class="fl">Date</label><input type="date" class="fi" id="f-date"></div>
-    <div class="fg"><label class="fl">Actif</label><select class="fsl" id="f-asset"><option value="">Choisir...</option><optgroup label="★ Robustesse"><option>Or physique (GLD)</option><option>Argent physique (SLV)</option><option>Énergie renouv. (ICLN)</option><option>Énergie US (XLE)</option><option>Liquidité CHF</option></optgroup><optgroup label="◈ Indices Halal"><option>IGDA — DJ Islamic Global</option><option>ISWD — MSCI World Islamic</option><option>SPUS — S&P 500 Sharia</option><option>ISDE — MSCI EM Islamic</option></optgroup></select></div>
-    <div class="fg"><label class="fl">Action</label><select class="fsl" id="f-action"><option value="observation">Observation</option><option value="achat">Achat</option><option value="renforcement">Renforcement</option><option value="allegement">Allègement</option><option value="sortie">Sortie totale</option></select></div>
-    <div class="fg"><label class="fl">Montant (€)</label><input type="number" class="fi" id="f-amount" placeholder="ex: 500"></div>
-    <div class="fg full"><label class="fl">Justification</label><textarea class="ftx" id="f-note" placeholder="Ton raisonnement..."></textarea></div>
-    <div class="fg fac"><button class="bsj" onclick="saveD()">Enregistrer</button><button class="bcj" onclick="toggleForm()">Annuler</button></div>
-  </div>
-  <div class="je" id="je"><div class="jempty" id="jempty">Aucune décision — commence ta première simulation</div></div>
 </div>
 
+<!-- ZAKAT REMINDER -->
+<div class="q3-card" style="margin-top:10px">
+  <div class="q3-hdr"><span>Rappel Zakat</span><span id="zakat-nisab" style="font-size:9px;color:var(--gold)">—</span></div>
+  <div class="q3-body">
+    <div style="font-size:11px;color:var(--t2);line-height:1.7">
+      2,5% de (GLD + SLV) à la date anniversaire du hawl.<br>
+      Prélever sur la liquidité N3 — ne pas vendre N1.<br>
+      <span style="color:var(--t3);font-size:10px">COPX → Zakat des actions (valeur × 2,5%)</span>
+    </div>
+    <div style="margin-top:8px;border-top:1px solid var(--border);padding-top:8px">
+      <div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px">Zakat estimée / an (si données saisies)</div>
+      <div class="smc-val" id="zakat-est" style="color:var(--gold)">—</div>
+    </div>
+  </div>
 </div>
-<div class="ftr">
-  <span>Portefeuille Halal Robuste · Stratégie Hormuz 2026</span>
-  <span>Workflow multicritères · 5 critères pondérés · Données locales</span>
+
+</div><!-- /col-right -->
+</div><!-- /main -->
+
+<div class="footer">
+  <span>Portefeuille Halal Robuste · Doctrine v2.0 · Hormuz 2026</span>
+  <span>Interactive Brokers Cash Account · Sharia compliant</span>
   <span>⚠ Simulation uniquement — pas de conseil financier</span>
 </div>
 
 <script>
-const SK='hv7p',BK='hv7b',DK='hv7d';
+const SK='hv7p_v3',BK='hv7b_v3',DK='hv7d_v3';
 let P=JSON.parse(localStorage.getItem(SK)||'{}');
 let B=JSON.parse(localStorage.getItem(BK)||'{}');
 let decisions=JSON.parse(localStorage.getItem(DK)||'[]');
 
-const fN=(v,d=2)=>v==null||isNaN(v)?'—':new Intl.NumberFormat('fr-FR',{minimumFractionDigits:d,maximumFractionDigits:d}).format(v);
-const fP=v=>v==null||isNaN(v)?'—':(v>=0?'+':'')+v.toFixed(2)+'%';
-const fE=v=>v==null||isNaN(v)?'—':new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR',minimumFractionDigits:0}).format(v);
+// ── UTILS ──
 const $=id=>document.getElementById(id);
-const setEl=(id,v)=>{const e=$(id);if(e)e.textContent=v};
+const fE=v=>v==null?'—':'€'+Math.round(v).toLocaleString('fr-FR');
+const fP=v=>v==null?'—':(v>=0?'+':'')+v.toFixed(2)+'%';
+const fN=(v,d=1)=>v==null?'—':v.toFixed(d);
+function setEl(id,v){const e=$(id);if(e)e.textContent=v;}
 
-function setChgDec(id,c,b){
-  const e=$(id);if(!e)return;
-  if(!c||!b){e.textContent='—';e.className='dc2 neu';return}
-  const p=(c-b)/b*100;e.textContent=fP(p);
-  e.className='dc2 '+(p>0.1?'up':p<-0.1?'dn':'neu');
-}
-function setMktChg(id,c,b){
-  const e=$(id);if(!e)return;
-  if(!c||!b){e.textContent='—';e.className='mch neu';return}
-  const p=(c-b)/b*100;e.textContent=fP(p);
-  e.className='mch '+(p>0.1?'up':p<-0.1?'dn':'neu');
-}
-function setAlert(id,lv){const e=$(id);if(!e)return;e.className='mc '+(lv>=3?'hi':lv>=1?'mid':lv===0?'ok':'neu')}
-function setBadge(id,action,score){
-  const e=$(id);if(!e)return;
-  const M={acheter:['bb','ACHETER'],renforcer:['brf','RENFORCER'],conserver:['bh','CONSERVER'],alleger:['bse','ALLÉGER'],vendre:['bse','VENDRE'],surveiller:['bw','SURVEILLER']};
-  const[c,l]=M[action]||['bw','—'];
-  e.className='badge '+c;e.textContent=l;
-  if(score!==undefined){const s=$(id.replace('s-','sc-'));if(s)s.textContent=score+'/10'}
-}
-
-// ═══ WORKFLOW MULTICRITÈRES ═══
-function computeWorkflow(){
-  const p=P,b=B;
-  if(!p.brent&&!p.gold)return;
-  const brent=p.brent||108;
-
-  // C1 — Scénario Hormuz (35%)
-  let c1=5;
-  if(brent>160)c1=10;else if(brent>130)c1=8.5;else if(brent>110)c1=7;
-  else if(brent>100)c1=6;else if(brent>85)c1=4;else if(brent>70)c1=2.5;else c1=1;
-  if(p.hormuz){if(p.hormuz<5)c1=Math.min(10,c1+2);else if(p.hormuz<10)c1=Math.min(10,c1+1);else if(p.hormuz>18)c1=Math.max(0,c1-1.5)}
-
-  // C2 — Momentum or (25%)
-  let c2=5;
-  const gold=p.gold||0,goldB=b.gold||gold;
-  if(gold&&goldB){const g=(gold-goldB)/goldB*100;if(g>10)c2=9.5;else if(g>5)c2=8;else if(g>2)c2=6.5;else if(g>0)c2=5.5;else if(g>-3)c2=4;else c2=2}
-
-  // C3 — Spread Brent-WTI (15%)
-  let c3=5,spread=null;
-  if(p.wti){spread=+(brent-p.wti).toFixed(1);if(spread>15)c3=10;else if(spread>10)c3=8;else if(spread>6)c3=6.5;else if(spread>3)c3=5;else if(spread>0)c3=4;else c3=2}
-
-  // C4 — Taux 10 ans US (15%) — inversé
-  let c4=5;
-  if(p.t10y){if(p.t10y>5.5)c4=1;else if(p.t10y>4.5)c4=3;else if(p.t10y>4.0)c4=5;else if(p.t10y>3.0)c4=7;else c4=9}
-
-  // C5 — EUR/USD (10%)
-  let c5=5;
-  if(p.eurusd&&b.eurusd){const f=(p.eurusd-b.eurusd)/b.eurusd*100;if(f>3)c5=8.5;else if(f>1)c5=7;else if(f>0)c5=5.5;else if(f>-2)c5=4;else c5=2}
-
-  const sg=+(c1*.35+c2*.25+c3*.15+c4*.15+c5*.10).toFixed(1);
-  setEl('wf-glob',fN(sg,1));
-
-  // Scénario géo
-  const sc=brent<80?0:brent<130?1:brent<170?2:3;
-  const sLabels=['Désescalade ✓','Blocage prolongé ⚡','Escalade majeure ⚠','Guerre totale 🔴'];
-  const sCls=['s0','s1','s2','s3'];
-  const sDesc=[
-    `Brent ${fN(brent,1)}$ — Désescalade possible · Rotation vers indices halal à envisager`,
-    `Brent ${fN(brent,1)}$ · Spread ${spread!=null?spread+'$':'—'} — Blocage confirmé · Maintenir actifs tangibles`,
-    `Brent ${fN(brent,1)}$ — Escalade critique · Surpondérer or et liquidité · Réduire indices`,
-    `Brent ${fN(brent,1)}$ — Crise extrême · Conservation absolue du capital`
-  ];
-  const sit=$('sit');sit.className='sbadge '+sCls[sc];sit.textContent='⬡ '+sLabels[sc];
-  setEl('sit-desc',sDesc[sc]);
-
-  // Afficher critères
-  [{id:1,v:c1,d:`Brent ${fN(brent,1)}$${p.hormuz?' · '+p.hormuz+' transits':''}`,col:'var(--amber)'},
-   {id:2,v:c2,d:`Or ${gold?fN(gold,0)+'$ ('+fP((gold-goldB)/goldB*100)+')':'—'}`,col:'var(--blue)'},
-   {id:3,v:c3,d:spread!=null?`Spread ${spread}$ → ${spread>8?'disruption':'normal'}`:' WTI non saisi',col:'var(--teal)'},
-   {id:4,v:c4,d:p.t10y?`T10Y ${fN(p.t10y,2)}% → ${p.t10y>4.5?'pression':'favorable'}`:' Non saisi',col:'var(--purple)'},
-   {id:5,v:c5,d:p.eurusd?`EUR/USD ${fN(p.eurusd,3)}`:' Non saisi',col:'var(--green)'}
-  ].forEach(cr=>{
-    setEl(`c${cr.id}v`,fN(cr.v,1)+'/10');setEl(`c${cr.id}d`,cr.d);
-    const bar=$(`c${cr.id}b`);if(bar){bar.style.width=cr.v*10+'%';bar.style.background=cr.col}
-  });
-
-  // Décisions actifs
-  const vix=p.vix||25;
-  const scores={
-    GLD:+((c1*.40+c2*.35+(10-c4)*.25)).toFixed(1),
-    SLV:+((c1*.45+c2*.30+c3*.25)).toFixed(1),
-    ICLN:+((c1*.40+c2*.20+c3*.20+(vix<30?7:vix<40?5:3)*.20)).toFixed(1),
-    XLE:+((c1*.35+c3*.35+(sc<3?6:3)*.30)).toFixed(1),
-    IGDA:+(((10-c1)*.40+c4*.30+c5*.30)).toFixed(1),
-    ISWD:+(((10-c1)*.35+c4*.30+c5*.35)).toFixed(1),
-    SPUS:+(((10-c1)*.40+(10-c2)*.20+c4*.20+c5*.20)).toFixed(1),
-    ISDE:+(((10-c1)*.30+c5*.40+(10-c4)*.30)).toFixed(1),
-  };
-  const action=s=>s>=7.5?'acheter':s>=6.5?'renforcer':s>=5?'conserver':s>=3.5?'alleger':'vendre';
-  const actionIdx=s=>s>=7.5?'acheter':s>=5.5?'conserver':s>=4?'surveiller':'vendre';
-  setBadge('s-GLD',action(scores.GLD),scores.GLD);
-  setBadge('s-SLV',action(scores.SLV),scores.SLV);
-  setBadge('s-ICLN',action(scores.ICLN),scores.ICLN);
-  setBadge('s-XLE',action(scores.XLE),scores.XLE);
-  setBadge('s-IGDA',actionIdx(scores.IGDA),scores.IGDA);
-  setBadge('s-ISWD',actionIdx(scores.ISWD),scores.ISWD);
-  setBadge('s-SPUS',actionIdx(scores.SPUS),scores.SPUS);
-  setBadge('s-ISDE',actionIdx(scores.ISDE),scores.ISDE);
-
-  // Synthèse
-  const biais=sg>=7?'Crise confirmée — Défensif':sg>=5.5?'Tension — Mixte':sg>=4?'Modéré — Équilibré':'Détente — Croissance';
-  const bColor=sg>=7?'var(--red)':sg>=5.5?'var(--amber)':sg>=4?'var(--blue)':'var(--green)';
-  const sb=$('syn-biais');if(sb){sb.textContent=biais;sb.style.color=bColor}
-  const top=sg>=7?'Renforcer Or + XLE':sg>=5.5?'Maintenir actifs tangibles':sg>=4?'Rééquilibrer vers indices':'Rotation IGDA + ISWD';
-  const sa=$('syn-action');if(sa){sa.textContent=top;sa.style.color=sg>=5.5?'var(--amber)':'var(--green)'}
-  setEl('syn-alloc',sg>=7?'80% Rob / 20% Idx':sg>=5?'65% Rob / 35% Idx':'50% Rob / 50% Idx');
-  return {sg,scores,sc};
-}
-
-// ═══ RENDER MARCHÉ ═══
-function render(){
-  const p=P,b=B;
-  if(!p.brent&&!p.gold)return;
-  if(p.brent){setEl('v-brent','$'+fN(p.brent,1));setMktChg('d-brent',p.brent,b.brent);setAlert('c-brent',p.brent>130?4:p.brent>100?3:p.brent>80?1:0);setEl('n-brent',p.brent>130?'🔴 Escalade critique':p.brent>100?'⚠ Seuil crise':p.brent>80?'→ Tension':'✓ Normal')}
-  if(p.wti){setEl('v-wti','$'+fN(p.wti,1));setMktChg('d-wti',p.wti,b.wti);setAlert('c-wti',1);if(p.brent){const sp=+(p.brent-p.wti).toFixed(1);setEl('n-spread','Spread B-W : $'+fN(sp,1)+(sp>8?' ⚠ disruption':sp>4?' → tension':' ✓ normal'))}}
-  if(p.gold){setEl('v-gold','$'+fN(p.gold,0));setMktChg('d-gold',p.gold,b.gold);setAlert('c-gold',p.gold>4500?4:p.gold>3500?3:2);if(p.eurusd)setEl('n-gold-eur','Or en € : '+fN(p.gold/p.eurusd,0)+'€/oz')}
-  if(p.silver){setEl('v-silver','$'+fN(p.silver,1));setMktChg('d-silver',p.silver,b.silver);setAlert('c-silver',1)}
-  if(p.vix){setEl('v-vix',fN(p.vix,1));setMktChg('d-vix',p.vix,b.vix);setAlert('c-vix',p.vix>40?4:p.vix>25?2:0);setEl('n-vix',p.vix>40?'🔴 Panique':p.vix>25?'⚠ Tension':'✓ Calme')}
-  if(p.t10y){setEl('v-t10y',fN(p.t10y,2)+'%');setMktChg('d-t10y',p.t10y,b.t10y);setAlert('c-t10y',p.t10y>5?4:p.t10y>4.5?2:0);setEl('n-t10y',p.t10y>5?'🔴 Très élevé':p.t10y>4.5?'⚠ Pression or':'→ Modéré')}
-  if(p.eurusd){setEl('v-eurusd',fN(p.eurusd,3));setMktChg('d-eurusd',p.eurusd,b.eurusd);setAlert('c-eurusd',1);setEl('n-eurusd',p.eurusd>1.1?'EUR fort → actifs $ moins chers':p.eurusd<1.0?'USD fort → actifs $ plus chers':'→ Parité équilibrée')}
-  if(p.hormuz){setEl('v-hormuz',p.hormuz);setAlert('c-hormuz',p.hormuz<5?4:p.hormuz<10?3:p.hormuz<15?1:0);setEl('n-hormuz',p.hormuz<5?'🔴 Quasi-fermé':p.hormuz<12?'⚠ Fortement réduit':p.hormuz<18?'→ Réduit':'✓ Quasi-normal');const dh=$('d-hormuz');const pct=Math.round((p.hormuz-21)/21*100);if(dh){dh.textContent=(pct>=0?'+':'')+pct+'% vs normal';dh.className='mch '+(pct<-20?'dn':'neu')}}
-  // Actifs
-  if(p.gld||p.gold){setEl('p-GLD','$'+fN(p.gld||p.gold/9.3));setChgDec('c-GLD',p.gld||p.gold/9.3,b.gld||b.gold/9.3)}
-  if(p.silver){setEl('p-SLV','$'+fN(p.silver/14,2));setChgDec('c-SLV',p.silver,b.silver)}
-  if(p.icln){setEl('p-ICLN','$'+fN(p.icln));setChgDec('c-ICLN',p.icln,b.icln)}
-  if(p.xle){setEl('p-XLE','$'+fN(p.xle));setChgDec('c-XLE',p.xle,b.xle)}
-  if(p.igda){setEl('p-IGDA','$'+fN(p.igda));setChgDec('c-IGDA',p.igda,b.igda)}
-  if(p.iswd){setEl('p-ISWD','$'+fN(p.iswd));setChgDec('c-ISWD',p.iswd,b.iswd)}
-  if(p.spus){setEl('p-SPUS','$'+fN(p.spus));setChgDec('c-SPUS',p.spus,b.spus)}
-  if(p.isde){setEl('p-ISDE','$'+fN(p.isde));setChgDec('c-ISDE',p.isde,b.isde)}else{setEl('p-ISDE','N/D')}
-  updateSim();
-  if(p.updatedAt){const d=new Date(p.updatedAt);setEl('last-upd','Màj '+d.toLocaleDateString('fr-FR')+' '+d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}))}
-  computeWorkflow();
-}
-
-// ═══ SIMULATION ═══
-function updateSim(){
-  const p=P,b=B;
-  const S=getSimAmount();
-  const pm={GLD:p.gld||(p.gold?p.gold/9.3:null),SLV:p.silver?p.silver/14:null,ICLN:p.icln,XLE:p.xle};
-  const bm={GLD:b.gld||(b.gold?b.gold/9.3:null),SLV:b.silver?b.silver/14:null,ICLN:b.icln,XLE:b.xle};
-  let rv=S*.10;
-  for(const[t,a] of Object.entries({GLD:.35,SLV:.10,ICLN:.25,XLE:.20})){rv+=pm[t]&&bm[t]?S*a*(1+(pm[t]-bm[t])/bm[t]):S*a}
-  const rp=(rv-S)/S*100;
-  setEl('sv-rob',fE(rv));const sre=$('sp-rob');if(sre){sre.textContent=fP(rp);sre.style.color=rp>=0?'var(--green)':'var(--red)'}
-  const im={IGDA:p.igda,ISWD:p.iswd,SPUS:p.spus,ISDE:p.isde};
-  const ib={IGDA:b.igda,ISWD:b.iswd,SPUS:b.spus,ISDE:b.isde};
-  let iv=0;for(const[t,a] of Object.entries({IGDA:.40,ISWD:.30,SPUS:.20,ISDE:.10})){iv+=im[t]&&ib[t]?S*a*(1+(im[t]-ib[t])/ib[t]):S*a}
-  const ip=(iv-S)/S*100;
-  setEl('sv-idx',fE(iv));const spi=$('sp-idx');if(spi){spi.textContent=fP(ip);spi.style.color=ip>=0?'var(--green)':'var(--red)'}
-  const ae=$('sv-alp');const alp=rp-ip;if(ae){ae.textContent=fP(alp);ae.style.color=alp>=0?'var(--green)':'var(--red)'}
-}
-
-// ═══ MODAL ═══
-function getSimAmount(){return parseFloat(document.getElementById('sim-amount')?.value)||10000}
-function updateSimAmount(){updateSim()}
+// ── MODAL ──
 function openModal(){
-  const fs=['brent','wti','vix','sp','t10y','eurusd','hormuz','gld','gold','silver','icln','xle','igda','iswd','spus','isde'];
-  fs.forEach(f=>{const e=$('i-'+f);if(e&&P[f])e.value=P[f]});
+  // Pré-remplir
+  ['brent','wti','vix','sp','t10y','eurusd','hormuz','gold','gld','silver','slv','copx','xle','icln','spus','igda','iswd'].forEach(k=>{
+    const el=$('i-'+k);if(el&&P[k]!=null)el.value=P[k];
+  });
   $('modal').classList.add('open');
 }
-function closeModal(){$('modal').classList.remove('open')}
+function closeModal(){$('modal').classList.remove('open');}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+
 function savePrices(){
-  const fs=['brent','wti','vix','sp','t10y','eurusd','hormuz','gld','gold','silver','icln','xle','igda','iswd','spus','isde'];
-  const np={};fs.forEach(f=>{const v=parseFloat($('i-'+f)?.value);if(!isNaN(v)&&v>0)np[f]=v});
-  if(!Object.keys(B).length){B={...np};localStorage.setItem(BK,JSON.stringify(B))}
-  P={...P,...np,updatedAt:new Date().toISOString()};localStorage.setItem(SK,JSON.stringify(P));
-  closeModal();render();
+  const keys=['brent','wti','vix','sp','t10y','eurusd','hormuz','gold','gld','silver','slv','copx','xle','icln','spus','igda','iswd'];
+  if(Object.keys(B).length===0)B={...P};
+  else B={...B};
+  keys.forEach(k=>{
+    const v=parseFloat($('i-'+k)?.value);
+    if(!isNaN(v))P[k]=v;
+  });
+  localStorage.setItem(SK,JSON.stringify(P));
+  localStorage.setItem(BK,JSON.stringify(B));
+  closeModal();
+  render();
 }
 
-// ═══ JOURNAL ═══
-function toggleForm(){const f=$('jf');f.classList.toggle('open');if(f.classList.contains('open'))$('f-date').value=new Date().toISOString().split('T')[0]}
-function saveD(){
+// ── RENDER PRINCIPAL ──
+function render(){
+  const p=P;
+  if(!Object.keys(p).length)return;
+
+  // Date
+  setEl('last-upd',new Date().toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}));
+
+  // Indicateurs
+  if(p.brent!=null){
+    $(  'v-brent').textContent='$'+fN(p.brent,1);
+    const cls=p.brent>100?'hi':p.brent>85?'mid':'ok';
+    document.querySelector('.ic:nth-child(1)')?.classList.add(cls);
+  }
+  if(p.wti!=null){
+    $('v-wti').textContent='$'+fN(p.wti,1);
+    const spread=p.brent&&p.wti?fN(p.brent-p.wti,1):'—';
+    $('n-spread').textContent='Spread B-W : $'+spread;
+  }
+  if(p.gold!=null){
+    $('v-gold').textContent='$'+Math.round(p.gold).toLocaleString();
+    if(p.eurusd)$('n-gold-eur').textContent='Or en € : '+Math.round(p.gold/p.eurusd)+'€';
+  }
+  if(p.silver!=null)$('v-silver').textContent='$'+fN(p.silver,1);
+  if(p.vix!=null){
+    $('v-vix').textContent=fN(p.vix,1);
+    $('n-vix').textContent=p.vix>35?'⚠ CHOC LIQUIDITÉ':p.vix>25?'⚠ Stress élevé':'Seuils : 25 · 35';
+  }
+  if(p.t10y!=null)$('v-t10y').textContent=fN(p.t10y,2)+'%';
+  if(p.eurusd!=null)$('v-eurusd').textContent=fN(p.eurusd,3);
+  if(p.hormuz!=null){
+    $('v-hormuz').textContent=p.hormuz+'/j';
+    $('d-hormuz').textContent=p.hormuz<5?'⚠ Bloqué':p.hormuz<14?'↓ Perturbé':'→ Normal';
+    $('d-hormuz').className='ic-chg '+(p.hormuz<5?'dn':p.hormuz<14?'dn':'neu');
+  }
+
+  // Accordion summary
+  const smry=[
+    p.brent?'Brent $'+fN(p.brent,0):'Brent —',
+    p.gold?'Or $'+Math.round(p.gold):'Or —',
+    p.vix?'VIX '+fN(p.vix,1):'VIX —',
+    p.t10y?'T10Y '+fN(p.t10y,2)+'%':'T10Y —',
+    p.eurusd?'EUR/USD '+fN(p.eurusd,3):'EUR/USD —'
+  ].join(' · ');
+  setEl('accord-summary',smry);
+
+  // Prix actifs
+  const prices={GLD:p.gld,SLV:p.slv,COPX:p.copx,XLE:p.xle,ICLN:p.icln,SPUS:p.spus,IGDA:p.igda};
+  const bprices={GLD:B.gld,SLV:B.slv,COPX:B.copx,XLE:B.xle,ICLN:B.icln,SPUS:B.spus,IGDA:B.igda};
+  Object.entries(prices).forEach(([t,v])=>{
+    const el=$('p-'+t);
+    if(el&&v!=null)el.textContent='$'+fN(v,2);
+    const chg=$('c-'+t);
+    if(chg){
+      const bv=bprices[t];
+      if(v!=null&&bv!=null&&bv>0){
+        const pct=(v-bv)/bv*100;
+        chg.textContent=fP(pct);
+        chg.className='apc '+(pct>0?'up':pct<0?'dn':'neu');
+      }
+    }
+  });
+
+  computeWorkflow();
+  updateSim();
+  updateZakat();
+}
+
+// ── WORKFLOW ──
+function computeWorkflow(){
+  const p=P;
+
+  // Critère 1 : Hormuz / Pétrole
+  let c1=0;
+  if(p.brent!=null){
+    if(p.brent>120)c1=10;
+    else if(p.brent>100)c1=8;
+    else if(p.brent>85)c1=5;
+    else if(p.brent>75)c1=3;
+    else c1=1;
+  }
+  if(p.hormuz!=null){
+    if(p.hormuz<5)c1=Math.min(10,c1+3);
+    else if(p.hormuz<10)c1=Math.min(10,c1+1.5);
+  }
+  c1=Math.min(10,c1);
+  setEl('c1v',fN(c1,1));
+  $('c1b').style.width=(c1*10)+'%';
+  setEl('c1d',p.brent?'Brent $'+fN(p.brent,0)+(p.hormuz!=null?' · Transits '+p.hormuz+'/j':''):'Brent + transits');
+
+  // Critère 2 : Momentum or
+  let c2=5;
+  if(p.gold!=null){
+    if(p.gold>5000)c2=10;
+    else if(p.gold>4500)c2=8;
+    else if(p.gold>4000)c2=7;
+    else if(p.gold>3500)c2=5;
+    else if(p.gold>3000)c2=3;
+    else c2=2;
+  }
+  setEl('c2v',fN(c2,1));
+  $('c2b').style.width=(c2*10)+'%';
+  setEl('c2d',p.gold?'Or $'+Math.round(p.gold):'Or vs base');
+
+  // Critère 3 : Spread Brent-WTI
+  let c3=5;
+  if(p.brent!=null&&p.wti!=null){
+    const sp=p.brent-p.wti;
+    if(sp>20)c3=10;
+    else if(sp>12)c3=8;
+    else if(sp>6)c3=6;
+    else if(sp>3)c3=4;
+    else c3=2;
+  }
+  setEl('c3v',fN(c3,1));
+  $('c3b').style.width=(c3*10)+'%';
+  const sp=p.brent&&p.wti?(p.brent-p.wti).toFixed(1):null;
+  setEl('c3d',sp?'Spread $'+sp+'/bbl':'Disruption maritime');
+
+  // Critère 4 : Taux 10Y
+  let c4=5;
+  if(p.t10y!=null){
+    if(p.t10y>5.5)c4=9;
+    else if(p.t10y>4.5)c4=7;
+    else if(p.t10y>3.5)c4=5;
+    else if(p.t10y>2.5)c4=3;
+    else c4=2;
+  }
+  setEl('c4v',fN(c4,1));
+  $('c4b').style.width=(c4*10)+'%';
+  setEl('c4d',p.t10y?fN(p.t10y,2)+'% · '+(p.t10y>4.5?'Pression sur or':'Favorable or'):'Pression or');
+
+  // Critère 5 : EUR/USD
+  let c5=5;
+  if(p.eurusd!=null){
+    if(p.eurusd<1.05)c5=8;
+    else if(p.eurusd<1.10)c5=6;
+    else if(p.eurusd<1.15)c5=5;
+    else if(p.eurusd<1.25)c5=4;
+    else c5=2;
+  }
+  setEl('c5v',fN(c5,1));
+  $('c5b').style.width=(c5*10)+'%';
+  setEl('c5d',p.eurusd?fN(p.eurusd,3)+(p.eurusd<1.10?' · Dollar fort':' · Euro stable'):'Impact €');
+
+  // Score global pondéré
+  const score=+(c1*.35+c2*.25+c3*.15+c4*.15+c5*.10).toFixed(1);
+  setEl('score-glob',score);
+
+  // Scénario + signaux
+  let scenario,desc,scenCls,signaux,biais,robPct,idxPct,allocSub,nextTrig;
+
+  // Cas spécial choc liquidité
+  if(p.vix!=null&&p.vix>35){
+    scenario='⚡ CHOC DE LIQUIDITÉ';scenCls='sc-choc';
+    desc='VIX > 35 — panique de marché. Tout baisse d\'abord. Garder uniquement GLD et cash. Ne rien faire d\'autre jusqu\'à stabilisation.';
+    signaux={GLD:'ACHETER',SLV:'ATTENDRE',COPX:'ATTENDRE',XLE:'ÉVITER',ICLN:'ATTENDRE',SPUS:'ÉVITER',IGDA:'ÉVITER'};
+    biais='REFUGE TOTAL';robPct=85;idxPct=15;
+    allocSub='Choc liquidité — GLD + cash uniquement';
+    nextTrig='Attendre VIX < 28 avant tout mouvement';
+  } else if(score>=7.5){
+    scenario='🔴 CRISE GÉOPOLITIQUE';scenCls='sc-crise';
+    desc='Brent > $100 + tensions Hormuz. Actifs tangibles surperforment. Les indices halal actions sont pénalisés. Renforcer le socle.';
+    signaux={GLD:'ACHETER',SLV:'RENFORCER',COPX:'RENFORCER',XLE:'ACHETER',ICLN:'CONSERVER',SPUS:'ALLÉGER',IGDA:'ALLÉGER'};
+    biais='DÉFENSIF FORT';robPct=80;idxPct=20;
+    allocSub='Crise active — surpondération tangibles';
+    nextTrig=p.brent?'Si Brent repasse < $90 → réduire XLE':'Surveiller détente Brent';
+  } else if(score>=6){
+    scenario='🟠 TENSION MODÉRÉE';scenCls='sc-trans';
+    desc='Brent élevé mais stable. Risques présents. Maintenir la robustesse tout en conservant une exposition tactique équilibrée.';
+    signaux={GLD:'CONSERVER',SLV:'CONSERVER',COPX:'CONSERVER',XLE:'CONSERVER',ICLN:'CONSERVER',SPUS:'ATTENDRE',IGDA:'ATTENDRE'};
+    biais='ÉQUILIBRÉ';robPct=65;idxPct=35;
+    allocSub='Transition — pas d\'action urgente';
+    nextTrig='Surveiller Brent $100 (crise) ou $80 (détente)';
+  } else if(score>=4.5){
+    scenario='🟡 TRANSITION';scenCls='sc-trans';
+    desc='Signaux mixtes. Aucun régime clair. Maintenir les positions en attendant un signal directionnel confirmé.';
+    signaux={GLD:'CONSERVER',SLV:'CONSERVER',COPX:'CONSERVER',XLE:'RÉDUIRE',ICLN:'CONSERVER',SPUS:'ACCUMULER',IGDA:'ACCUMULER'};
+    biais='MIXTE';robPct=55;idxPct=45;
+    allocSub='Transition — accumulation progressive indices';
+    nextTrig='Attendre confirmation signal VIX ou Brent';
+  } else {
+    scenario='🟢 DÉTENTE';scenCls='sc-detente';
+    desc='Environnement favorable aux actifs risqués. Brent bas, VIX calme. Surpondérer les indices halal. Or en socle structurel.';
+    signaux={GLD:'CONSERVER',SLV:'CONSERVER',COPX:'CONSERVER',XLE:'RÉDUIRE',ICLN:'RENFORCER',SPUS:'ACHETER',IGDA:'ACHETER'};
+    biais='OFFENSIF';robPct=40;idxPct=60;
+    allocSub='Détente — rotation vers indices halal';
+    nextTrig=p.brent?'Si Brent remonte > $85 → réévaluer':'Surveiller remontée Brent';
+  }
+
+  // Afficher scénario
+  const badge=$('scenario-badge');
+  badge.textContent=scenario;
+  badge.className='scenario-badge '+scenCls;
+  setEl('scenario-desc',desc);
+  setEl('syn-biais',biais);
+
+  // Barre allocation
+  $('alloc-bar-rob').style.width=robPct+'%';
+  $('alloc-bar-rob').textContent='★ '+robPct+'%';
+  $('alloc-bar-idx').style.width=idxPct+'%';
+  $('alloc-bar-idx').textContent='◈ '+idxPct+'%';
+  setEl('alloc-rob-pct',robPct+'%');
+  setEl('alloc-idx-pct',idxPct+'%');
+  setEl('alloc-subtitle',allocSub);
+  setEl('next-trigger',nextTrig);
+
+  // Signaux par actif
+  const sigMap={
+    'ACHETER':{cls:'sig-buy',txt:'ACHETER'},
+    'RENFORCER':{cls:'sig-reinf',txt:'RENFORCER'},
+    'ACCUMULER':{cls:'sig-reinf',txt:'ACCUMULER'},
+    'CONSERVER':{cls:'sig-hold',txt:'CONSERVER'},
+    'RÉDUIRE':{cls:'sig-sell',txt:'RÉDUIRE'},
+    'ALLÉGER':{cls:'sig-sell',txt:'ALLÉGER'},
+    'ÉVITER':{cls:'sig-sell',txt:'ÉVITER'},
+    'ATTENDRE':{cls:'sig-wait',txt:'ATTENDRE'},
+  };
+  Object.entries(signaux).forEach(([t,sig])=>{
+    const el=$('s-'+t);
+    if(el){
+      const m=sigMap[sig]||{cls:'sig-na',txt:sig};
+      el.className='signal-badge '+m.cls;
+      el.textContent=m.txt;
+    }
+  });
+
+  // Liquidité Q3
+  updateLiquidity();
+}
+
+function updateLiquidity(){
+  const S=getSimAmount();
+  const liq=S*.15;
+  const liqPct=15;
+  setEl('liq-val',fE(liq));
+  $('liq-bar').style.width=liqPct+'%';
+  const status=liqPct>20?{t:'Niveau optimal — action possible',c:'var(--green)'}
+    :liqPct>=15?{t:'Niveau minimum — action limitée',c:'var(--amber)'}
+    :{t:'⚠ Sous le seuil — reconstituer en priorité',c:'var(--red)'};
+  $('liq-bar').style.background=status.c;
+  $('liq-val').style.color=status.c;
+  setEl('liq-status',status.t);
+  setEl('q3-status',liqPct.toFixed(0)+'% du portefeuille');
+}
+
+function updateSim(){
+  const p=P,b=B,S=getSimAmount();
+  // Robustesse (GLD+SLV+COPX+XLE+ICLN)
+  const rmap={GLD:.27,SLV:.08,COPX:.06,XLE:.18,ICLN:.15};
+  const bmap={GLD:b.gld,SLV:b.slv,COPX:b.copx,XLE:b.xle,ICLN:b.icln};
+  const pmap={GLD:p.gld,SLV:p.slv,COPX:p.copx,XLE:p.xle,ICLN:p.icln};
+  let rv=S*.15;
+  Object.entries(rmap).forEach(([t,a])=>{
+    const pv=pmap[t],bv=bmap[t];
+    rv+=pv&&bv&&bv>0?S*a*(1+(pv-bv)/bv):S*a;
+  });
+  const rp=(rv-S)/S*100;
+  const svr=$('sv-rob'),svr2=$('sv-rob2');
+  const spr=$('sp-rob'),spr2=$('sp-rob2');
+  [svr,svr2].forEach(e=>{if(e){e.textContent=fE(rv);e.style.color='var(--gold)';}});
+  [spr,spr2].forEach(e=>{if(e){e.textContent=fP(rp);e.style.color=rp>=0?'var(--green)':'var(--red)';}});
+
+  // Indices halal
+  const imap={SPUS:.40,IGDA:.35,ISWD:.25};
+  const ibmap={SPUS:b.spus,IGDA:b.igda,ISWD:b.iswd?b.iswd/100:null};
+  const ipmap={SPUS:p.spus,IGDA:p.igda,ISWD:p.iswd?p.iswd/100:null};
+  let iv=0;
+  Object.entries(imap).forEach(([t,a])=>{
+    const pv=ipmap[t],bv=ibmap[t];
+    iv+=pv&&bv&&bv>0?S*a*(1+(pv-bv)/bv):S*a;
+  });
+  const ip=(iv-S)/S*100;
+  const svi=$('sv-idx'),svi2=$('sv-idx2');
+  const spi=$('sp-idx'),spi2=$('sp-idx2');
+  [svi,svi2].forEach(e=>{if(e){e.textContent=fE(iv);e.style.color='var(--blue)';}});
+  [spi,spi2].forEach(e=>{if(e){e.textContent=fP(ip);e.style.color=ip>=0?'var(--green)':'var(--red)';}});
+
+  // Alpha
+  const alpha=rp-ip;
+  const sva=$('sv-alpha');
+  if(sva){sva.textContent=fP(alpha);sva.style.color=alpha>=0?'var(--green)':'var(--red)';}
+
+  // Cash sim
+  setEl('p-CASH',fE(S*.15));
+}
+
+function updateZakat(){
+  const p=P,S=getSimAmount();
+  const goldVal=S*.27;
+  const silverVal=S*.08;
+  const zakatAmt=(goldVal+silverVal)*.025;
+  setEl('zakat-est',fE(zakatAmt)+'/an');
+  // Nisab indicatif
+  const nisab=p.gold?Math.round(p.gold*85/31.1)+'€ (85g or)':'~5 800€';
+  setEl('zakat-nisab','Nisab ≈ '+nisab);
+}
+
+function getSimAmount(){return parseFloat($('sim-amount')?.value)||10000;}
+function updateAll(){computeWorkflow();updateSim();updateZakat();}
+
+// ── ACCORDION ──
+function toggleIndicators(){
+  const body=$('accord-body');
+  const icon=$('accord-icon');
+  body.classList.toggle('open');
+  icon.classList.toggle('open');
+}
+
+// ── JOURNAL ──
+function toggleForm(){
+  const f=$('jform');
+  f.classList.toggle('open');
+  if(f.classList.contains('open')){
+    const today=new Date().toISOString().split('T')[0];
+    $('f-date').value=today;
+  }
+}
+function saveDecision(){
   const date=$('f-date').value,asset=$('f-asset').value,action=$('f-action').value;
   const amount=parseFloat($('f-amount').value),note=$('f-note').value;
-  const action2=document.getElementById('f-action').value;
-  if(!asset||!date){alert('Date et actif requis.');return}
-  if(action2!=='observation'&&(!amount||isNaN(amount))){alert('Montant requis pour cette action.');return}
-  const wfs=parseFloat($('wf-glob')?.textContent)||null;
-  const spread=P.brent&&P.wti?+(P.brent-P.wti).toFixed(1):null;
-  decisions.unshift({id:Date.now(),date,asset,action,amount,note,brent:P.brent,gold:P.gold,vix:P.vix,spread,eurusd:P.eurusd,t10y:P.t10y,scenario:$('sit')?.textContent,wfScore:wfs});
+  if(!asset||!date){alert('Date et actif requis.');return;}
+  const score=parseFloat($('score-glob')?.textContent)||null;
+  const sp=P.brent&&P.wti?(P.brent-P.wti).toFixed(1):null;
+  decisions.unshift({id:Date.now(),date,asset,action,amount:isNaN(amount)?null:amount,note,
+    brent:P.brent,gold:P.gold,vix:P.vix,spread:sp,eurusd:P.eurusd,
+    scenario:$('scenario-badge')?.textContent,score});
   localStorage.setItem(DK,JSON.stringify(decisions));
   $('f-asset').value='';$('f-amount').value='';$('f-note').value='';
-  toggleForm();renderJ();
+  toggleForm();renderJournal();
 }
-function renderJ(){
-  const c=$('je'),empty=$('jempty');
-  if(!decisions.length){empty.style.display='block';return}
-  empty.style.display='none';
+function renderJournal(){
+  const list=$('jlist'),empty=$('jempty');
+  if(!decisions.length){if(empty)empty.style.display='block';return;}
+  if(empty)empty.style.display='none';
   const col={observation:'var(--t3)',achat:'var(--green)',renforcement:'var(--teal)',allegement:'var(--amber)',sortie:'var(--red)'};
-  c.innerHTML=decisions.slice(0,30).map(d=>`
+  list.innerHTML=decisions.slice(0,30).map(d=>`
     <div class="jrow">
       <div class="jdate">${d.date}</div>
-      <div class="jasset">${d.asset.split('(')[0].trim()}</div>
-      <div class="jact" style="color:${col[d.action]||'var(--t2)'}">${d.action.toUpperCase()}</div>
-      <div class="jamt">${fE(d.amount)}</div>
+      <div class="jasset">${(d.asset||'').split('(')[0].trim()}</div>
+      <div class="jact" style="color:${col[d.action]||'var(--t2)'}">${(d.action||'').toUpperCase()}</div>
+      <div class="jamt">${d.amount?fE(d.amount):'—'}</div>
       <div class="jnote" title="${d.note||''}">${d.note||'—'}</div>
-      <div class="jctx">${d.brent?'B:$'+fN(d.brent,0):''} ${d.spread?'S:'+d.spread+'$':''}</div>
-      <div class="jscore">${d.wfScore?d.wfScore+'/10':'—'}</div>
+      <div class="jctx">${d.brent?'B:$'+fN(d.brent,0):''} ${d.spread?'S:'+d.spread:''}</div>
+      <div class="jscr">${d.score?d.score+'/10':'—'}</div>
     </div>`).join('');
 }
 
-// ═══ INIT ═══
-document.addEventListener('DOMContentLoaded',()=>{renderJ();if(Object.keys(P).length)render();else setTimeout(openModal,400)});
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+// ── INIT ──
+document.addEventListener('DOMContentLoaded',()=>{
+  renderJournal();
+  if(Object.keys(P).length){render();}
+  else{setTimeout(()=>openModal(),300);}
+});
 </script>
 </body>
 </html>

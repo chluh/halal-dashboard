@@ -133,6 +133,10 @@ body::before{content:'';position:fixed;inset:0;
 .m-card.top:hover{transform:translateX(-50%) translateY(-2px)}
 .m-card.bottom{top:calc(100% + 36px);left:50%;transform:translateX(-50%)}
 .m-card.bottom:hover{transform:translateX(-50%) translateY(2px)}
+.milestone.edge-left .m-card{left:0;transform:none}
+.milestone.edge-left .m-card:hover{transform:translateY(-2px)}
+.milestone.edge-left .m-card.bottom{transform:none}
+.milestone.edge-left .m-card.bottom:hover{transform:translateY(2px)}
 .m-card-hdr{padding:7px 9px;border-bottom:1px solid var(--line2);
   display:flex;align-items:center;justify-content:space-between;background:var(--bg2)}
 .m-date{font-family:var(--mono);font-size:9px;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em}
@@ -787,11 +791,11 @@ function renderTimeline(){
   const today=new Date();
   const start=new Date(ms[0].date);
   const todayD=Math.max(0,(today-start)/864e5);
-  const minW=Math.max(900,window.innerWidth-48);
+  const minW=Math.max(1200,window.innerWidth-48);
   const totalW=Math.max(minW,totalDays*(minW/totalDays)+80);
   inner.style.width=totalW+'px';
   road.style.width=(totalW-44)+'px';
-  const todayPct=Math.min(97,(todayD/totalDays)*100);
+  const todayPct=Math.min(97,Math.max(2,(todayD/totalDays)*100));
   document.getElementById('today-mk').style.left=todayPct+'%';
   document.getElementById('today-flag').textContent=today.toLocaleDateString('fr-FR',{day:'2-digit',month:'short'});
   document.getElementById('road-prog').style.width=todayPct+'%';
@@ -813,7 +817,7 @@ function renderTimeline(){
   // Jalons
   ms.forEach((m,i)=>{
     const mD=(new Date(m.date)-start)/864e5;
-    const pct=Math.max(2,Math.min(95,(mD/totalDays)*100));
+    const pct=Math.max(3,Math.min(95,(mD/totalDays)*100));
     const isFuture=new Date(m.date)>today;
     const isFrozen=S.simCrise&&isFuture&&m.regime!=='crise';
     const cats=m.alloc.reduce((a,x)=>{a[x.cat||x.type]=(a[x.cat||x.type]||0)+x.pct;return a},{});
@@ -822,7 +826,8 @@ function renderTimeline(){
             (m.regime==='crise')?'var(--gold)':'var(--blue)';
     const isTop=i%2===0;
     const el=document.createElement('div');
-    el.className='milestone'+(isFrozen?' frozen':'');
+    const isEdgeLeft=pct<12;
+    el.className='milestone'+(isFrozen?' frozen':'')+(isEdgeLeft?' edge-left':'');
     el.style.cssText=`left:${pct}%;margin-top:-8px`;
     el.innerHTML=`
       <div class="m-pin" style="color:${col}">

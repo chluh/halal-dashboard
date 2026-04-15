@@ -4,29 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Plan Halal Robuste — v2.1</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg:    #f4f1eb;
-  --bg2:   #eceae2;
-  --bg3:   #e2dfd5;
-  --ink:   #1a1814;
-  --ink2:  #5a564e;
-  --ink3:  #9a9690;
-  --line:  rgba(26,24,20,0.10);
-  --line2: rgba(26,24,20,0.05);
-  --gold:  #b8860b;
-  --gold2: rgba(184,134,11,0.14);
-  --blue:  #1a4a7a;
-  --blue2: rgba(26,74,122,0.12);
-  --green: #1a6040;
-  --green2:rgba(26,96,64,0.12);
-  --red:   #8b1a1a;
-  --red2:  rgba(139,26,26,0.10);
-  --amber: #8b5a1a;
-  --mono:  'DM Mono', monospace;
-  --sans:  'DM Sans', sans-serif;
-  --disp:  'Bebas Neue', sans-serif;
+:root{
+  --bg:#f4f1eb;--bg2:#eceae2;--bg3:#e2dfd5;
+  --ink:#1a1814;--ink2:#5a564e;--ink3:#9a9690;
+  --line:rgba(26,24,20,.10);--line2:rgba(26,24,20,.05);
+  --gold:#b8860b;--gold2:rgba(184,134,11,.14);--gold3:rgba(184,134,11,.07);
+  --blue:#1a4a7a;--blue2:rgba(26,74,122,.12);
+  --green:#1a6040;--green2:rgba(26,96,64,.12);
+  --red:#8b1a1a;--red2:rgba(139,26,26,.10);
+  --amber:#8b5a1a;--amber2:rgba(139,90,26,.10);
+  --mono:'DM Mono',monospace;--sans:'DM Sans',sans-serif;--disp:'Bebas Neue',sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:13px;min-height:100vh}
@@ -34,121 +23,85 @@ body::before{content:'';position:fixed;inset:0;
   background-image:linear-gradient(var(--line2) 1px,transparent 1px),linear-gradient(90deg,var(--line2) 1px,transparent 1px);
   background-size:40px 40px;pointer-events:none;z-index:0}
 
-/* ── HEADER ── */
+/* HEADER */
 .hdr{position:sticky;top:0;z-index:100;background:var(--ink);color:var(--bg);
-  padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;height:50px;display:flex;align-items:center;justify-content:space-between;
   border-bottom:3px solid var(--gold)}
-.logo{font-family:var(--disp);font-size:20px;letter-spacing:.08em;display:flex;align-items:center;gap:8px}
-.logo-dot{width:7px;height:7px;background:var(--gold);border-radius:50%;animation:pulse 2s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
-.hdr-center{display:flex;align-items:center;gap:6px}
-.regime-pill{display:flex;align-items:center;gap:6px;padding:5px 14px;border-radius:2px;
+.logo{font-family:var(--disp);font-size:19px;letter-spacing:.08em;display:flex;align-items:center;gap:7px}
+.logo-dot{width:7px;height:7px;background:var(--gold);border-radius:50%;animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.hdr-mid{display:flex;align-items:center;gap:8px}
+.regime-pill{display:flex;align-items:center;gap:5px;padding:4px 12px;border-radius:2px;
   font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
   border:1px solid;cursor:pointer;transition:opacity .15s}
 .regime-pill:hover{opacity:.8}
 .rp-dot{width:5px;height:5px;border-radius:50%}
 .rp-crise{background:var(--red2);color:var(--red);border-color:rgba(139,26,26,.3)}
 .rp-crise .rp-dot{background:var(--red)}
-.rp-trans{background:rgba(139,90,26,.1);color:var(--amber);border-color:rgba(139,90,26,.3)}
+.rp-trans{background:var(--amber2);color:var(--amber);border-color:rgba(139,90,26,.3)}
 .rp-trans .rp-dot{background:var(--amber)}
 .rp-detente{background:var(--green2);color:var(--green);border-color:rgba(26,96,64,.3)}
 .rp-detente .rp-dot{background:var(--green)}
 .hdr-right{display:flex;align-items:center;gap:8px}
 .cap-wrap{display:flex;align-items:center;gap:5px;background:rgba(244,241,235,.07);
-  border:1px solid rgba(244,241,235,.12);border-radius:2px;padding:4px 10px}
+  border:1px solid rgba(244,241,235,.12);border-radius:2px;padding:3px 9px}
 .cap-wrap label{font-family:var(--mono);font-size:9px;color:rgba(244,241,235,.4);text-transform:uppercase;letter-spacing:.08em}
 .cap-input{background:transparent;border:none;color:var(--bg);font-family:var(--disp);
-  font-size:17px;width:82px;outline:none;text-align:right}
+  font-size:16px;width:78px;outline:none;text-align:right}
+.btn-markets{background:rgba(184,134,11,.2);color:var(--gold);border:1px solid rgba(184,134,11,.4);
+  border-radius:2px;padding:6px 14px;font-family:var(--mono);font-size:10px;font-weight:500;
+  letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:all .15s;position:relative}
+.btn-markets:hover{background:rgba(184,134,11,.3)}
+.btn-markets.stale::after{content:'';position:absolute;top:-3px;right:-3px;
+  width:8px;height:8px;background:var(--amber);border-radius:50%;animation:blink .8s infinite}
 .btn-add{background:var(--gold);color:var(--ink);border:none;border-radius:2px;
-  padding:7px 14px;font-family:var(--mono);font-size:10px;font-weight:500;
+  padding:6px 14px;font-family:var(--mono);font-size:10px;font-weight:500;
   letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:background .15s}
 .btn-add:hover{background:#d4a010}
 
-/* ── BANDE RÉSUMÉ ── */
-.summary{position:relative;z-index:1;background:var(--ink);color:var(--bg);
-  padding:9px 24px;display:flex;align-items:center;gap:24px;
-  border-bottom:1px solid rgba(244,241,235,.08);overflow-x:auto}
-.sb{flex-shrink:0}
-.sb-lbl{font-family:var(--mono);font-size:9px;color:rgba(244,241,235,.35);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1px}
-.sb-val{font-family:var(--disp);font-size:18px;letter-spacing:.04em}
-.sb-sep{width:1px;height:24px;background:rgba(244,241,235,.1);flex-shrink:0}
-.sb-action{flex:1;font-family:var(--mono);font-size:11px;color:rgba(244,241,235,.6);
-  padding-left:14px;border-left:2px solid var(--gold)}
-.sb-action strong{color:var(--bg)}
+/* BANDE ACTION PRINCIPALE */
+.action-band{position:relative;z-index:1;background:var(--ink);color:var(--bg);
+  padding:0;border-bottom:1px solid rgba(244,241,235,.08)}
+.action-inner{display:flex;align-items:stretch;overflow-x:auto;min-height:52px}
+.ab-item{flex-shrink:0;display:flex;flex-direction:column;justify-content:center;
+  padding:8px 16px;border-right:1px solid rgba(244,241,235,.08)}
+.ab-lbl{font-family:var(--mono);font-size:8px;color:rgba(244,241,235,.35);
+  text-transform:uppercase;letter-spacing:.1em;margin-bottom:2px}
+.ab-val{font-family:var(--disp);font-size:17px;letter-spacing:.04em}
+.ab-sep{width:1px;flex-shrink:0;background:rgba(244,241,235,.08)}
+/* Action prioritaire — grande zone */
+.ab-action{flex:1;display:flex;flex-direction:column;justify-content:center;
+  padding:8px 16px;min-width:0}
+.ab-action-lbl{font-family:var(--mono);font-size:9px;color:rgba(244,241,235,.35);
+  text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px}
+.ab-action-content{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.action-tag{display:flex;align-items:center;gap:5px;padding:3px 10px;
+  border-radius:2px;font-family:var(--mono);font-size:10px;font-weight:500;
+  letter-spacing:.04em;border:1px solid}
+.at-buy{background:rgba(26,96,64,.2);color:#4ae89a;border-color:rgba(26,96,64,.4)}
+.at-hold{background:rgba(184,134,11,.15);color:var(--gold);border-color:rgba(184,134,11,.3)}
+.at-reduce{background:rgba(139,26,26,.15);color:#f08080;border-color:rgba(139,26,26,.3)}
+.at-dot{width:6px;height:6px;border-radius:50%}
 
-/* ── PANNEAU MARCHÉS ── */
-.market-panel{position:relative;z-index:1;background:var(--bg2);
-  border-bottom:2px solid var(--ink)}
-.mp-toggle{display:flex;align-items:center;gap:8px;padding:8px 24px;
-  cursor:pointer;border-bottom:1px solid var(--line)}
-.mp-toggle:hover{background:var(--bg3)}
-.mp-arrow{font-size:10px;transition:transform .2s;font-family:var(--mono)}
-.mp-arrow.open{transform:rotate(90deg)}
-.mp-label{font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.06em;text-transform:uppercase}
-.mp-summary{font-family:var(--mono);font-size:10px;color:var(--ink3);margin-left:auto}
-.mp-body{display:none;padding:14px 24px 16px}
-.mp-body.open{display:block}
-
-/* Grille marchés */
-.mp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
-.mf{display:flex;flex-direction:column;gap:3px}
-.mf-label{font-family:var(--mono);font-size:9px;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em;display:flex;align-items:center;justify-content:space-between}
-.mf-label span{font-size:8px;color:var(--ink3);opacity:.6}
-.mf-input{background:var(--bg);border:1px solid var(--line);border-radius:3px;
-  color:var(--ink);font-family:var(--mono);font-size:13px;padding:6px 9px;
-  outline:none;transition:border-color .15s;width:100%}
-.mf-input:focus{border-color:var(--gold)}
-.mp-links{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
-.mp-links a{font-family:var(--mono);font-size:9px;color:var(--blue);text-decoration:none;
-  padding:2px 7px;background:var(--blue2);border-radius:2px;border:1px solid rgba(26,74,122,.2)}
-.mp-links a:hover{color:var(--gold)}
-.mp-bottom{display:flex;align-items:center;justify-content:space-between}
-.btn-calc{background:var(--ink);color:var(--bg);border:none;border-radius:2px;
-  padding:8px 20px;font-family:var(--mono);font-size:10px;font-weight:500;
-  letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:background .15s}
-.btn-calc:hover{background:#333}
-.mp-last{font-family:var(--mono);font-size:10px;color:var(--ink3)}
-
-/* Alertes */
-.alerts{position:relative;z-index:1;display:flex;border-bottom:1px solid var(--line);
-  background:var(--bg);overflow-x:auto}
-.alert-item{display:flex;align-items:center;gap:7px;padding:7px 14px;
+/* ALERTES */
+.alerts{position:relative;z-index:1;display:flex;background:var(--bg);
+  border-bottom:1px solid var(--line);overflow-x:auto}
+.alert-item{display:flex;align-items:center;gap:6px;padding:6px 14px;
   border-right:1px solid var(--line);font-family:var(--mono);font-size:10px;flex-shrink:0}
 .alert-item:last-child{border-right:none}
-.alert-item.active{background:var(--red2)}
+.alert-item.triggered{background:var(--red2)}
 .a-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-.a-dormant{background:var(--ink3)}
-.a-watch{background:var(--amber);animation:pulse 1.5s infinite}
-.a-active{background:var(--red);animation:pulse .8s infinite}
-.a-lbl{color:var(--ink2)}
-.a-lbl strong{color:var(--ink)}
-.a-act{color:var(--ink3)}
-.alert-item.active .a-act{color:var(--red)}
+.a-off{background:var(--ink3)}.a-watch{background:var(--amber);animation:blink 1.5s infinite}
+.a-on{background:var(--red);animation:blink .8s infinite}
+.a-txt{color:var(--ink2)}.a-txt strong{color:var(--ink)}
+.a-arrow{color:var(--ink3);font-size:9px}
+.alert-item.triggered .a-arrow{color:var(--red)}
 
-/* ── MAIN ── */
-.main{position:relative;z-index:1;padding:24px 24px 40px}
+/* MAIN */
+.main{position:relative;z-index:1;padding:20px 20px 40px}
 
-/* Contrôles haut */
-.top-controls{display:flex;align-items:center;justify-content:space-between;
-  margin-bottom:16px;flex-wrap:wrap;gap:10px}
-.legend{display:flex;align-items:center;gap:16px;padding:8px 12px;
-  background:var(--bg2);border:1px solid var(--line);border-radius:3px;width:fit-content}
-.leg-item{display:flex;align-items:center;gap:5px}
-.leg-dot{width:9px;height:9px;border-radius:50%}
-.leg-lbl{font-family:var(--mono);font-size:10px;color:var(--ink2)}
-.sim-wrap{display:flex;align-items:center;gap:7px}
-.sim-lbl{font-family:var(--mono);font-size:10px;color:var(--ink2);text-transform:uppercase;letter-spacing:.06em}
-.toggle-btn{position:relative;width:34px;height:17px;background:var(--bg3);
-  border:1px solid var(--line);border-radius:9px;cursor:pointer;transition:background .2s}
-.toggle-btn.on{background:var(--red)}
-.toggle-knob{position:absolute;top:2px;left:2px;width:11px;height:11px;
-  background:var(--bg);border-radius:50%;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
-.toggle-btn.on .toggle-knob{left:19px}
-.sim-desc{font-size:11px;color:var(--ink3)}
-.sim-desc.on{color:var(--red)}
-
-/* ── TIMELINE ── */
-.tl-wrap{overflow-x:auto;padding-bottom:16px;
+/* TIMELINE */
+.tl-wrap{overflow-x:auto;padding-bottom:14px;
   scrollbar-width:thin;scrollbar-color:var(--ink3) var(--bg3)}
 .tl-wrap::-webkit-scrollbar{height:3px}
 .tl-wrap::-webkit-scrollbar-track{background:var(--bg3)}
@@ -160,53 +113,53 @@ body::before{content:'';position:fixed;inset:0;
 .road-prog{position:absolute;top:0;left:0;bottom:0;background:var(--gold);border-radius:2px;transition:width .6s ease}
 .today-mk{position:absolute;top:-20px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;z-index:10}
 .today-flag{background:var(--ink);color:var(--bg);font-family:var(--mono);font-size:9px;
-  font-weight:500;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:2px;white-space:nowrap}
+  font-weight:500;letter-spacing:.06em;text-transform:uppercase;padding:3px 7px;border-radius:2px;white-space:nowrap}
 .today-line{width:2px;height:44px;background:var(--ink)}
-.ms-container{position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none}
+.ms-cont{position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none}
 
 /* Jalons */
 .milestone{position:absolute;top:50%;transform:translateX(-50%);pointer-events:all}
 .m-pin{position:absolute;top:-36px;left:50%;transform:translateX(-50%);
   display:flex;flex-direction:column;align-items:center;cursor:pointer}
-.m-pin-dot{width:15px;height:15px;border-radius:50%;border:3px solid var(--bg);
-  box-shadow:0 0 0 2px currentColor,0 2px 8px rgba(0,0,0,.2);
-  transition:transform .15s;z-index:2}
+.m-pin-dot{width:14px;height:14px;border-radius:50%;border:3px solid var(--bg);
+  box-shadow:0 0 0 2px currentColor,0 2px 8px rgba(0,0,0,.2);transition:transform .15s;z-index:2}
 .m-pin:hover .m-pin-dot{transform:scale(1.2)}
 .m-pin-line{width:2px;height:20px;background:currentColor;opacity:.4}
 .m-card{position:absolute;width:178px;background:var(--bg);border:1px solid var(--line);
-  border-radius:3px;box-shadow:0 4px 16px rgba(26,24,20,.08);overflow:hidden;
+  border-radius:3px;box-shadow:0 4px 14px rgba(26,24,20,.08);overflow:hidden;
   cursor:pointer;transition:box-shadow .15s,transform .15s}
-.m-card:hover{box-shadow:0 8px 24px rgba(26,24,20,.14)}
+.m-card:hover{box-shadow:0 7px 20px rgba(26,24,20,.14)}
 .m-card.top{bottom:calc(100% + 36px);left:50%;transform:translateX(-50%)}
 .m-card.top:hover{transform:translateX(-50%) translateY(-2px)}
 .m-card.bottom{top:calc(100% + 36px);left:50%;transform:translateX(-50%)}
 .m-card.bottom:hover{transform:translateX(-50%) translateY(2px)}
 .m-card-hdr{padding:7px 9px;border-bottom:1px solid var(--line2);
-  display:flex;align-items:center;justify-content:space-between}
+  display:flex;align-items:center;justify-content:space-between;background:var(--bg2)}
 .m-date{font-family:var(--mono);font-size:9px;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em}
 .m-amount{font-family:var(--disp);font-size:15px}
 .m-card-body{padding:7px 9px;display:flex;flex-direction:column;gap:3px}
 .m-row{display:flex;align-items:center;justify-content:space-between;font-size:11px}
-.m-row-name{display:flex;align-items:center;gap:4px}
+.m-row-l{display:flex;align-items:center;gap:4px}
 .m-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 .m-row-amt{font-family:var(--mono);font-size:10px;color:var(--ink2)}
 .m-card-ftr{padding:5px 9px;background:var(--bg2);border-top:1px solid var(--line2);
   display:flex;align-items:center;justify-content:space-between}
-.m-reserve{font-family:var(--mono);font-size:9px;color:var(--ink3)}
-.m-reserve strong{color:var(--ink2)}
+.m-res{font-family:var(--mono);font-size:9px;color:var(--ink3)}
+.m-res strong{color:var(--ink2)}
 .m-status{font-family:var(--mono);font-size:9px}
-.m-status.done{color:var(--green)}
-.m-status.todo{color:var(--ink3)}
-.milestone.frozen .m-pin-dot{opacity:.35}
-.milestone.frozen .m-card{opacity:.45;filter:grayscale(.8)}
-.m-frozen-badge{position:absolute;top:-7px;right:-7px;background:var(--ink3);
+.m-status.done{color:var(--green)}.m-status.todo{color:var(--ink3)}
+.milestone.frozen .m-pin-dot{opacity:.3}
+.milestone.frozen .m-card{opacity:.4;filter:grayscale(.8)}
+.m-reeval{position:absolute;top:-7px;right:-7px;background:var(--amber);
+  color:var(--bg);font-family:var(--mono);font-size:8px;padding:2px 5px;border-radius:2px}
+.m-frozen-b{position:absolute;top:-7px;right:-7px;background:var(--ink3);
   color:var(--bg);font-family:var(--mono);font-size:8px;padding:2px 5px;border-radius:2px}
 
-/* Zakat marker */
+/* Zakat */
 .zakat-mk{position:absolute;top:50%;transform:translateX(-50%)}
 .z-pin{position:absolute;top:-28px;left:50%;transform:translateX(-50%);
   display:flex;flex-direction:column;align-items:center}
-.z-dot{width:11px;height:11px;background:var(--bg);border:2px solid var(--blue);border-radius:50%}
+.z-dot{width:10px;height:10px;background:var(--bg);border:2px solid var(--blue);border-radius:50%}
 .z-line{width:1px;height:14px;background:var(--blue);opacity:.5}
 .z-lbl{position:absolute;top:calc(100% + 26px);left:50%;transform:translateX(-50%);
   background:var(--blue2);border:1px solid rgba(26,74,122,.2);border-radius:2px;
@@ -215,116 +168,163 @@ body::before{content:'';position:fixed;inset:0;
 .z-amount{font-family:var(--disp);font-size:13px;color:var(--blue);margin-top:1px}
 .z-sub{font-size:9px;color:var(--ink3);margin-top:1px}
 
-/* ── OVERLAY ── */
+/* OVERLAY */
 .overlay{position:fixed;inset:0;background:rgba(26,24,20,.72);
   backdrop-filter:blur(5px);z-index:200;display:none;align-items:center;justify-content:center}
 .overlay.open{display:flex}
-.modal{background:var(--bg);border:1px solid var(--line);border-top:3px solid var(--gold);
-  border-radius:3px;width:500px;max-width:96vw;max-height:90vh;overflow-y:auto;
-  box-shadow:0 20px 60px rgba(26,24,20,.3)}
-.modal-hdr{padding:16px 20px 12px;border-bottom:1px solid var(--line2)}
+
+/* MODALS commune */
+.modal-base{background:var(--bg);border:1px solid var(--line);border-radius:3px;
+  max-width:96vw;box-shadow:0 20px 60px rgba(26,24,20,.3)}
+
+/* Modal marchés */
+.mkt-modal{width:560px;border-top:3px solid var(--gold)}
+.mkt-hdr{padding:14px 20px 10px;border-bottom:1px solid var(--line2);
+  display:flex;align-items:center;justify-content:space-between}
+.mkt-title{font-family:var(--disp);font-size:20px;letter-spacing:.06em}
+.mkt-sub{font-family:var(--mono);font-size:10px;color:var(--ink3);margin-top:2px}
+.mkt-close{background:none;border:none;color:var(--ink3);cursor:pointer;font-size:16px}
+.mkt-links{display:flex;flex-wrap:wrap;gap:5px;padding:10px 20px;
+  background:var(--bg2);border-bottom:1px solid var(--line2)}
+.mkt-links a{font-family:var(--mono);font-size:9px;color:var(--blue);text-decoration:none;
+  padding:2px 7px;background:var(--blue2);border-radius:2px;border:1px solid rgba(26,74,122,.2)}
+.mkt-links a:hover{color:var(--gold)}
+.mkt-body{padding:14px 20px}
+.mkt-section{margin-bottom:14px}
+.mkt-section-title{font-family:var(--mono);font-size:9px;font-weight:500;
+  color:var(--ink3);text-transform:uppercase;letter-spacing:.1em;
+  margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--line2)}
+.mkt-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mkt-field{display:flex;flex-direction:column;gap:3px}
+.mkt-label{font-family:var(--mono);font-size:9px;color:var(--ink3);
+  text-transform:uppercase;letter-spacing:.06em;display:flex;align-items:center;justify-content:space-between}
+.mkt-label span{font-size:8px;opacity:.6}
+.mkt-input{background:var(--bg2);border:1px solid var(--line);border-radius:3px;
+  color:var(--ink);font-family:var(--mono);font-size:12px;padding:6px 9px;
+  outline:none;transition:border-color .15s;width:100%}
+.mkt-input:focus{border-color:var(--gold)}
+/* Sélecteur Hormuz */
+.hormuz-sel{display:flex;gap:6px}
+.hz-opt{flex:1;padding:7px 4px;text-align:center;border:1px solid var(--line);
+  border-radius:3px;cursor:pointer;font-family:var(--mono);font-size:10px;
+  letter-spacing:.04em;transition:all .15s;background:var(--bg2)}
+.hz-opt:hover{background:var(--bg3)}
+.hz-opt.selected-red{background:var(--red2);border-color:rgba(139,26,26,.4);color:var(--red)}
+.hz-opt.selected-amb{background:var(--amber2);border-color:rgba(139,90,26,.4);color:var(--amber)}
+.hz-opt.selected-grn{background:var(--green2);border-color:rgba(26,96,64,.4);color:var(--green)}
+.mkt-ftr{padding:12px 20px;border-top:1px solid var(--line2);
+  display:flex;align-items:center;justify-content:space-between}
+.mkt-last{font-family:var(--mono);font-size:10px;color:var(--ink3)}
+.btn-calc{background:var(--ink);color:var(--bg);border:none;border-radius:2px;
+  padding:8px 20px;font-family:var(--mono);font-size:10px;font-weight:500;
+  letter-spacing:.05em;text-transform:uppercase;cursor:pointer}
+.btn-calc:hover{background:#333}
+
+/* Modal versement */
+.vers-modal{width:500px;border-top:3px solid var(--gold)}
+.modal-hdr{padding:14px 20px 10px;border-bottom:1px solid var(--line2)}
 .modal-title{font-family:var(--disp);font-size:20px;letter-spacing:.06em}
 .modal-sub{font-family:var(--mono);font-size:10px;color:var(--ink3);margin-top:2px}
-.modal-body{padding:16px 20px}
-.mrow{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px}
+.modal-body{padding:14px 20px}
+.mrow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
 .mfield{display:flex;flex-direction:column;gap:3px}
-.mfield.full{grid-column:1/-1}
 .mlabel{font-family:var(--mono);font-size:9px;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em}
 .minput,.msel{background:var(--bg2);border:1px solid var(--line);border-radius:3px;
-  color:var(--ink);font-family:var(--mono);font-size:12px;padding:7px 9px;outline:none;transition:border-color .15s}
+  color:var(--ink);font-family:var(--mono);font-size:12px;padding:6px 9px;outline:none;transition:border-color .15s}
 .minput:focus,.msel:focus{border-color:var(--gold)}
-.msel option{background:var(--bg2)}
-.alloc-sec{background:var(--bg2);border:1px solid var(--line2);border-radius:3px;padding:12px;margin-bottom:12px}
-.alloc-sec-title{font-family:var(--mono);font-size:9px;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:9px}
-.alloc-row{display:grid;grid-template-columns:18px 1fr 70px 46px;align-items:center;gap:7px;margin-bottom:7px}
+.alloc-sec{background:var(--bg2);border:1px solid var(--line2);border-radius:3px;padding:11px;margin-bottom:11px}
+.alloc-sec-title{font-family:var(--mono);font-size:9px;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.alloc-row{display:grid;grid-template-columns:16px 1fr 68px 44px;align-items:center;gap:6px;margin-bottom:6px}
 .alloc-row:last-child{margin-bottom:0}
 .a-slider{-webkit-appearance:none;height:3px;background:var(--bg3);border-radius:2px;outline:none;cursor:pointer}
-.a-slider::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;border-radius:50%;
+.a-slider::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;border-radius:50%;
   background:var(--ink);cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.2)}
 .a-pct{font-family:var(--mono);font-size:10px;text-align:right;font-weight:500}
-.alloc-total{display:flex;justify-content:space-between;margin-top:9px;padding-top:7px;
+.alloc-total{display:flex;justify-content:space-between;margin-top:8px;padding-top:7px;
   border-top:1px solid var(--line2);font-family:var(--mono);font-size:10px}
-.total-ok{color:var(--green)}.total-warn{color:var(--red)}
-.modal-note{background:var(--gold2);border:1px solid rgba(184,134,11,.2);border-radius:3px;
-  padding:9px 11px;font-size:11px;color:var(--ink2);line-height:1.6;margin-bottom:12px}
-.modal-ftr{padding:12px 20px;border-top:1px solid var(--line2);display:flex;gap:7px;justify-content:flex-end}
-.btn-confirm{background:var(--ink);color:var(--bg);border:none;border-radius:3px;
-  padding:8px 20px;font-family:var(--mono);font-size:10px;font-weight:500;
-  letter-spacing:.04em;cursor:pointer;transition:background .15s}
+.tok{color:var(--green)}.twarn{color:var(--red)}
+.modal-note{background:var(--gold3);border:1px solid rgba(184,134,11,.2);border-radius:3px;
+  padding:8px 11px;font-size:11px;color:var(--ink2);line-height:1.6;margin-bottom:11px}
+.modal-ftr{padding:11px 20px;border-top:1px solid var(--line2);display:flex;gap:7px;justify-content:flex-end}
+.btn-confirm{background:var(--ink);color:var(--bg);border:none;border-radius:2px;
+  padding:8px 18px;font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.04em;cursor:pointer}
 .btn-confirm:hover{background:#333}
 .btn-cancel-m{background:transparent;color:var(--ink3);border:1px solid var(--line);
-  border-radius:3px;padding:8px 12px;font-family:var(--mono);font-size:10px;cursor:pointer}
+  border-radius:2px;padding:8px 11px;font-family:var(--mono);font-size:10px;cursor:pointer}
 
-/* MODAL DÉTAIL */
-.detail-modal{background:var(--bg);border:1px solid var(--line);border-radius:3px;
-  width:320px;max-width:96vw;box-shadow:0 20px 60px rgba(26,24,20,.25)}
-.dm-hdr{padding:12px 16px;background:var(--ink);color:var(--bg);border-radius:3px 3px 0 0;
+/* Modal détail jalon */
+.detail-modal{width:320px;max-width:96vw;border-top:3px solid var(--ink)}
+.dm-hdr{padding:11px 14px;background:var(--ink);color:var(--bg);
   display:flex;align-items:center;justify-content:space-between}
-.dm-title{font-family:var(--disp);font-size:19px;letter-spacing:.06em}
+.dm-title{font-family:var(--disp);font-size:18px;letter-spacing:.06em}
 .dm-date{font-family:var(--mono);font-size:10px;color:rgba(244,241,235,.4)}
-.dm-close{background:none;border:none;color:rgba(244,241,235,.4);cursor:pointer;font-size:15px}
-.dm-body{padding:12px 16px}
-.dm-alloc{display:flex;flex-direction:column;gap:5px;margin-bottom:10px}
-.dm-row{display:flex;align-items:center;gap:7px;padding:6px 9px;background:var(--bg2);border-radius:3px}
+.dm-close{background:none;border:none;color:rgba(244,241,235,.4);cursor:pointer;font-size:14px}
+.dm-body{padding:11px 14px}
+.dm-alloc{display:flex;flex-direction:column;gap:4px;margin-bottom:9px}
+.dm-row{display:flex;align-items:center;gap:6px;padding:5px 8px;background:var(--bg2);border-radius:2px}
 .dm-name{flex:1;font-size:12px}
-.dm-bar-w{width:72px;height:3px;background:var(--bg3);border-radius:2px;overflow:hidden}
+.dm-bar-w{width:64px;height:3px;background:var(--bg3);border-radius:2px;overflow:hidden}
 .dm-bar{height:100%;border-radius:2px}
-.dm-amt{font-family:var(--mono);font-size:10px;color:var(--ink2);min-width:48px;text-align:right}
-.dm-ftr{border-top:1px solid var(--line2);padding-top:9px;display:flex;flex-direction:column;gap:5px}
+.dm-amt{font-family:var(--mono);font-size:10px;color:var(--ink2);min-width:46px;text-align:right}
+.dm-ftr{border-top:1px solid var(--line2);padding-top:8px;display:flex;flex-direction:column;gap:4px}
 .dm-ftr-row{display:flex;justify-content:space-between;font-size:11px}
 .dm-ftr-lbl{color:var(--ink3);font-family:var(--mono)}
 .dm-ftr-val{font-family:var(--mono);font-weight:500}
-.dm-actions{display:flex;gap:5px;margin-top:9px}
-.btn-done{flex:1;background:var(--green);color:var(--bg);border:none;border-radius:3px;
-  padding:7px;font-family:var(--mono);font-size:10px;letter-spacing:.04em;cursor:pointer}
-.btn-done:hover{opacity:.85}
-.btn-done.undone{background:var(--ink3)}
+.dm-actions{display:flex;gap:5px;margin-top:8px}
+.btn-done{flex:1;background:var(--green);color:var(--bg);border:none;border-radius:2px;
+  padding:6px;font-family:var(--mono);font-size:10px;cursor:pointer}
+.btn-done:hover{opacity:.85}.btn-done.undone{background:var(--ink3)}
 .btn-del{background:transparent;color:var(--red);border:1px solid rgba(139,26,26,.3);
-  border-radius:3px;padding:7px 10px;font-family:var(--mono);font-size:10px;cursor:pointer}
+  border-radius:2px;padding:6px 9px;font-family:var(--mono);font-size:10px;cursor:pointer}
 
-/* MODAL RÉGIME */
-.regime-modal{background:var(--bg);border:1px solid var(--line);
-  border-top:3px solid var(--ink);border-radius:3px;width:360px;max-width:96vw;
-  box-shadow:0 20px 60px rgba(26,24,20,.25);padding:18px}
-.rm-title{font-family:var(--disp);font-size:20px;letter-spacing:.06em;margin-bottom:12px}
-.rm-opts{display:flex;flex-direction:column;gap:7px;margin-bottom:14px}
-.rm-opt{display:flex;align-items:center;gap:9px;padding:9px 12px;
+/* Modal régime */
+.regime-modal{width:340px;padding:16px;border-top:3px solid var(--ink)}
+.rm-title{font-family:var(--disp);font-size:19px;letter-spacing:.06em;margin-bottom:11px}
+.rm-opts{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+.rm-opt{display:flex;align-items:center;gap:8px;padding:8px 11px;
   border:1px solid var(--line);border-radius:3px;cursor:pointer;transition:background .12s;font-size:12px}
-.rm-opt:hover{background:var(--bg2)}
-.rm-opt.selected{border-color:var(--gold);background:var(--gold2)}
+.rm-opt:hover{background:var(--bg2)}.rm-opt.selected{border-color:var(--gold);background:var(--gold3)}
 .rm-opt-info{flex:1}
 .rm-opt-name{font-family:var(--mono);font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.04em}
 .rm-opt-desc{font-size:10px;color:var(--ink3);margin-top:1px}
 
-/* GUIDE */
+/* Confirm dialog */
+.confirm-modal{width:380px;padding:20px;border-top:3px solid var(--amber)}
+.confirm-q{font-family:var(--disp);font-size:20px;letter-spacing:.04em;margin-bottom:8px}
+.confirm-body{font-size:12px;color:var(--ink2);line-height:1.6;margin-bottom:14px}
+.confirm-ftr{display:flex;gap:8px;justify-content:flex-end}
+.btn-confirm-yes{background:var(--amber);color:var(--bg);border:none;border-radius:2px;
+  padding:8px 18px;font-family:var(--mono);font-size:10px;font-weight:500;cursor:pointer}
+.btn-confirm-no{background:transparent;color:var(--ink3);border:1px solid var(--line);
+  border-radius:2px;padding:8px 11px;font-family:var(--mono);font-size:10px;cursor:pointer}
+
+/* Guide */
 .guide{position:fixed;inset:0;background:rgba(26,24,20,.87);z-index:300;
   display:flex;align-items:center;justify-content:center}
 .guide-card{background:var(--bg);border:1px solid var(--line);border-top:3px solid var(--gold);
-  border-radius:3px;width:460px;max-width:96vw;box-shadow:0 24px 64px rgba(26,24,20,.4)}
+  border-radius:3px;width:450px;max-width:96vw;box-shadow:0 24px 64px rgba(26,24,20,.4)}
 .g-steps{display:flex;border-bottom:1px solid var(--line2)}
-.g-step{flex:1;padding:9px 12px;font-family:var(--mono);font-size:9px;text-transform:uppercase;
-  letter-spacing:.06em;color:var(--ink3);text-align:center;border-right:1px solid var(--line2);transition:all .2s}
+.g-step{flex:1;padding:8px 10px;font-family:var(--mono);font-size:9px;text-transform:uppercase;
+  letter-spacing:.06em;color:var(--ink3);text-align:center;border-right:1px solid var(--line2)}
 .g-step:last-child{border-right:none}
-.g-step.active{color:var(--gold);background:var(--gold2)}
+.g-step.active{color:var(--gold);background:var(--gold3)}
 .g-step.done{color:var(--green)}
-.g-body{padding:20px 22px;min-height:170px}
-.g-q{font-family:var(--disp);font-size:22px;letter-spacing:.04em;margin-bottom:6px}
-.g-sub{font-size:12px;color:var(--ink3);margin-bottom:16px;line-height:1.5}
+.g-body{padding:18px 20px;min-height:160px}
+.g-q{font-family:var(--disp);font-size:20px;letter-spacing:.04em;margin-bottom:5px}
+.g-sub{font-size:12px;color:var(--ink3);margin-bottom:14px;line-height:1.5}
 .g-input{background:var(--bg2);border:1px solid var(--line);border-radius:3px;
-  color:var(--ink);font-family:var(--disp);font-size:26px;padding:9px 12px;outline:none;
+  color:var(--ink);font-family:var(--disp);font-size:24px;padding:8px 11px;outline:none;
   width:100%;transition:border-color .15s;letter-spacing:.04em}
 .g-input:focus{border-color:var(--gold)}
-.g-opts{display:flex;flex-direction:column;gap:7px}
-.g-opt{display:flex;align-items:center;gap:9px;padding:9px 12px;border:1px solid var(--line);
+.g-opts{display:flex;flex-direction:column;gap:6px}
+.g-opt{display:flex;align-items:center;gap:8px;padding:8px 11px;border:1px solid var(--line);
   border-radius:3px;cursor:pointer;font-size:12px;transition:background .12s}
-.g-opt:hover{background:var(--bg2)}
-.g-opt.selected{border-color:var(--gold);background:var(--gold2)}
-.g-ftr{padding:12px 22px;border-top:1px solid var(--line2);display:flex;justify-content:space-between;align-items:center}
+.g-opt:hover{background:var(--bg2)}.g-opt.selected{border-color:var(--gold);background:var(--gold3)}
+.g-ftr{padding:11px 20px;border-top:1px solid var(--line2);display:flex;justify-content:space-between;align-items:center}
 .g-count{font-family:var(--mono);font-size:10px;color:var(--ink3)}
-.btn-next{background:var(--ink);color:var(--bg);border:none;border-radius:3px;
-  padding:8px 20px;font-family:var(--mono);font-size:10px;letter-spacing:.04em;cursor:pointer}
-.btn-next:hover{background:#333}
-.btn-next:disabled{background:var(--ink3);cursor:not-allowed}
+.btn-next{background:var(--ink);color:var(--bg);border:none;border-radius:2px;
+  padding:7px 18px;font-family:var(--mono);font-size:10px;letter-spacing:.04em;cursor:pointer}
+.btn-next:hover{background:#333}.btn-next:disabled{background:var(--ink3);cursor:not-allowed}
 </style>
 </head>
 <body>
@@ -337,33 +337,36 @@ body::before{content:'';position:fixed;inset:0;
       <div class="g-step" id="gs1">02 · Régime</div>
       <div class="g-step" id="gs2">03 · Démarrer</div>
     </div>
-    <div class="g-body" id="g-body">
+    <div class="g-body">
       <div id="gstep-0">
         <div class="g-q">Capital de départ ?</div>
-        <div class="g-sub">Montant à virer sur votre compte IBKR. Saisissable en € — tout se recalcule automatiquement.</div>
+        <div class="g-sub">Montant viré sur votre compte IBKR. Tout se recalcule automatiquement.</div>
         <input type="number" class="g-input" id="g-capital" placeholder="10 000" min="100" step="500">
       </div>
       <div id="gstep-1" style="display:none">
-        <div class="g-q">Régime de marché actuel ?</div>
-        <div class="g-sub">Détermine l'allocation suggérée sur chaque versement.</div>
+        <div class="g-q">Régime actuel ?</div>
+        <div class="g-sub">Définit l'allocation suggérée sur chaque versement. Modifiable à tout moment.</div>
         <div class="g-opts">
-          <div class="g-opt" onclick="selectRegime('crise')" id="gr-crise">
+          <div class="g-opt" onclick="selR('crise')" id="gr-crise">
             <div class="m-dot" style="background:var(--red)"></div>
-            <div><div style="font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.04em">🔴 Crise géopolitique</div><div style="font-size:10px;color:var(--ink3);margin-top:1px">Brent &gt;$100 · Hormuz · Sur-pondérer SGLN+XOM</div></div>
+            <div><div style="font-family:var(--mono);font-size:10px;text-transform:uppercase">🔴 Crise — Brent &gt;$100 · Hormuz bloqué</div>
+            <div style="font-size:10px;color:var(--ink3);margin-top:1px">Surpondérer SGLN.L + XOM/CVX</div></div>
           </div>
-          <div class="g-opt" onclick="selectRegime('trans')" id="gr-trans">
+          <div class="g-opt" onclick="selR('trans')" id="gr-trans">
             <div class="m-dot" style="background:var(--amber)"></div>
-            <div><div style="font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.04em">🟡 Transition</div><div style="font-size:10px;color:var(--ink3);margin-top:1px">Brent $80-100 · Signaux mixtes · Équilibrer</div></div>
+            <div><div style="font-family:var(--mono);font-size:10px;text-transform:uppercase">🟡 Transition — Brent $80-100</div>
+            <div style="font-size:10px;color:var(--ink3);margin-top:1px">Équilibrer SGLN + INRG + IGDA</div></div>
           </div>
-          <div class="g-opt selected" onclick="selectRegime('detente')" id="gr-detente">
+          <div class="g-opt selected" onclick="selR('detente')" id="gr-detente">
             <div class="m-dot" style="background:var(--green)"></div>
-            <div><div style="font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.04em">🟢 Détente</div><div style="font-size:10px;color:var(--ink3);margin-top:1px">Brent &lt;$80 · VIX calme · Sur-pondérer INRG+IGDA</div></div>
+            <div><div style="font-family:var(--mono);font-size:10px;text-transform:uppercase">🟢 Détente — Brent &lt;$80 · VIX calme</div>
+            <div style="font-size:10px;color:var(--ink3);margin-top:1px">Surpondérer INRG.L + IGDA.L</div></div>
           </div>
         </div>
       </div>
       <div id="gstep-2" style="display:none">
-        <div class="g-q">Votre plan est prêt.</div>
-        <div class="g-sub">Premier jalon généré. Saisissez les cours de marché dans le panneau "Marchés" pour que le régime se mette à jour automatiquement.</div>
+        <div class="g-q">Prêt à démarrer.</div>
+        <div class="g-sub">Premier jalon créé. Mettez à jour les cours via le bouton "Marchés" pour que le régime s'ajuste automatiquement.</div>
         <div style="background:var(--bg2);border:1px solid var(--line2);border-radius:3px;padding:10px 12px" id="g-preview"></div>
       </div>
     </div>
@@ -380,7 +383,7 @@ body::before{content:'';position:fixed;inset:0;
 <!-- HEADER -->
 <div class="hdr">
   <div class="logo"><div class="logo-dot"></div>HALAL ROBUSTE · v2.1</div>
-  <div class="hdr-center">
+  <div class="hdr-mid">
     <div class="regime-pill" id="regime-pill" onclick="openRegimeModal()">
       <div class="rp-dot"></div><span>—</span>
     </div>
@@ -388,97 +391,36 @@ body::before{content:'';position:fixed;inset:0;
   <div class="hdr-right">
     <div class="cap-wrap">
       <label>Capital</label>
-      <input type="number" class="cap-input" id="cap-input" value="10000" min="100" step="500" oninput="onCapitalChange()">
+      <input type="number" class="cap-input" id="cap-input" value="10000" min="100" step="500" oninput="onCapChange()">
       <span style="font-family:var(--mono);font-size:11px;color:rgba(244,241,235,.4)">€</span>
     </div>
+    <button class="btn-markets stale" id="btn-markets" onclick="openMktModal()">📊 Marchés</button>
     <button class="btn-add" onclick="openAddModal()">+ Versement</button>
   </div>
 </div>
 
-<!-- RÉSUMÉ -->
-<div class="summary">
-  <div class="sb"><div class="sb-lbl">Investi</div><div class="sb-val" id="sb-investi" style="color:var(--gold)">—</div></div>
-  <div class="sb-sep"></div>
-  <div class="sb"><div class="sb-lbl">Poudre sèche</div><div class="sb-val" id="sb-reserve" style="color:var(--bg)">—</div></div>
-  <div class="sb-sep"></div>
-  <div class="sb"><div class="sb-lbl">Jalons</div><div class="sb-val" id="sb-jalons" style="color:var(--bg)">—</div></div>
-  <div class="sb-sep"></div>
-  <div class="sb-action" id="sb-action">Chargement...</div>
-</div>
-
-<!-- PANNEAU MARCHÉS -->
-<div class="market-panel">
-  <div class="mp-toggle" onclick="toggleMarkets()">
-    <span class="mp-arrow" id="mp-arrow">▶</span>
-    <span class="mp-label">Marchés</span>
-    <span class="mp-summary" id="mp-summary">Saisir les cours pour activer le régime automatique</span>
-  </div>
-  <div class="mp-body" id="mp-body">
-    <div class="mp-links">
-      <a href="https://finance.yahoo.com/quote/BZ=F" target="_blank">Brent BZ=F</a>
-      <a href="https://finance.yahoo.com/quote/%5EVIX" target="_blank">VIX ^VIX</a>
-      <a href="https://finance.yahoo.com/quote/GC=F" target="_blank">Or GC=F</a>
-      <a href="https://finance.yahoo.com/quote/SGLN.L" target="_blank">SGLN.L</a>
-      <a href="https://finance.yahoo.com/quote/PHSP.L" target="_blank">PHSP.L</a>
-      <a href="https://finance.yahoo.com/quote/INRG.L" target="_blank">INRG.L</a>
-      <a href="https://finance.yahoo.com/quote/IGDA.L" target="_blank">IGDA.L</a>
-      <a href="https://finance.yahoo.com/quote/ISWD.L" target="_blank">ISWD.L</a>
-      <a href="https://finance.yahoo.com/quote/XOM" target="_blank">XOM</a>
-      <a href="https://finance.yahoo.com/quote/CVX" target="_blank">CVX</a>
+<!-- BANDE ACTION -->
+<div class="action-band">
+  <div class="action-inner">
+    <div class="ab-item">
+      <div class="ab-lbl">Investi</div>
+      <div class="ab-val" id="ab-investi" style="color:var(--gold)">—</div>
     </div>
-    <div class="mp-grid">
-      <div class="mf">
-        <label class="mf-label">Brent <span>$/bbl</span></label>
-        <input type="number" step="0.1" class="mf-input" id="m-brent" placeholder="ex: 102.4" oninput="autoDetectRegime()">
-      </div>
-      <div class="mf">
-        <label class="mf-label">VIX <span>^VIX</span></label>
-        <input type="number" step="0.1" class="mf-input" id="m-vix" placeholder="ex: 21.3" oninput="autoDetectRegime()">
-      </div>
-      <div class="mf">
-        <label class="mf-label">Or spot <span>$/oz</span></label>
-        <input type="number" step="1" class="mf-input" id="m-gold" placeholder="ex: 4750">
-      </div>
-      <div class="mf">
-        <label class="mf-label">Transits Hormuz <span>navires/j</span></label>
-        <input type="number" step="1" class="mf-input" id="m-hormuz" placeholder="ex: 3 (bloqué)" oninput="autoDetectRegime()">
-      </div>
-      <div class="mf">
-        <label class="mf-label">SGLN.L <span>£</span></label>
-        <input type="number" step="0.01" class="mf-input" id="m-sgln" placeholder="ex: 47.20">
-      </div>
-      <div class="mf">
-        <label class="mf-label">INRG.L <span>£</span></label>
-        <input type="number" step="0.01" class="mf-input" id="m-inrg" placeholder="ex: 8.06">
-      </div>
-      <div class="mf">
-        <label class="mf-label">IGDA.L <span>$</span></label>
-        <input type="number" step="0.01" class="mf-input" id="m-igda" placeholder="ex: 34.78">
-      </div>
-      <div class="mf">
-        <label class="mf-label">ISWD.L <span>GBp</span></label>
-        <input type="number" step="1" class="mf-input" id="m-iswd" placeholder="ex: 4431">
-      </div>
-      <div class="mf">
-        <label class="mf-label">XOM <span>$</span></label>
-        <input type="number" step="0.01" class="mf-input" id="m-xom" placeholder="ex: 108.5">
-      </div>
-      <div class="mf">
-        <label class="mf-label">CVX <span>$</span></label>
-        <input type="number" step="0.01" class="mf-input" id="m-cvx" placeholder="ex: 152.3">
-      </div>
-      <div class="mf">
-        <label class="mf-label">PHSP.L <span>£</span></label>
-        <input type="number" step="0.01" class="mf-input" id="m-phsp" placeholder="ex: 31.5">
-      </div>
-      <div class="mf">
-        <label class="mf-label">COPA.L / FCX <span>$</span></label>
-        <input type="number" step="0.01" class="mf-input" id="m-copa" placeholder="ex: 44.2">
-      </div>
+    <div class="ab-item">
+      <div class="ab-lbl">Poudre sèche</div>
+      <div class="ab-val" id="ab-reserve" style="color:rgba(244,241,235,.9)">—</div>
     </div>
-    <div class="mp-bottom">
-      <button class="btn-calc" onclick="saveMktAndCalc()">Calculer le régime →</button>
-      <span class="mp-last" id="mp-last">Jamais mis à jour</span>
+    <div class="ab-item">
+      <div class="ab-lbl">Jalons</div>
+      <div class="ab-val" id="ab-jalons" style="color:rgba(244,241,235,.9)">—</div>
+    </div>
+    <div class="ab-sep"></div>
+    <!-- ACTION PRIORITAIRE avec montants -->
+    <div class="ab-action">
+      <div class="ab-action-lbl">Action prioritaire · ce versement</div>
+      <div class="ab-action-content" id="ab-actions">
+        <span style="font-family:var(--mono);font-size:10px;color:rgba(244,241,235,.3)">En attente de données marchés...</span>
+      </div>
     </div>
   </div>
 </div>
@@ -487,38 +429,28 @@ body::before{content:'';position:fixed;inset:0;
 <div class="alerts">
   <div class="alert-item" id="al-gold">
     <div class="a-dot a-watch"></div>
-    <div><div class="a-lbl"><strong>Or &lt;$4 400</strong></div><div class="a-act">→ Opportunité · Cible JPM $6 300</div></div>
+    <div class="a-txt"><strong>Or &lt; $4 400</strong></div>
+    <div class="a-arrow">→ opportunité d'achat SGLN</div>
   </div>
   <div class="alert-item" id="al-brent">
-    <div class="a-dot a-dormant"></div>
-    <div><div class="a-lbl"><strong>Brent &gt;$100</strong></div><div class="a-act">→ Renforcer SGLN + XOM/CVX</div></div>
+    <div class="a-dot a-off"></div>
+    <div class="a-txt"><strong>Brent &gt; $100</strong></div>
+    <div class="a-arrow">→ renforcer SGLN + XOM/CVX</div>
   </div>
   <div class="alert-item" id="al-vix">
-    <div class="a-dot a-dormant"></div>
-    <div><div class="a-lbl"><strong>VIX &gt;35</strong></div><div class="a-act">→ SGLN uniquement · Tout baisse</div></div>
+    <div class="a-dot a-off"></div>
+    <div class="a-txt"><strong>VIX &gt; 35</strong></div>
+    <div class="a-arrow">→ SGLN uniquement</div>
   </div>
-  <div class="alert-item" id="al-hormuz">
+  <div class="alert-item" id="al-hz">
     <div class="a-dot a-watch"></div>
-    <div><div class="a-lbl"><strong>Hormuz rouvre</strong></div><div class="a-act">→ Rotation défensif → offensif 4 sem.</div></div>
+    <div class="a-txt"><strong>Hormuz perturbé</strong></div>
+    <div class="a-arrow">→ maintenir défensif</div>
   </div>
 </div>
 
-<!-- MAIN -->
+<!-- MAIN / TIMELINE -->
 <div class="main">
-  <div class="top-controls">
-    <div class="legend">
-      <div class="leg-item"><div class="leg-dot" style="background:var(--gold)"></div><span class="leg-lbl">N1 · SGLN PHSP COPA</span></div>
-      <div class="leg-item"><div class="leg-dot" style="background:var(--blue)"></div><span class="leg-lbl">N2 · Énergie XOM/CVX INRG</span></div>
-      <div class="leg-item"><div class="leg-dot" style="background:var(--green)"></div><span class="leg-lbl">N2 · Indices IGDA ISWD</span></div>
-      <div class="leg-item"><div class="leg-dot" style="background:#888"></div><span class="leg-lbl">Réserve N3</span></div>
-    </div>
-    <div class="sim-wrap">
-      <span class="sim-lbl">Simuler crise</span>
-      <div class="toggle-btn" id="sim-toggle" onclick="toggleSim()"><div class="toggle-knob"></div></div>
-      <span class="sim-desc" id="sim-desc">Jalons futurs en mode crise</span>
-    </div>
-  </div>
-
   <div class="tl-wrap" id="tl-wrap">
     <div class="tl-inner" id="tl-inner">
       <div class="tl-road" id="tl-road">
@@ -527,261 +459,367 @@ body::before{content:'';position:fixed;inset:0;
           <div class="today-flag" id="today-flag">Aujourd'hui</div>
           <div class="today-line"></div>
         </div>
-        <div class="ms-container" id="ms-container"></div>
+        <div class="ms-cont" id="ms-cont"></div>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-const SK='hv3_state';
-let state=loadState();
-
+const SK='hv4';
+let S=loadState();
 function loadState(){
   const s=localStorage.getItem(SK);
-  if(s)return JSON.parse(s);
-  return{capital:10000,regime:'detente',milestones:[],mkt:{},guideComplete:false,simCrise:false};
+  if(s)try{return JSON.parse(s);}catch(e){}
+  return{capital:10000,regime:'detente',milestones:[],mkt:{},hormuz:null,guideOk:false,simCrise:false,mktTs:null};
 }
-function save(){localStorage.setItem(SK,JSON.stringify(state))}
+function save(){localStorage.setItem(SK,JSON.stringify(S))}
+
+// ── RÉGIMES ──
+const RG={
+  crise:{label:'🔴 CRISE',cls:'rp-crise',
+    actions:[
+      {key:'SGLN',name:'Or SGLN.L',pct:30,color:'var(--gold)',type:'buy'},
+      {key:'XOM',name:'XOM+CVX',pct:22,color:'var(--blue)',type:'buy'},
+      {key:'INRG',name:'INRG.L',pct:15,color:'#2a5a9a',type:'hold'},
+      {key:'IGDA',name:'IGDA.L',pct:3,color:'var(--green)',type:'reduce'},
+      {key:'PHSP',name:'Argent PHSP.L',pct:9,color:'#8a7a5a',type:'hold'},
+      {key:'COPA',name:'COPA.L',pct:6,color:'#a0520a',type:'hold'},
+    ]},
+  trans:{label:'🟡 TRANSITION',cls:'rp-trans',
+    actions:[
+      {key:'SGLN',name:'Or SGLN.L',pct:27,color:'var(--gold)',type:'hold'},
+      {key:'INRG',name:'INRG.L',pct:15,color:'#2a5a9a',type:'buy'},
+      {key:'IGDA',name:'IGDA.L+ISWD',pct:20,color:'var(--green)',type:'buy'},
+      {key:'XOM',name:'XOM+CVX',pct:10,color:'var(--blue)',type:'reduce'},
+      {key:'PHSP',name:'Argent PHSP.L',pct:8,color:'#8a7a5a',type:'hold'},
+    ]},
+  detente:{label:'🟢 DÉTENTE',cls:'rp-detente',
+    actions:[
+      {key:'INRG',name:'INRG.L',pct:20,color:'#2a5a9a',type:'buy'},
+      {key:'IGDA',name:'IGDA.L+ISWD',pct:27,color:'var(--green)',type:'buy'},
+      {key:'SGLN',name:'Or SGLN.L',pct:23,color:'var(--gold)',type:'hold'},
+      {key:'XOM',name:'XOM+CVX',pct:3,color:'var(--blue)',type:'reduce'},
+      {key:'PHSP',name:'Argent PHSP.L',pct:7,color:'#8a7a5a',type:'hold'},
+    ]}
+};
+const typeLabel={buy:'ACHETER',hold:'CONSERVER',reduce:'RÉDUIRE'};
+const typeCls={buy:'at-buy',hold:'at-hold',reduce:'at-reduce'};
 
 // ── GUIDE ──
-let guideStep=0,selRegime=state.regime||'detente';
-function selectRegime(r){
-  selRegime=r;
-  ['crise','trans','detente'].forEach(x=>document.getElementById('gr-'+x)?.classList.toggle('selected',x===r));
-}
+let guideStep=0,selRegime=S.regime||'detente';
+function selR(r){selRegime=r;['crise','trans','detente'].forEach(x=>document.getElementById('gr-'+x)?.classList.toggle('selected',x===r));}
 function nextStep(){
   if(guideStep===0){
     const v=parseFloat(document.getElementById('g-capital').value);
     if(!v||v<100){document.getElementById('g-capital').focus();return;}
-    state.capital=v;document.getElementById('cap-input').value=v;
+    S.capital=v;document.getElementById('cap-input').value=v;
     guideStep=1;
-    document.getElementById('gstep-0').style.display='none';
-    document.getElementById('gstep-1').style.display='block';
+    hide('gstep-0');show('gstep-1');
     document.getElementById('gs0').className='g-step done';
     document.getElementById('gs1').className='g-step active';
     document.getElementById('g-count').textContent='Étape 2 / 3';
   } else if(guideStep===1){
-    state.regime=selRegime;
-    const j=genMilestone(new Date(),state.capital*0.4,false);
-    state.milestones=[j];
+    S.regime=selRegime;
+    const j=genJalon(new Date(),S.capital*0.4,false);
+    S.milestones=[j];
     guideStep=2;
-    document.getElementById('gstep-1').style.display='none';
-    document.getElementById('gstep-2').style.display='block';
+    hide('gstep-1');show('gstep-2');
     document.getElementById('gs1').className='g-step done';
     document.getElementById('gs2').className='g-step active';
     document.getElementById('g-count').textContent='Étape 3 / 3';
     document.getElementById('btn-next').textContent='Lancer →';
-    const r=REGIMES[selRegime];
+    const amt=S.capital*0.4*0.85;
     document.getElementById('g-preview').innerHTML=
-      r.alloc.map(a=>`<div style="display:flex;align-items:center;gap:7px;margin-bottom:3px">
-        <div style="width:7px;height:7px;border-radius:50%;background:${a.color};flex-shrink:0"></div>
-        <span style="flex:1;font-size:11px">${a.name}</span>
-        <span style="font-family:var(--mono);font-size:10px;color:var(--ink2)">${fE(state.capital*0.4*0.85*a.pct/100)}</span>
+      RG[selRegime].actions.map(a=>`<div style="display:flex;align-items:center;gap:7px;margin-bottom:3px">
+        <div style="width:6px;height:6px;border-radius:50%;background:${a.color};flex-shrink:0"></div>
+        <span style="flex:1;font-size:11px">${typeLabel[a.type]} ${a.name}</span>
+        <span style="font-family:var(--mono);font-size:10px;color:var(--ink2)">${fE(amt*a.pct/100)}</span>
       </div>`).join('')+
       `<div style="border-top:1px solid var(--line2);padding-top:5px;margin-top:5px;font-family:var(--mono);font-size:10px;color:var(--ink3);display:flex;justify-content:space-between">
-        <span>Réserve N3 (15%)</span><span>${fE(state.capital*0.4*0.15)}</span></div>`;
-  } else {
-    state.guideComplete=true;save();
-    document.getElementById('guide').style.display='none';
-    renderAll();
-  }
-}
-
-// ── RÉGIMES ──
-const REGIMES={
-  crise:{label:'🔴 CRISE',cls:'rp-crise',
-    action:'Renforcer <strong>SGLN.L (or)</strong>. Ajouter <strong>XOM + CVX</strong>. Maintenir <strong>INRG.L</strong>.',
-    alloc:[
-      {key:'SGLN',name:'Or (SGLN.L)',pct:30,color:'var(--gold)',cat:'rob'},
-      {key:'PHSP',name:'Argent (PHSP.L)',pct:9,color:'#8a7a5a',cat:'rob'},
-      {key:'COPA',name:'Cuivre (COPA.L)',pct:6,color:'#a0520a',cat:'rob'},
-      {key:'XOM',name:'XOM + CVX',pct:22,color:'var(--blue)',cat:'nrj'},
-      {key:'INRG',name:'Renouvelable (INRG.L)',pct:15,color:'#2a5a9a',cat:'nrj'},
-      {key:'IGDA',name:'IGDA.L',pct:3,color:'var(--green)',cat:'idx'},
-    ]},
-  trans:{label:'🟡 TRANSITION',cls:'rp-trans',
-    action:'Maintenir <strong>SGLN.L</strong>. Équilibrer <strong>INRG.L + IGDA.L</strong>. Réduire XOM/CVX.',
-    alloc:[
-      {key:'SGLN',name:'Or (SGLN.L)',pct:27,color:'var(--gold)',cat:'rob'},
-      {key:'PHSP',name:'Argent (PHSP.L)',pct:8,color:'#8a7a5a',cat:'rob'},
-      {key:'COPA',name:'Cuivre (COPA.L)',pct:5,color:'#a0520a',cat:'rob'},
-      {key:'XOM',name:'XOM + CVX',pct:10,color:'var(--blue)',cat:'nrj'},
-      {key:'INRG',name:'Renouvelable (INRG.L)',pct:15,color:'#2a5a9a',cat:'nrj'},
-      {key:'IGDA',name:'IGDA.L + ISWD.L',pct:20,color:'var(--green)',cat:'idx'},
-    ]},
-  detente:{label:'🟢 DÉTENTE',cls:'rp-detente',
-    action:'Acheter <strong>INRG.L + IGDA.L</strong>. Accumuler <strong>SGLN.L (or bas)</strong>. Réduire XOM/CVX.',
-    alloc:[
-      {key:'SGLN',name:'Or (SGLN.L)',pct:23,color:'var(--gold)',cat:'rob'},
-      {key:'PHSP',name:'Argent (PHSP.L)',pct:7,color:'#8a7a5a',cat:'rob'},
-      {key:'COPA',name:'Cuivre (COPA.L)',pct:5,color:'#a0520a',cat:'rob'},
-      {key:'XOM',name:'XOM + CVX',pct:3,color:'var(--blue)',cat:'nrj'},
-      {key:'INRG',name:'Renouvelable (INRG.L)',pct:20,color:'#2a5a9a',cat:'nrj'},
-      {key:'IGDA',name:'IGDA.L + ISWD.L',pct:27,color:'var(--green)',cat:'idx'},
-    ]}
-};
-
-// ── MARCHÉS ──
-function toggleMarkets(){
-  const b=document.getElementById('mp-body');
-  const a=document.getElementById('mp-arrow');
-  b.classList.toggle('open');
-  a.classList.toggle('open');
-}
-
-function autoDetectRegime(){
-  const brent=parseFloat(document.getElementById('m-brent')?.value);
-  const vix=parseFloat(document.getElementById('m-vix')?.value);
-  const hormuz=parseFloat(document.getElementById('m-hormuz')?.value);
-  if(!brent&&!vix)return;
-  let r='detente';
-  if(vix>35){r='crise';}
-  else if(brent>100||(hormuz!=null&&hormuz<5)){r='crise';}
-  else if(brent>80||(hormuz!=null&&hormuz<14)){r='trans';}
-  if(r!==state.regime){state.regime=r;save();updateHeader();updateSummary();}
-}
-
-function saveMktAndCalc(){
-  const fields=['brent','vix','gold','hormuz','sgln','inrg','igda','iswd','xom','cvx','phsp','copa'];
-  fields.forEach(k=>{
-    const v=parseFloat(document.getElementById('m-'+k)?.value);
-    if(!isNaN(v))state.mkt[k]=v;
-  });
-  autoDetectRegime();
-  updateAlerts();
-  updateSummary();
-  document.getElementById('mp-last').textContent=
-    'Mis à jour '+new Date().toLocaleDateString('fr-FR',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
-  save();
-}
-
-function updateAlerts(){
-  const m=state.mkt;
-  if(m.gold){
-    const al=document.getElementById('al-gold');
-    if(m.gold<4400){al.classList.add('active');al.querySelector('.a-dot').className='a-dot a-active';}
-    else{al.classList.remove('active');al.querySelector('.a-dot').className='a-dot a-watch';}
-  }
-  if(m.brent){
-    const al=document.getElementById('al-brent');
-    if(m.brent>100){al.classList.add('active');al.querySelector('.a-dot').className='a-dot a-active';}
-    else{al.classList.remove('active');al.querySelector('.a-dot').className='a-dot a-dormant';}
-  }
-  if(m.vix){
-    const al=document.getElementById('al-vix');
-    if(m.vix>35){al.classList.add('active');al.querySelector('.a-dot').className='a-dot a-active';}
-    else{al.classList.remove('active');al.querySelector('.a-dot').className='a-dot a-dormant';}
-  }
-}
-
-function updateMpSummary(){
-  const m=state.mkt;
-  const parts=[];
-  if(m.brent)parts.push('Brent $'+m.brent.toFixed(0));
-  if(m.gold)parts.push('Or $'+Math.round(m.gold));
-  if(m.vix)parts.push('VIX '+m.vix.toFixed(1));
-  if(m.hormuz!=null)parts.push('Hormuz '+m.hormuz+'/j');
-  document.getElementById('mp-summary').textContent=parts.length?parts.join(' · '):'Saisir les cours pour activer le régime automatique';
+        <span>Réserve N3 (15%)</span><span>${fE(S.capital*0.4*0.15)}</span></div>`;
+  } else {S.guideOk=true;save();hide('guide');renderAll();}
 }
 
 // ── UTILS ──
 const fE=v=>'€'+Math.round(v).toLocaleString('fr-FR');
 const fDate=d=>new Date(d).toLocaleDateString('fr-FR',{month:'short',year:'2-digit'});
 const fDateFull=d=>new Date(d).toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'});
+function show(id){const e=document.getElementById(id);if(e)e.style.display='';}
+function hide(id){const e=document.getElementById(id);if(e)e.style.display='none';}
+function closeOverlay(){const o=document.getElementById('overlay');o.classList.remove('open');o.innerHTML='';}
 
-function genMilestone(date,amount,future=false){
-  const reg=state.simCrise&&future?'crise':state.regime;
-  const r=REGIMES[reg];
+function genJalon(date,amount,future=false){
+  const reg=(S.simCrise&&future)?'crise':S.regime;
+  const r=RG[reg];
   const inv=amount*0.85;
   return{
     id:Date.now()+Math.random(),
     date:date instanceof Date?date.toISOString().split('T')[0]:date,
     amount:Math.round(amount),
-    alloc:r.alloc.map(a=>({...a,amount:Math.round(inv*a.pct/100)})),
-    regime:reg,done:false,note:'',future
+    alloc:r.actions.map(a=>({...a,amount:Math.round(inv*a.pct/100)})),
+    regime:reg,done:false,note:'',future,stale:false
   };
 }
 
-function getTotalDays(){
-  const ms=state.milestones;
-  if(ms.length<2)return 180;
-  const start=new Date(ms[0].date);
-  const end=new Date(ms[ms.length-1].date);
-  return Math.max(180,(end-start)/(864e5)+60);
+// ── MARCHÉS ──
+function openMktModal(){
+  const m=S.mkt,hz=S.hormuz;
+  const ov=document.getElementById('overlay');
+  ov.innerHTML=`<div class="modal-base mkt-modal">
+    <div class="mkt-hdr">
+      <div><div class="mkt-title">DONNÉES DE MARCHÉS</div>
+      <div class="mkt-sub">Saisir les cours depuis Yahoo Finance · Le régime se met à jour automatiquement</div></div>
+      <button class="mkt-close" onclick="closeOverlay()">✕</button>
+    </div>
+    <div class="mkt-links">
+      <a href="https://finance.yahoo.com/quote/BZ=F" target="_blank">Brent BZ=F</a>
+      <a href="https://finance.yahoo.com/quote/%5EVIX" target="_blank">VIX</a>
+      <a href="https://finance.yahoo.com/quote/GC=F" target="_blank">Or GC=F</a>
+      <a href="https://finance.yahoo.com/quote/SGLN.L" target="_blank">SGLN.L</a>
+      <a href="https://finance.yahoo.com/quote/INRG.L" target="_blank">INRG.L</a>
+      <a href="https://finance.yahoo.com/quote/IGDA.L" target="_blank">IGDA.L</a>
+      <a href="https://finance.yahoo.com/quote/ISWD.L" target="_blank">ISWD.L</a>
+      <a href="https://finance.yahoo.com/quote/PHSP.L" target="_blank">PHSP.L</a>
+      <a href="https://finance.yahoo.com/quote/COPA.L" target="_blank">COPA.L</a>
+      <a href="https://finance.yahoo.com/quote/XOM" target="_blank">XOM</a>
+      <a href="https://finance.yahoo.com/quote/CVX" target="_blank">CVX</a>
+    </div>
+    <div class="mkt-body">
+      <div class="mkt-section">
+        <div class="mkt-section-title">Signaux macro · Déclencheurs du régime</div>
+        <div class="mkt-grid">
+          <div class="mkt-field"><label class="mkt-label">Brent <span>$/bbl · BZ=F</span></label>
+            <input type="number" step="0.1" class="mkt-input" id="mk-brent" placeholder="ex: 102.4" value="${m.brent||''}"></div>
+          <div class="mkt-field"><label class="mkt-label">VIX <span>^VIX</span></label>
+            <input type="number" step="0.1" class="mkt-input" id="mk-vix" placeholder="ex: 21.3" value="${m.vix||''}"></div>
+          <div class="mkt-field"><label class="mkt-label">Or spot <span>$/oz · GC=F</span></label>
+            <input type="number" step="1" class="mkt-input" id="mk-gold" placeholder="ex: 4750" value="${m.gold||''}"></div>
+        </div>
+      </div>
+      <div class="mkt-section">
+        <div class="mkt-section-title">Détroit d'Hormuz · État du trafic maritime</div>
+        <div class="hormuz-sel">
+          <div class="hz-opt ${hz==='bloque'?'selected-red':''}" onclick="selHz('bloque')">🔴 Bloqué<br><span style="font-size:9px;opacity:.7">&lt; 5 navires/j</span></div>
+          <div class="hz-opt ${hz==='perturbe'?'selected-amb':''}" onclick="selHz('perturbe')">🟡 Perturbé<br><span style="font-size:9px;opacity:.7">5–14 navires/j</span></div>
+          <div class="hz-opt ${hz==='normal'?'selected-grn':''}" onclick="selHz('normal')">🟢 Normal<br><span style="font-size:9px;opacity:.7">&gt; 14 navires/j</span></div>
+        </div>
+      </div>
+      <div class="mkt-section">
+        <div class="mkt-section-title">Cours des actifs UCITS (optionnel)</div>
+        <div class="mkt-grid">
+          <div class="mkt-field"><label class="mkt-label">SGLN.L <span>£</span></label>
+            <input type="number" step="0.01" class="mkt-input" id="mk-sgln" placeholder="ex: 47.20" value="${m.sgln||''}"></div>
+          <div class="mkt-field"><label class="mkt-label">INRG.L <span>£</span></label>
+            <input type="number" step="0.01" class="mkt-input" id="mk-inrg" placeholder="ex: 8.06" value="${m.inrg||''}"></div>
+          <div class="mkt-field"><label class="mkt-label">IGDA.L <span>$</span></label>
+            <input type="number" step="0.01" class="mkt-input" id="mk-igda" placeholder="ex: 34.78" value="${m.igda||''}"></div>
+          <div class="mkt-field"><label class="mkt-label">ISWD.L <span>GBp</span></label>
+            <input type="number" step="1" class="mkt-input" id="mk-iswd" placeholder="ex: 4431" value="${m.iswd||''}"></div>
+          <div class="mkt-field"><label class="mkt-label">PHSP.L <span>£</span></label>
+            <input type="number" step="0.01" class="mkt-input" id="mk-phsp" placeholder="ex: 31.5" value="${m.phsp||''}"></div>
+          <div class="mkt-field"><label class="mkt-label">COPA.L / FCX <span>$</span></label>
+            <input type="number" step="0.01" class="mkt-input" id="mk-copa" placeholder="ex: 44.2" value="${m.copa||''}"></div>
+          <div class="mkt-field"><label class="mkt-label">XOM <span>$</span></label>
+            <input type="number" step="0.01" class="mkt-input" id="mk-xom" placeholder="ex: 108.5" value="${m.xom||''}"></div>
+          <div class="mkt-field"><label class="mkt-label">CVX <span>$</span></label>
+            <input type="number" step="0.01" class="mkt-input" id="mk-cvx" placeholder="ex: 152.3" value="${m.cvx||''}"></div>
+        </div>
+      </div>
+    </div>
+    <div class="mkt-ftr">
+      <span class="mkt-last" id="mkt-last">${S.mktTs?'Mis à jour '+new Date(S.mktTs).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}):'Jamais mis à jour'}</span>
+      <button class="btn-calc" onclick="calcMkt()">Calculer le régime →</button>
+    </div>
+  </div>`;
+  ov.classList.add('open');
 }
 
-// ── RENDER ──
-function renderAll(){updateHeader();updateSummary();renderTimeline();updateAlerts();updateMpSummary();}
-
-function updateHeader(){
-  const r=REGIMES[state.regime];
-  const pill=document.getElementById('regime-pill');
-  pill.className='regime-pill '+r.cls;
-  pill.innerHTML=`<div class="rp-dot"></div><span>${r.label}</span>`;
-  document.getElementById('cap-input').value=state.capital;
-}
-
-function updateSummary(){
-  const total=state.milestones.reduce((s,m)=>s+m.amount,0);
-  const reserve=Math.max(0,state.capital-total);
-  const r=REGIMES[state.regime];
-  document.getElementById('sb-investi').textContent=fE(total);
-  document.getElementById('sb-reserve').textContent=fE(reserve);
-  document.getElementById('sb-jalons').textContent=state.milestones.length;
-  document.getElementById('sb-action').innerHTML=r.action;
-  // Pré-remplir les champs marchés si données existantes
-  const m=state.mkt;
-  ['brent','vix','gold','hormuz','sgln','inrg','igda','iswd','xom','cvx','phsp','copa'].forEach(k=>{
-    const el=document.getElementById('m-'+k);
-    if(el&&m[k]!=null&&!el.value)el.value=m[k];
+let hzSel=null;
+function selHz(v){
+  hzSel=v;
+  ['bloque','perturbe','normal'].forEach(x=>{
+    const el=document.querySelector(`.hz-opt:nth-child(${x==='bloque'?1:x==='perturbe'?2:3})`);
+    if(el)el.className='hz-opt '+(x===v?(v==='bloque'?'selected-red':v==='perturbe'?'selected-amb':'selected-grn'):'');
   });
 }
 
+function calcMkt(){
+  const fields=['brent','vix','gold','sgln','inrg','igda','iswd','phsp','copa','xom','cvx'];
+  fields.forEach(k=>{
+    const v=parseFloat(document.getElementById('mk-'+k)?.value);
+    if(!isNaN(v))S.mkt[k]=v;
+  });
+  if(hzSel)S.hormuz=hzSel;
+  S.mktTs=Date.now();
+  // Détecter régime
+  const b=S.mkt.brent,vix=S.mkt.vix,hz=S.hormuz;
+  let prevR=S.regime;
+  if(vix>35||b>110||(hz==='bloque'))S.regime='crise';
+  else if(b>85||hz==='perturbe')S.regime='trans';
+  else S.regime='detente';
+  // Si régime a changé et jalons futurs existent → proposer recalcul
+  const futurJalons=S.milestones.filter(m=>new Date(m.date)>new Date()&&!m.done);
+  if(prevR!==S.regime&&futurJalons.length>0){
+    save();closeOverlay();openConfirmRecalc(futurJalons.length,prevR);
+  } else {
+    save();closeOverlay();renderAll();
+    document.getElementById('btn-markets').classList.remove('stale');
+  }
+}
+
+function openConfirmRecalc(n,prevR){
+  const ov=document.getElementById('overlay');
+  ov.innerHTML=`<div class="modal-base confirm-modal">
+    <div class="confirm-q">Régime modifié</div>
+    <div class="confirm-body">
+      Le régime est passé de <strong>${RG[prevR].label}</strong> vers <strong>${RG[S.regime].label}</strong>.<br><br>
+      Vous avez <strong>${n} jalon(s) futur(s)</strong> non-exécutés.<br>
+      Recalculer leurs allocations selon le nouveau régime ?<br><br>
+      <span style="color:var(--ink3);font-size:11px">Les jalons déjà exécutés (✓) ne seront pas modifiés.</span>
+    </div>
+    <div class="confirm-ftr">
+      <button class="btn-confirm-no" onclick="noRecalc()">Garder les allocations actuelles</button>
+      <button class="btn-confirm-yes" onclick="doRecalc()">Recalculer les jalons futurs</button>
+    </div>
+  </div>`;
+  ov.classList.add('open');
+}
+
+function doRecalc(){
+  const today=new Date();
+  S.milestones=S.milestones.map(m=>{
+    if(new Date(m.date)>today&&!m.done){
+      const r=RG[S.regime];
+      const inv=m.amount*0.85;
+      return{...m,alloc:r.actions.map(a=>({...a,amount:Math.round(inv*a.pct/100)})),regime:S.regime};
+    }
+    return m;
+  });
+  save();closeOverlay();renderAll();
+  document.getElementById('btn-markets').classList.remove('stale');
+}
+
+function noRecalc(){
+  // Marquer jalons futurs comme "à réévaluer"
+  const today=new Date();
+  S.milestones=S.milestones.map(m=>{
+    if(new Date(m.date)>today&&!m.done)return{...m,stale:true};
+    return m;
+  });
+  save();closeOverlay();renderAll();
+  document.getElementById('btn-markets').classList.remove('stale');
+}
+
+// ── RENDER GLOBAL ──
+function renderAll(){
+  updateHeader();
+  updateActionBand();
+  updateAlerts();
+  renderTimeline();
+}
+
+function updateHeader(){
+  const r=RG[S.regime];
+  const pill=document.getElementById('regime-pill');
+  pill.className='regime-pill '+r.cls;
+  pill.innerHTML=`<div class="rp-dot"></div><span>${r.label}</span>`;
+  document.getElementById('cap-input').value=S.capital;
+  // Bouton marchés stale si >12h sans mise à jour
+  const btn=document.getElementById('btn-markets');
+  if(!S.mktTs||(Date.now()-S.mktTs>12*3600*1000))btn.classList.add('stale');
+  else btn.classList.remove('stale');
+}
+
+function updateActionBand(){
+  const total=S.milestones.reduce((s,m)=>s+m.amount,0);
+  const reserve=Math.max(0,S.capital-total);
+  document.getElementById('ab-investi').textContent=fE(total);
+  document.getElementById('ab-reserve').textContent=fE(reserve);
+  document.getElementById('ab-jalons').textContent=S.milestones.length;
+  // Actions avec montants concrets
+  const nextAmt=S.capital*0.15; // prochain versement estimé = 15% si rien planifié
+  const r=RG[S.regime];
+  const inv=nextAmt*0.85;
+  const el=document.getElementById('ab-actions');
+  if(!S.mktTs){
+    el.innerHTML=`<span style="font-family:var(--mono);font-size:10px;color:rgba(244,241,235,.3)">Cliquez "Marchés" pour saisir les cours et obtenir les actions prioritaires</span>`;
+    return;
+  }
+  // Afficher les 3 premières actions avec montants
+  el.innerHTML=r.actions.slice(0,4).map(a=>`
+    <div class="action-tag ${typeCls[a.type]}">
+      <div class="at-dot" style="background:${a.color}"></div>
+      ${typeLabel[a.type]} ${a.name} · ${fE(inv*a.pct/100)}
+    </div>`).join('');
+}
+
+function updateAlerts(){
+  const m=S.mkt,hz=S.hormuz;
+  setAlert('al-gold',m.gold&&m.gold<4400,'a-watch','a-on');
+  setAlert('al-brent',m.brent&&m.brent>100,'a-off','a-on');
+  setAlert('al-vix',m.vix&&m.vix>35,'a-off','a-on');
+  setAlert('al-hz',hz==='bloque'||hz==='perturbe','a-off',hz==='bloque'?'a-on':'a-watch');
+  // Mettre à jour texte alerte Hormuz
+  const hzEl=document.getElementById('al-hz');
+  if(hzEl){
+    const txt=hzEl.querySelector('.a-txt strong');
+    if(txt)txt.textContent=hz==='bloque'?'Hormuz bloqué':hz==='perturbe'?'Hormuz perturbé':'Hormuz normal';
+    const arrow=hzEl.querySelector('.a-arrow');
+    if(arrow)arrow.textContent=hz==='bloque'?'→ mode crise actif':hz==='perturbe'?'→ maintenir défensif':'→ rotation possible';
+  }
+}
+function setAlert(id,triggered,offCls,onCls){
+  const el=document.getElementById(id);if(!el)return;
+  el.classList.toggle('triggered',!!triggered);
+  const dot=el.querySelector('.a-dot');
+  if(dot)dot.className='a-dot '+(triggered?onCls:offCls);
+}
+
+// ── TIMELINE ──
 function renderTimeline(){
-  const ms=state.milestones;
-  const container=document.getElementById('ms-container');
+  const ms=S.milestones;
+  const cont=document.getElementById('ms-cont');
   const road=document.getElementById('tl-road');
   const inner=document.getElementById('tl-inner');
-  if(!ms.length){container.innerHTML='';road.style.width='100%';return;}
+  if(!ms.length){cont.innerHTML='';road.style.width='100%';return;}
   const totalDays=getTotalDays();
   const today=new Date();
-  const startDate=new Date(ms[0].date);
-  const todayDays=Math.max(0,(today-startDate)/864e5);
-  const minW=Math.max(900,window.innerWidth-56);
-  const totalW=Math.max(minW,totalDays*(minW/totalDays)+100);
+  const start=new Date(ms[0].date);
+  const todayD=Math.max(0,(today-start)/864e5);
+  const minW=Math.max(900,window.innerWidth-48);
+  const totalW=Math.max(minW,totalDays*(minW/totalDays)+80);
   inner.style.width=totalW+'px';
-  road.style.width=(totalW-50)+'px';
-  const todayPct=Math.min(98,(todayDays/totalDays)*100);
-  const todayMk=document.getElementById('today-mk');
-  todayMk.style.left=todayPct+'%';
+  road.style.width=(totalW-44)+'px';
+  const todayPct=Math.min(97,(todayD/totalDays)*100);
+  document.getElementById('today-mk').style.left=todayPct+'%';
   document.getElementById('today-flag').textContent=today.toLocaleDateString('fr-FR',{day:'2-digit',month:'short'});
   document.getElementById('road-prog').style.width=todayPct+'%';
-  container.innerHTML='';
+  cont.innerHTML='';
   // Zakat
-  const zDate=new Date(startDate);zDate.setFullYear(zDate.getFullYear()+1);
-  const zDays=(zDate-startDate)/864e5;
-  if(zDays<=totalDays+30){
-    const zPct=(zDays/totalDays)*100;
-    const zAmt=state.capital*(0.30+0.07)*0.025;
+  const zDate=new Date(start);zDate.setFullYear(zDate.getFullYear()+1);
+  const zD=(zDate-start)/864e5;
+  if(zD<=totalDays+30){
+    const zPct=(zD/totalDays)*100;
+    const zAmt=S.capital*0.37*0.025;
     const zm=document.createElement('div');zm.className='zakat-mk';
-    zm.style.left=Math.min(94,zPct)+'%';
+    zm.style.left=Math.min(93,zPct)+'%';
     zm.innerHTML=`<div class="z-pin"><div class="z-dot"></div><div class="z-line"></div></div>
       <div class="z-lbl"><div class="z-title">⚖ Zakat due</div>
       <div class="z-amount">${fE(zAmt)}</div>
       <div class="z-sub">${zDate.toLocaleDateString('fr-FR',{month:'short',year:'numeric'})}</div></div>`;
-    container.appendChild(zm);
+    cont.appendChild(zm);
   }
+  // Jalons
   ms.forEach((m,i)=>{
-    const mDays=(new Date(m.date)-startDate)/864e5;
-    const pct=Math.max(2,Math.min(96,(mDays/totalDays)*100));
+    const mD=(new Date(m.date)-start)/864e5;
+    const pct=Math.max(2,Math.min(95,(mD/totalDays)*100));
     const isFuture=new Date(m.date)>today;
-    const isFrozen=state.simCrise&&isFuture&&m.regime!=='crise';
-    const cats=m.alloc.reduce((a,x)=>{a[x.cat]=(a[x.cat]||0)+x.pct;return a},{});
-    let col='#888';
-    if(cats.idx>cats.rob&&cats.idx>cats.nrj)col='var(--green)';
-    else if(cats.nrj>cats.rob)col='var(--blue)';
-    else col='var(--gold)';
+    const isFrozen=S.simCrise&&isFuture&&m.regime!=='crise';
+    const cats=m.alloc.reduce((a,x)=>{a[x.cat||x.type]=(a[x.cat||x.type]||0)+x.pct;return a},{});
+    // Couleur dominante
+    let col=((cats.buy||0)>30&&m.regime==='detente')?'var(--green)':
+            (m.regime==='crise')?'var(--gold)':'var(--blue)';
     const isTop=i%2===0;
     const el=document.createElement('div');
     el.className='milestone'+(isFrozen?' frozen':'');
@@ -792,7 +830,8 @@ function renderTimeline(){
         <div class="m-pin-line"></div>
       </div>
       <div class="m-card ${isTop?'top':'bottom'}" onclick="openDetail('${m.id}')">
-        ${isFrozen?'<div class="m-frozen-badge">⏸ GELÉ</div>':''}
+        ${m.stale?'<div class="m-reeval">⟳ À réévaluer</div>':''}
+        ${isFrozen?'<div class="m-frozen-b">⏸ GELÉ</div>':''}
         <div class="m-card-hdr">
           <div class="m-date">${fDate(m.date)}</div>
           <div class="m-amount">${fE(m.amount)}</div>
@@ -800,98 +839,102 @@ function renderTimeline(){
         <div class="m-card-body">
           ${m.alloc.slice(0,4).map(a=>`
             <div class="m-row">
-              <div class="m-row-name"><div class="m-dot" style="background:${a.color}"></div><span>${a.name}</span></div>
+              <div class="m-row-l"><div class="m-dot" style="background:${a.color}"></div>
+              <span style="font-size:11px">${typeLabel[a.type]||''} ${a.name}</span></div>
               <div class="m-row-amt">${fE(a.amount)}</div>
             </div>`).join('')}
           ${m.alloc.length>4?`<div style="font-size:9px;color:var(--ink3);font-family:var(--mono)">+${m.alloc.length-4} actifs...</div>`:''}
         </div>
         <div class="m-card-ftr">
-          <div class="m-reserve">Réserve : <strong>${fE(m.amount*0.15)}</strong></div>
+          <div class="m-res">Réserve : <strong>${fE(m.amount*0.15)}</strong></div>
           <div class="m-status ${m.done?'done':'todo'}">${m.done?'✓ Exécuté':isFuture?'○ Planifié':'○ À faire'}</div>
         </div>
       </div>`;
-    container.appendChild(el);
+    cont.appendChild(el);
   });
+}
+
+function getTotalDays(){
+  const ms=S.milestones;
+  if(ms.length<2)return 180;
+  const s=new Date(ms[0].date);
+  const e=new Date(ms[ms.length-1].date);
+  return Math.max(180,(e-s)/864e5+60);
 }
 
 // ── MODAL VERSEMENT ──
 let sliderAlloc=[];
 function openAddModal(){
-  const r=REGIMES[state.regime];
-  sliderAlloc=r.alloc.map(a=>({...a}));
+  const r=RG[S.regime];
+  sliderAlloc=r.actions.map(a=>({...a}));
   let suggestDate=new Date().toISOString().split('T')[0];
-  if(state.milestones.length>0){
-    const last=new Date(state.milestones[state.milestones.length-1].date);
+  if(S.milestones.length>0){
+    const last=new Date(S.milestones[S.milestones.length-1].date);
     last.setMonth(last.getMonth()+1);
     suggestDate=last.toISOString().split('T')[0];
   }
   const ov=document.getElementById('overlay');
-  ov.innerHTML=`
-    <div class="modal">
-      <div class="modal-hdr">
-        <div class="modal-title">NOUVEAU VERSEMENT</div>
-        <div class="modal-sub">Allocation suggérée · Régime ${r.label} · Ajustable via les sliders</div>
+  ov.innerHTML=`<div class="modal-base vers-modal">
+    <div class="modal-hdr">
+      <div class="modal-title">NOUVEAU VERSEMENT</div>
+      <div class="modal-sub">Allocation suggérée · ${r.label} · Ajustable via les sliders</div>
+    </div>
+    <div class="modal-body">
+      <div class="mrow">
+        <div class="mfield"><label class="mlabel">Date du versement</label>
+          <input type="date" class="minput" id="mv-date" value="${suggestDate}"></div>
+        <div class="mfield"><label class="mlabel">Montant à virer sur IBKR (€)</label>
+          <input type="number" class="minput" id="mv-amount" value="2000" min="100" step="100" oninput="updSliderAmts()"></div>
       </div>
-      <div class="modal-body">
-        <div class="mrow">
-          <div class="mfield"><label class="mlabel">Date du versement</label>
-            <input type="date" class="minput" id="mv-date" value="${suggestDate}"></div>
-          <div class="mfield"><label class="mlabel">Montant viré sur IBKR (€)</label>
-            <input type="number" class="minput" id="mv-amount" value="2000" min="100" step="100" oninput="updateSliderAmounts()"></div>
+      <div class="alloc-sec">
+        <div class="alloc-sec-title">Allocation · Ajustable</div>
+        <div id="alloc-rows"></div>
+        <div class="alloc-total">
+          <span style="color:var(--ink2)">Total investi</span>
+          <span id="total-pct" class="tok">85%</span>
+          <span style="color:var(--ink3)" id="total-res">Réserve N3 : 15%</span>
         </div>
-        <div class="alloc-sec">
-          <div class="alloc-sec-title">Allocation · ${r.label} · Modifiable</div>
-          <div id="alloc-rows"></div>
-          <div class="alloc-total">
-            <span style="color:var(--ink2)">Total investi</span>
-            <span id="total-pct" class="total-ok">85%</span>
-            <span style="color:var(--ink3)" id="total-res">Réserve N3 : 15%</span>
-          </div>
-        </div>
-        <div class="modal-note"><strong>Rappel :</strong> Ces montants correspondent à des ordres à passer manuellement sur Interactive Brokers. Le tableau ne passe pas d'ordres automatiquement.</div>
       </div>
-      <div class="modal-ftr">
-        <button class="btn-cancel-m" onclick="closeOverlay()">Annuler</button>
-        <button class="btn-confirm" onclick="confirmAdd()">Ajouter ce jalon →</button>
-      </div>
-    </div>`;
+      <div class="modal-note"><strong>Rappel :</strong> Ces ordres sont à passer manuellement sur Interactive Brokers après le virement.</div>
+    </div>
+    <div class="modal-ftr">
+      <button class="btn-cancel-m" onclick="closeOverlay()">Annuler</button>
+      <button class="btn-confirm" onclick="confirmAdd()">Ajouter →</button>
+    </div>
+  </div>`;
   renderAllocRows();
   ov.classList.add('open');
 }
 
 function renderAllocRows(){
-  const rows=document.getElementById('alloc-rows');
-  if(!rows)return;
+  const rows=document.getElementById('alloc-rows');if(!rows)return;
   rows.innerHTML=sliderAlloc.map((a,i)=>`
     <div class="alloc-row">
       <div class="m-dot" style="background:${a.color}"></div>
       <div style="font-size:11px">${a.name}</div>
       <input type="range" class="a-slider" min="0" max="40" value="${a.pct}"
-        oninput="updateSlider(${i},this.value)" style="accent-color:${a.color}">
+        oninput="updSlider(${i},this.value)" style="accent-color:${a.color}">
       <div class="a-pct" id="ap-${i}" style="color:${a.color}">${a.pct}%</div>
     </div>`).join('');
-  updateSliderAmounts();
+  updSliderAmts();
 }
-
-function updateSlider(i,val){
-  sliderAlloc[i].pct=parseInt(val);
-  const total=sliderAlloc.reduce((s,a)=>s+a.pct,0);
-  document.getElementById('ap-'+i).textContent=val+'%';
+function updSlider(i,v){
+  sliderAlloc[i].pct=parseInt(v);
+  const t=sliderAlloc.reduce((s,a)=>s+a.pct,0);
+  document.getElementById('ap-'+i).textContent=v+'%';
   const tp=document.getElementById('total-pct');
   const tr=document.getElementById('total-res');
-  if(tp){tp.textContent=total+'%';tp.className=total<=85?'total-ok':'total-warn';}
-  if(tr)tr.textContent='Réserve N3 : '+(100-total)+'%';
-  updateSliderAmounts();
+  if(tp){tp.textContent=t+'%';tp.className=t<=85?'tok':'twarn';}
+  if(tr)tr.textContent='Réserve N3 : '+(100-t)+'%';
+  updSliderAmts();
 }
-
-function updateSliderAmounts(){
-  const amount=parseFloat(document.getElementById('mv-amount')?.value)||2000;
+function updSliderAmts(){
+  const amt=parseFloat(document.getElementById('mv-amount')?.value)||2000;
   sliderAlloc.forEach((a,i)=>{
     const el=document.getElementById('ap-'+i);
-    if(el)el.textContent=a.pct+'% · '+fE(amount*a.pct/100);
+    if(el)el.textContent=a.pct+'% · '+fE(amt*a.pct/100);
   });
 }
-
 function confirmAdd(){
   const date=document.getElementById('mv-date')?.value;
   const amount=parseFloat(document.getElementById('mv-amount')?.value);
@@ -899,57 +942,53 @@ function confirmAdd(){
   const j={
     id:Date.now(),date,amount:Math.round(amount),
     alloc:sliderAlloc.map(a=>({...a,amount:Math.round(amount*a.pct/100)})),
-    regime:state.regime,done:false,note:'',future:new Date(date)>new Date()
+    regime:S.regime,done:false,note:'',future:new Date(date)>new Date(),stale:false
   };
-  state.milestones.push(j);
-  state.milestones.sort((a,b)=>new Date(a.date)-new Date(b.date));
+  S.milestones.push(j);
+  S.milestones.sort((a,b)=>new Date(a.date)-new Date(b.date));
   save();closeOverlay();renderAll();
 }
 
 // ── MODAL DÉTAIL ──
 function openDetail(id){
-  const m=state.milestones.find(x=>String(x.id)===String(id));
-  if(!m)return;
+  const m=S.milestones.find(x=>String(x.id)===String(id));if(!m)return;
   const ov=document.getElementById('overlay');
-  const totalInv=m.alloc.reduce((s,a)=>s+a.amount,0);
-  ov.innerHTML=`
-    <div class="detail-modal">
-      <div class="dm-hdr">
-        <div><div class="dm-title">${fE(m.amount)}</div><div class="dm-date">${fDateFull(m.date)}</div></div>
-        <button class="dm-close" onclick="closeOverlay()">✕</button>
+  const inv=m.alloc.reduce((s,a)=>s+a.amount,0);
+  ov.innerHTML=`<div class="modal-base detail-modal">
+    <div class="dm-hdr">
+      <div><div class="dm-title">${fE(m.amount)}</div><div class="dm-date">${fDateFull(m.date)}</div></div>
+      <button class="dm-close" onclick="closeOverlay()">✕</button>
+    </div>
+    <div class="dm-body">
+      <div class="dm-alloc">
+        ${m.alloc.map(a=>`<div class="dm-row">
+          <div class="m-dot" style="background:${a.color}"></div>
+          <div class="dm-name">${typeLabel[a.type]||''} ${a.name}</div>
+          <div class="dm-bar-w"><div class="dm-bar" style="background:${a.color};width:${a.pct}%"></div></div>
+          <div class="dm-amt">${fE(a.amount)}</div>
+        </div>`).join('')}
       </div>
-      <div class="dm-body">
-        <div class="dm-alloc">
-          ${m.alloc.map(a=>`
-            <div class="dm-row">
-              <div class="m-dot" style="background:${a.color}"></div>
-              <div class="dm-name">${a.name}</div>
-              <div class="dm-bar-w"><div class="dm-bar" style="background:${a.color};width:${a.pct}%"></div></div>
-              <div class="dm-amt">${fE(a.amount)}</div>
-            </div>`).join('')}
-        </div>
-        <div class="dm-ftr">
-          <div class="dm-ftr-row"><span class="dm-ftr-lbl">Total investi</span><span class="dm-ftr-val">${fE(totalInv)}</span></div>
-          <div class="dm-ftr-row"><span class="dm-ftr-lbl">Réserve N3 conservée</span><span class="dm-ftr-val" style="color:var(--green)">${fE(m.amount-totalInv)}</span></div>
-          <div class="dm-ftr-row"><span class="dm-ftr-lbl">Régime</span><span class="dm-ftr-val" style="font-size:10px">${REGIMES[m.regime]?.label||m.regime}</span></div>
-        </div>
-        <div class="dm-actions">
-          <button class="btn-done ${m.done?'undone':''}" onclick="toggleDone('${m.id}')">
-            ${m.done?'↩ Annuler exécution':'✓ Marquer exécuté'}</button>
-          <button class="btn-del" onclick="delMilestone('${m.id}')">✕</button>
-        </div>
+      <div class="dm-ftr">
+        <div class="dm-ftr-row"><span class="dm-ftr-lbl">Total investi</span><span class="dm-ftr-val">${fE(inv)}</span></div>
+        <div class="dm-ftr-row"><span class="dm-ftr-lbl">Réserve N3</span><span class="dm-ftr-val" style="color:var(--green)">${fE(m.amount-inv)}</span></div>
+        <div class="dm-ftr-row"><span class="dm-ftr-lbl">Régime</span><span class="dm-ftr-val" style="font-size:10px">${RG[m.regime]?.label||m.regime}</span></div>
       </div>
-    </div>`;
+      <div class="dm-actions">
+        <button class="btn-done ${m.done?'undone':''}" onclick="toggleDone('${m.id}')">
+          ${m.done?'↩ Annuler':'✓ Marquer exécuté'}</button>
+        <button class="btn-del" onclick="delM('${m.id}')">✕</button>
+      </div>
+    </div>
+  </div>`;
   ov.classList.add('open');
 }
-
 function toggleDone(id){
-  const m=state.milestones.find(x=>String(x.id)===String(id));
-  if(m){m.done=!m.done;save();closeOverlay();renderAll();}
+  const m=S.milestones.find(x=>String(x.id)===String(id));
+  if(m){m.done=!m.done;if(m.done)m.stale=false;save();closeOverlay();renderAll();}
 }
-function delMilestone(id){
+function delM(id){
   if(confirm('Supprimer ce jalon ?')){
-    state.milestones=state.milestones.filter(x=>String(x.id)!==String(id));
+    S.milestones=S.milestones.filter(x=>String(x.id)!==String(id));
     save();closeOverlay();renderAll();
   }
 }
@@ -957,47 +996,38 @@ function delMilestone(id){
 // ── MODAL RÉGIME ──
 function openRegimeModal(){
   const ov=document.getElementById('overlay');
-  ov.innerHTML=`
-    <div class="regime-modal">
-      <div class="rm-title">CHANGER LE RÉGIME</div>
-      <div class="rm-opts">
-        ${Object.entries(REGIMES).map(([k,r])=>`
-          <div class="rm-opt ${state.regime===k?'selected':''}" onclick="setRegime('${k}')">
-            <div class="m-dot" style="background:${k==='crise'?'var(--red)':k==='trans'?'var(--amber)':'var(--green)'}"></div>
-            <div class="rm-opt-info">
-              <div class="rm-opt-name">${r.label}</div>
-              <div class="rm-opt-desc">${k==='crise'?'Brent &gt;$100 · Hormuz · Crise géopolitique':k==='trans'?'Brent $80–100 · Signaux mixtes':'Brent &lt;$80 · VIX calme · Croissance'}</div>
-            </div>
-          </div>`).join('')}
-      </div>
-      <div style="font-size:11px;color:var(--ink3);margin-bottom:12px">Les prochains jalons utiliseront ce régime. Les jalons existants ne sont pas modifiés.</div>
-      <div style="display:flex;justify-content:flex-end"><button class="btn-cancel-m" onclick="closeOverlay()">Fermer</button></div>
-    </div>`;
+  ov.innerHTML=`<div class="modal-base regime-modal">
+    <div class="rm-title">CHANGER LE RÉGIME</div>
+    <div class="rm-opts">
+      ${Object.entries(RG).map(([k,r])=>`
+        <div class="rm-opt ${S.regime===k?'selected':''}" onclick="setRegime('${k}')">
+          <div class="m-dot" style="background:${k==='crise'?'var(--red)':k==='trans'?'var(--amber)':'var(--green)'}"></div>
+          <div class="rm-opt-info">
+            <div class="rm-opt-name">${r.label}</div>
+            <div class="rm-opt-desc">${k==='crise'?'Brent &gt;$100 · Hormuz bloqué/perturbé':k==='trans'?'Brent $80–100 · Signaux mixtes':'Brent &lt;$80 · VIX calme · Croissance'}</div>
+          </div>
+        </div>`).join('')}
+    </div>
+    <div style="font-size:11px;color:var(--ink3);margin-bottom:11px">Le régime se détecte aussi automatiquement via "Marchés".</div>
+    <div style="display:flex;justify-content:flex-end"><button class="btn-cancel-m" onclick="closeOverlay()">Fermer</button></div>
+  </div>`;
   ov.classList.add('open');
 }
-
-function setRegime(r){state.regime=r;save();closeOverlay();renderAll();}
-
-function toggleSim(){
-  state.simCrise=!state.simCrise;
-  const btn=document.getElementById('sim-toggle');
-  const desc=document.getElementById('sim-desc');
-  btn.classList.toggle('on',state.simCrise);
-  desc.className='sim-desc '+(state.simCrise?'on':'');
-  desc.textContent=state.simCrise?'⚠ Actif — jalons futurs en mode crise':'Jalons futurs en mode crise';
-  renderTimeline();
+function setRegime(r){
+  const prev=S.regime;S.regime=r;save();
+  const futurJalons=S.milestones.filter(m=>new Date(m.date)>new Date()&&!m.done);
+  closeOverlay();
+  if(prev!==r&&futurJalons.length>0)openConfirmRecalc(futurJalons.length,prev);
+  else renderAll();
 }
 
-function onCapitalChange(){
+// ── CAPITAL ──
+function onCapChange(){
   const v=parseFloat(document.getElementById('cap-input').value);
-  if(v&&v>=100){state.capital=v;save();updateSummary();}
+  if(v&&v>=100){S.capital=v;save();updateActionBand();}
 }
 
-function closeOverlay(){
-  const o=document.getElementById('overlay');
-  o.classList.remove('open');o.innerHTML='';
-}
-
+// ── EVENTS ──
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeOverlay();});
 document.getElementById('overlay').addEventListener('click',e=>{
   if(e.target===document.getElementById('overlay'))closeOverlay();
@@ -1005,12 +1035,13 @@ document.getElementById('overlay').addEventListener('click',e=>{
 window.addEventListener('resize',()=>renderTimeline());
 
 // ── INIT ──
-if(state.guideComplete){
-  document.getElementById('guide').style.display='none';
+if(S.guideOk){
+  hide('guide');
   renderAll();
+  if(!S.mktTs)document.getElementById('btn-markets').classList.add('stale');
 } else {
-  document.getElementById('g-capital').value=state.capital||10000;
-  selectRegime(state.regime||'detente');
+  document.getElementById('g-capital').value=S.capital||10000;
+  selR(S.regime||'detente');
 }
 </script>
 </body>

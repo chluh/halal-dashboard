@@ -802,7 +802,7 @@ body::before {
 <div class="hdr">
   <div class="logo">
     <div class="logo-dot"></div>
-    PLAN · HALAL ROBUSTE
+    PLAN · HALAL ROBUSTE v2.1
   </div>
   <div class="hdr-center">
     <div class="regime-pill" id="regime-display" onclick="openRegimeModal()">
@@ -878,9 +878,9 @@ body::before {
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px">
     <!-- Légende -->
     <div class="legend">
-      <div class="leg-item"><div class="leg-dot" style="background:var(--gold)"></div><span class="leg-label">N1 · Socle (GLD, SLV, COPX)</span></div>
-      <div class="leg-item"><div class="leg-dot" style="background:var(--blue)"></div><span class="leg-label">N2 · Énergie (XLE, ICLN)</span></div>
-      <div class="leg-item"><div class="leg-dot" style="background:var(--green)"></div><span class="leg-label">N2 · Indices halal (SPUS, IGDA, ISWD)</span></div>
+      <div class="leg-item"><div class="leg-dot" style="background:var(--gold)"></div><span class="leg-label">N1 · Socle (SGLN.L, PHSP.L, COPA.L)</span></div>
+      <div class="leg-item"><div class="leg-dot" style="background:var(--blue)"></div><span class="leg-label">N2 · Énergie (XOM/CVX, INRG.L)</span></div>
+      <div class="leg-item"><div class="leg-dot" style="background:var(--green)"></div><span class="leg-label">N2 · Indices halal (IGDA.L, ISWD.L)</span></div>
       <div class="leg-item"><div class="leg-dot" style="background:var(--grey)"></div><span class="leg-label">Réserve</span></div>
     </div>
 
@@ -985,13 +985,13 @@ const REGIMES = {
     cls: 'rp-crise',
     action: 'Renforcer <strong>GLD, SLV, COPX</strong>. Maintenir <strong>XLE</strong>. Réduire les indices halal.',
     alloc: [
-      { key:'GLD',  name:'Or (GLD)',        pct:28, color:'var(--gold)', cat:'rob' },
-      { key:'SLV',  name:'Argent (SLV)',    pct:9,  color:'#8a7a5a', cat:'rob' },
-      { key:'COPX', name:'Cuivre (COPX)',   pct:6,  color:'#a0520a', cat:'rob' },
+      { key:'SGLN',  name:'Or (SGLN.L)',        pct:28, color:'var(--gold)', cat:'rob' },
+      { key:'PHSP',  name:'Argent (PHSP.L)',    pct:9,  color:'#8a7a5a', cat:'rob' },
+      { key:'COPA', name:'Cuivre (COPA.L)',   pct:6,  color:'#a0520a', cat:'rob' },
       { key:'XLE',  name:'Énergie (XLE)',   pct:22, color:'var(--blue)', cat:'nrj' },
-      { key:'ICLN', name:'Renouvelable',    pct:15, color:'#2a5a9a', cat:'nrj' },
-      { key:'SPUS', name:'SPUS',            pct:2,  color:'var(--green)', cat:'idx' },
-      { key:'IGDA', name:'IGDA/ISWD',       pct:3,  color:'#2a7a4a', cat:'idx' },
+      { key:'INRG', name:'Renouvelable (INRG.L)',    pct:15, color:'#2a5a9a', cat:'nrj' },
+      { key:'IGDA', name:'IGDA.L',            pct:2,  color:'var(--green)', cat:'idx' },
+      { key:'ISWD', name:'ISWD.L',       pct:3,  color:'#2a7a4a', cat:'idx' },
     ]
   },
   trans: {
@@ -999,13 +999,13 @@ const REGIMES = {
     cls: 'rp-trans',
     action: 'Maintenir <strong>GLD, SLV, COPX</strong>. Équilibrer <strong>XLE + ICLN + indices halal</strong>.',
     alloc: [
-      { key:'GLD',  name:'Or (GLD)',        pct:26, color:'var(--gold)', cat:'rob' },
-      { key:'SLV',  name:'Argent (SLV)',    pct:8,  color:'#8a7a5a', cat:'rob' },
-      { key:'COPX', name:'Cuivre (COPX)',   pct:6,  color:'#a0520a', cat:'rob' },
+      { key:'SGLN',  name:'Or (SGLN.L)',        pct:26, color:'var(--gold)', cat:'rob' },
+      { key:'PHSP',  name:'Argent (PHSP.L)',    pct:8,  color:'#8a7a5a', cat:'rob' },
+      { key:'COPA', name:'Cuivre (COPA.L)',   pct:6,  color:'#a0520a', cat:'rob' },
       { key:'XLE',  name:'Énergie (XLE)',   pct:12, color:'var(--blue)', cat:'nrj' },
-      { key:'ICLN', name:'Renouvelable',    pct:15, color:'#2a5a9a', cat:'nrj' },
-      { key:'SPUS', name:'SPUS',            pct:12, color:'var(--green)', cat:'idx' },
-      { key:'IGDA', name:'IGDA/ISWD',       pct:6,  color:'#2a7a4a', cat:'idx' },
+      { key:'INRG', name:'Renouvelable (INRG.L)',    pct:15, color:'#2a5a9a', cat:'nrj' },
+      { key:'IGDA', name:'IGDA.L',            pct:12, color:'var(--green)', cat:'idx' },
+      { key:'ISWD', name:'ISWD.L',       pct:6,  color:'#2a7a4a', cat:'idx' },
     ]
   },
   detente: {
@@ -1013,13 +1013,13 @@ const REGIMES = {
     cls: 'rp-detente',
     action: 'Acheter <strong>SPUS, ICLN</strong>. Accumuler <strong>IGDA/ISWD</strong>. Conserver le socle N1.',
     alloc: [
-      { key:'GLD',  name:'Or (GLD)',        pct:22, color:'var(--gold)', cat:'rob' },
-      { key:'SLV',  name:'Argent (SLV)',    pct:8,  color:'#8a7a5a', cat:'rob' },
-      { key:'COPX', name:'Cuivre (COPX)',   pct:5,  color:'#a0520a', cat:'rob' },
+      { key:'SGLN',  name:'Or (SGLN.L)',        pct:22, color:'var(--gold)', cat:'rob' },
+      { key:'PHSP',  name:'Argent (PHSP.L)',    pct:8,  color:'#8a7a5a', cat:'rob' },
+      { key:'COPA', name:'Cuivre (COPA.L)',   pct:5,  color:'#a0520a', cat:'rob' },
       { key:'XLE',  name:'Énergie (XLE)',   pct:5,  color:'var(--blue)', cat:'nrj' },
-      { key:'ICLN', name:'Renouvelable',    pct:20, color:'#2a5a9a', cat:'nrj' },
-      { key:'SPUS', name:'SPUS',            pct:17, color:'var(--green)', cat:'idx' },
-      { key:'IGDA', name:'IGDA/ISWD',       pct:8,  color:'#2a7a4a', cat:'idx' },
+      { key:'INRG', name:'Renouvelable (INRG.L)',    pct:20, color:'#2a5a9a', cat:'nrj' },
+      { key:'IGDA', name:'IGDA.L',            pct:17, color:'var(--green)', cat:'idx' },
+      { key:'ISWD', name:'ISWD.L',       pct:8,  color:'#2a7a4a', cat:'idx' },
     ]
   }
 };

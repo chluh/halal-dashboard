@@ -3,798 +3,886 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Plan Halal Robuste — v2.1</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Halal Robuste · v2.2</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;500;700&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#f4f1eb;--bg2:#eceae2;--bg3:#e2dfd5;
-  --ink:#1a1814;--ink2:#5a564e;--ink3:#9a9690;
-  --line:rgba(26,24,20,.10);--line2:rgba(26,24,20,.05);
-  --gold:#b8860b;--gold2:rgba(184,134,11,.14);--gold3:rgba(184,134,11,.07);
-  --blue:#1a4a7a;--blue2:rgba(26,74,122,.12);
-  --green:#1a6040;--green2:rgba(26,96,64,.12);
-  --red:#8b1a1a;--red2:rgba(139,26,26,.10);
-  --amber:#8b5a1a;--amber2:rgba(139,90,26,.10);
-  --mono:'DM Mono',monospace;--sans:'DM Sans',sans-serif;--disp:'Bebas Neue',sans-serif;
+  --bg:#080b10;--bg2:#0d1117;--bg3:#131a24;--bg4:#1a2333;
+  --ink:#e8edf5;--ink2:#8a9bb0;--ink3:#3a4a5c;
+  --gold:#d4a843;--gold2:rgba(212,168,67,.15);--gold3:rgba(212,168,67,.06);
+  --blue:#4a8fd4;--blue2:rgba(74,143,212,.15);
+  --green:#2ec97a;--green2:rgba(46,201,122,.12);
+  --red:#e04f4f;--red2:rgba(224,79,79,.12);
+  --amber:#e08c30;--amber2:rgba(224,140,48,.12);
+  --teal:#2eb8b8;
+  --line:rgba(255,255,255,.06);--line2:rgba(255,255,255,.03);
+  --mono:'JetBrains Mono',monospace;--sans:'Syne',sans-serif;--disp:'Bebas Neue',sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:13px;min-height:100vh}
-body::before{content:'';position:fixed;inset:0;
-  background-image:linear-gradient(var(--line2) 1px,transparent 1px),linear-gradient(90deg,var(--line2) 1px,transparent 1px);
-  background-size:40px 40px;pointer-events:none;z-index:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:13px;min-height:100vh;overflow-x:hidden}
+body::after{content:'';position:fixed;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.04) 2px,rgba(0,0,0,.04) 4px);
+  pointer-events:none;z-index:999}
 
 /* HEADER */
-.hdr{position:sticky;top:0;z-index:100;background:var(--ink);color:var(--bg);
-  padding:0 20px;height:50px;display:flex;align-items:center;justify-content:space-between;
-  border-bottom:3px solid var(--gold)}
-.logo{font-family:var(--disp);font-size:19px;letter-spacing:.08em;display:flex;align-items:center;gap:7px}
-.logo-dot{width:7px;height:7px;background:var(--gold);border-radius:50%;animation:blink 2s ease-in-out infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.hdr{position:sticky;top:0;z-index:100;background:rgba(8,11,16,.95);
+  border-bottom:1px solid var(--line);backdrop-filter:blur(12px);
+  padding:0 20px;height:48px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--disp);font-size:20px;letter-spacing:.1em;
+  background:linear-gradient(135deg,var(--gold),#f0c060);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .hdr-mid{display:flex;align-items:center;gap:8px}
-.regime-pill{display:flex;align-items:center;gap:5px;padding:4px 12px;border-radius:2px;
-  font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
-  border:1px solid;cursor:pointer;transition:opacity .15s}
-.regime-pill:hover{opacity:.8}
-.rp-dot{width:5px;height:5px;border-radius:50%}
-.rp-crise{background:var(--red2);color:var(--red);border-color:rgba(139,26,26,.3)}
-.rp-crise .rp-dot{background:var(--red)}
-.rp-trans{background:var(--amber2);color:var(--amber);border-color:rgba(139,90,26,.3)}
-.rp-trans .rp-dot{background:var(--amber)}
-.rp-detente{background:var(--green2);color:var(--green);border-color:rgba(26,96,64,.3)}
-.rp-detente .rp-dot{background:var(--green)}
+.regime-badge{display:flex;align-items:center;gap:6px;padding:4px 12px;
+  border-radius:2px;font-family:var(--mono);font-size:10px;letter-spacing:.06em;
+  text-transform:uppercase;border:1px solid;transition:all .3s}
+.rb-dot{width:5px;height:5px;border-radius:50%}
+.rb-crise{background:var(--red2);color:var(--red);border-color:rgba(224,79,79,.3)}
+.rb-crise .rb-dot{background:var(--red);animation:blink .8s infinite}
+.rb-trans{background:var(--amber2);color:var(--amber);border-color:rgba(224,140,48,.3)}
+.rb-trans .rb-dot{background:var(--amber);animation:blink 1.5s infinite}
+.rb-detente{background:var(--green2);color:var(--green);border-color:rgba(46,201,122,.3)}
+.rb-detente .rb-dot{background:var(--green)}
+.rb-wait{background:var(--bg3);color:var(--ink3);border-color:var(--line)}
+.rb-wait .rb-dot{background:var(--ink3)}
 .hdr-right{display:flex;align-items:center;gap:8px}
-.cap-wrap{display:flex;align-items:center;gap:5px;background:rgba(244,241,235,.07);
-  border:1px solid rgba(244,241,235,.12);border-radius:2px;padding:3px 9px}
-.cap-wrap label{font-family:var(--mono);font-size:9px;color:rgba(244,241,235,.4);text-transform:uppercase;letter-spacing:.08em}
-.cap-input{background:transparent;border:none;color:var(--bg);font-family:var(--disp);
-  font-size:16px;width:78px;outline:none;text-align:right}
-.btn-markets{background:rgba(184,134,11,.2);color:var(--gold);border:1px solid rgba(184,134,11,.4);
-  border-radius:2px;padding:6px 14px;font-family:var(--mono);font-size:10px;font-weight:500;
-  letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:all .15s;position:relative}
-.btn-markets:hover{background:rgba(184,134,11,.3)}
-.btn-markets.stale::after{content:'';position:absolute;top:-3px;right:-3px;
-  width:8px;height:8px;background:var(--amber);border-radius:50%;animation:blink .8s infinite}
-.btn-add{background:var(--gold);color:var(--ink);border:none;border-radius:2px;
-  padding:6px 14px;font-family:var(--mono);font-size:10px;font-weight:500;
-  letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:background .15s}
-.btn-add:hover{background:#d4a010}
+.cap-wrap{display:flex;align-items:center;gap:5px;background:var(--bg3);
+  border:1px solid var(--line);border-radius:2px;padding:3px 9px}
+.cap-lbl{font-family:var(--mono);font-size:8px;color:var(--ink3);text-transform:uppercase;letter-spacing:.08em}
+.cap-in{background:transparent;border:none;color:var(--gold);
+  font-family:var(--disp);font-size:16px;width:76px;outline:none;text-align:right}
+.hdr-eur{font-family:var(--mono);font-size:10px;color:var(--ink3)}
 
-/* BANDE ACTION PRINCIPALE */
-.action-band{position:relative;z-index:1;background:var(--ink);color:var(--bg);
-  padding:0;border-bottom:1px solid rgba(244,241,235,.08)}
-.action-inner{display:flex;align-items:stretch;overflow-x:auto;min-height:52px}
-.ab-item{flex-shrink:0;display:flex;flex-direction:column;justify-content:center;
-  padding:8px 16px;border-right:1px solid rgba(244,241,235,.08)}
-.ab-lbl{font-family:var(--mono);font-size:8px;color:rgba(244,241,235,.35);
-  text-transform:uppercase;letter-spacing:.1em;margin-bottom:2px}
-.ab-val{font-family:var(--disp);font-size:17px;letter-spacing:.04em}
-.ab-sep{width:1px;flex-shrink:0;background:rgba(244,241,235,.08)}
-/* Action prioritaire — grande zone */
-.ab-action{flex:1;display:flex;flex-direction:column;justify-content:center;
-  padding:8px 16px;min-width:0}
-.ab-action-lbl{font-family:var(--mono);font-size:9px;color:rgba(244,241,235,.35);
-  text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px}
-.ab-action-content{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.action-tag{display:flex;align-items:center;gap:5px;padding:3px 10px;
-  border-radius:2px;font-family:var(--mono);font-size:10px;font-weight:500;
-  letter-spacing:.04em;border:1px solid}
-.at-buy{background:rgba(26,96,64,.2);color:#4ae89a;border-color:rgba(26,96,64,.4)}
-.at-hold{background:rgba(184,134,11,.15);color:var(--gold);border-color:rgba(184,134,11,.3)}
-.at-reduce{background:rgba(139,26,26,.15);color:#f08080;border-color:rgba(139,26,26,.3)}
-.at-dot{width:6px;height:6px;border-radius:50%}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(212,168,67,.4)}70%{box-shadow:0 0 0 8px rgba(212,168,67,0)}}
 
-/* ALERTES */
-.alerts{position:relative;z-index:1;display:flex;background:var(--bg);
-  border-bottom:1px solid var(--line);overflow-x:auto}
-.alert-item{display:flex;align-items:center;gap:6px;padding:6px 14px;
-  border-right:1px solid var(--line);font-family:var(--mono);font-size:10px;flex-shrink:0}
-.alert-item:last-child{border-right:none}
-.alert-item.triggered{background:var(--red2)}
-.a-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-.a-off{background:var(--ink3)}.a-watch{background:var(--amber);animation:blink 1.5s infinite}
-.a-on{background:var(--red);animation:blink .8s infinite}
-.a-txt{color:var(--ink2)}.a-txt strong{color:var(--ink)}
-.a-arrow{color:var(--ink3);font-size:9px}
-.alert-item.triggered .a-arrow{color:var(--red)}
+/* LAYOUT PRINCIPAL */
+.layout{display:grid;grid-template-columns:420px 1fr;min-height:calc(100vh - 48px)}
 
-/* MAIN */
-.main{position:relative;z-index:1;padding:20px 20px 40px}
+/* ── COLONNE GAUCHE : WORKFLOW ── */
+.wf-col{background:var(--bg2);border-right:1px solid var(--line);
+  display:flex;flex-direction:column;overflow-y:auto;height:calc(100vh - 48px);
+  position:sticky;top:48px}
 
-/* TIMELINE */
-.tl-wrap{overflow-x:auto;padding-bottom:14px;
-  scrollbar-width:thin;scrollbar-color:var(--ink3) var(--bg3)}
+/* Indicateur de progression */
+.progress-bar{display:flex;border-bottom:1px solid var(--line);background:var(--bg)}
+.pb-step{flex:1;padding:8px 0;text-align:center;font-family:var(--mono);
+  font-size:8px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);
+  border-right:1px solid var(--line);transition:all .3s;cursor:default}
+.pb-step:last-child{border-right:none}
+.pb-step.active{color:var(--gold);background:var(--gold3);border-bottom:2px solid var(--gold)}
+.pb-step.done{color:var(--green)}
+.pb-step.done::before{content:'✓ '}
+
+/* Étapes */
+.step{display:none;flex-direction:column;flex:1;animation:fadeIn .3s ease}
+.step.active{display:flex}
+
+.step-hdr{padding:20px 20px 0}
+.step-num{font-family:var(--mono);font-size:9px;color:var(--ink3);
+  text-transform:uppercase;letter-spacing:.12em;margin-bottom:6px}
+.step-title{font-family:var(--disp);font-size:28px;letter-spacing:.06em;
+  color:var(--ink);line-height:1.1;margin-bottom:6px}
+.step-sub{font-size:12px;color:var(--ink2);line-height:1.6}
+
+.step-body{padding:16px 20px;flex:1;display:flex;flex-direction:column;gap:10px}
+.step-ftr{padding:12px 20px;border-top:1px solid var(--line);
+  display:flex;flex-direction:column;gap:8px;background:var(--bg)}
+
+/* Bouton principal */
+.btn-main{background:var(--gold);color:var(--bg);border:none;border-radius:3px;
+  padding:12px 20px;font-family:var(--mono);font-size:11px;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;cursor:pointer;
+  transition:all .15s;width:100%;animation:pulse 2s infinite}
+.btn-main:hover{background:#e8b840;animation:none}
+.btn-main:disabled{background:var(--bg4);color:var(--ink3);animation:none;cursor:not-allowed}
+.btn-sec{background:transparent;color:var(--ink3);border:1px solid var(--line);
+  border-radius:3px;padding:8px 14px;font-family:var(--mono);font-size:10px;
+  cursor:pointer;transition:all .15s;text-align:center}
+.btn-sec:hover{border-color:var(--ink2);color:var(--ink2)}
+
+/* Champs de saisie marchés */
+.mkt-section{margin-bottom:4px}
+.mkt-stitle{font-family:var(--mono);font-size:8px;font-weight:700;
+  color:var(--ink3);text-transform:uppercase;letter-spacing:.12em;
+  margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--line2)}
+.mkt-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px}
+.mf{display:flex;flex-direction:column;gap:3px}
+.mf-lbl{font-family:var(--mono);font-size:8px;color:var(--ink3);
+  text-transform:uppercase;letter-spacing:.06em;display:flex;align-items:center;justify-content:space-between}
+.mf-lbl span{opacity:.5;font-size:8px}
+.mf-in{background:var(--bg3);border:1px solid var(--line);border-radius:2px;
+  color:var(--ink);font-family:var(--mono);font-size:12px;padding:6px 8px;
+  outline:none;transition:border-color .15s;width:100%}
+.mf-in:focus{border-color:var(--gold)}
+/* Hormuz selector */
+.hz-sel{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px}
+.hz-opt{padding:7px 4px;text-align:center;border:1px solid var(--line);
+  border-radius:2px;cursor:pointer;font-family:var(--mono);font-size:9px;
+  letter-spacing:.03em;transition:all .15s;background:var(--bg3);color:var(--ink3)}
+.hz-opt:hover{background:var(--bg4)}
+.hz-red.sel{background:var(--red2);border-color:rgba(224,79,79,.4);color:var(--red)}
+.hz-amb.sel{background:var(--amber2);border-color:rgba(224,140,48,.4);color:var(--amber)}
+.hz-grn.sel{background:var(--green2);border-color:rgba(46,201,122,.4);color:var(--green)}
+.links-row{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px}
+.lnk{font-family:var(--mono);font-size:9px;color:var(--blue);text-decoration:none;
+  padding:2px 6px;background:var(--blue2);border-radius:2px;border:1px solid rgba(74,143,212,.2)}
+.lnk:hover{color:var(--gold)}
+
+/* Étape 2 — Régime */
+.regime-result{background:var(--bg3);border-radius:4px;border:1px solid var(--line);
+  overflow:hidden;margin-bottom:6px}
+.rr-hdr{padding:12px 14px;border-bottom:1px solid var(--line)}
+.rr-label{font-family:var(--mono);font-size:9px;color:var(--ink3);
+  text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.rr-regime{font-family:var(--disp);font-size:32px;letter-spacing:.06em}
+.rr-body{padding:12px 14px}
+.rr-why{font-size:12px;color:var(--ink2);line-height:1.7;margin-bottom:10px}
+.rr-signals{display:flex;flex-direction:column;gap:4px}
+.rr-sig{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10px}
+.sig-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.sig-ok{background:var(--green)}.sig-warn{background:var(--amber)}.sig-bad{background:var(--red)}
+
+/* Étape 3 — Actions */
+.action-list{display:flex;flex-direction:column;gap:5px}
+.action-item{display:flex;align-items:center;gap:10px;padding:10px 12px;
+  border-radius:3px;border:1px solid var(--line);background:var(--bg3);
+  transition:all .15s}
+.action-item:hover{border-color:var(--gold);background:var(--gold3)}
+.ai-rank{font-family:var(--mono);font-size:11px;color:var(--ink3);min-width:16px}
+.ai-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.ai-info{flex:1}
+.ai-action{font-family:var(--mono);font-size:8px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.08em;margin-bottom:1px}
+.ai-name{font-size:12px;font-weight:500}
+.ai-pct{font-family:var(--mono);font-size:10px;color:var(--ink3)}
+.ai-amt{font-family:var(--disp);font-size:18px;letter-spacing:.04em}
+.ai-act-buy{color:var(--green)}.ai-act-hold{color:var(--amber)}.ai-act-reduce{color:var(--red)}
+
+.total-row{display:flex;justify-content:space-between;align-items:center;
+  padding:8px 12px;background:var(--bg4);border-radius:3px;
+  font-family:var(--mono);font-size:11px}
+.total-inv{color:var(--gold);font-size:14px;font-family:var(--disp)}
+.total-res{color:var(--ink3)}
+
+/* Étape 4 — Date */
+.date-proposal{background:var(--bg3);border:1px solid var(--gold);
+  border-radius:4px;padding:16px;margin-bottom:8px}
+.dp-label{font-family:var(--mono);font-size:9px;color:var(--ink3);
+  text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+.dp-date{font-family:var(--disp);font-size:36px;color:var(--gold);letter-spacing:.04em;margin-bottom:4px}
+.dp-reason{font-size:11px;color:var(--ink2);margin-bottom:10px}
+.dp-interval{font-family:var(--mono);font-size:10px;color:var(--ink3);
+  padding:4px 8px;background:var(--bg4);border-radius:2px;display:inline-block}
+.date-adjust{margin-top:8px}
+.date-adjust label{font-family:var(--mono);font-size:9px;color:var(--ink3);
+  text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:4px}
+.date-in{background:var(--bg3);border:1px solid var(--line);border-radius:2px;
+  color:var(--ink);font-family:var(--mono);font-size:13px;padding:6px 9px;
+  outline:none;width:100%;transition:border-color .15s}
+.date-in:focus{border-color:var(--gold)}
+
+/* Étape 5 — Ordres IBKR */
+.ibkr-list{display:flex;flex-direction:column;gap:4px}
+.ibkr-row{display:flex;align-items:center;gap:10px;padding:10px 12px;
+  background:var(--bg3);border-radius:3px;border-left:3px solid}
+.ibkr-action{font-family:var(--mono);font-size:9px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.06em;min-width:52px}
+.ibkr-ticker{font-size:13px;font-weight:600;flex:1}
+.ibkr-amount{font-family:var(--disp);font-size:18px;color:var(--gold)}
+.ibkr-check{width:18px;height:18px;border:1px solid var(--line);border-radius:2px;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:11px;transition:all .15s;flex-shrink:0}
+.ibkr-check.checked{background:var(--green);border-color:var(--green);color:#000}
+
+.ibkr-note{background:var(--gold3);border:1px solid rgba(212,168,67,.2);
+  border-radius:3px;padding:8px 10px;font-size:11px;color:var(--ink2);line-height:1.6}
+.ibkr-note strong{color:var(--gold)}
+
+/* ── COLONNE DROITE : TIMELINE ── */
+.tl-col{display:flex;flex-direction:column;overflow:hidden}
+
+.tl-hdr{padding:14px 20px;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.tl-title{font-family:var(--mono);font-size:9px;font-weight:700;
+  color:var(--ink3);text-transform:uppercase;letter-spacing:.1em}
+.tl-stats{display:flex;gap:16px}
+.ts-item{text-align:right}
+.ts-lbl{font-family:var(--mono);font-size:8px;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em}
+.ts-val{font-family:var(--disp);font-size:16px;letter-spacing:.04em}
+
+/* Timeline wrap */
+.tl-wrap{flex:1;overflow-x:auto;overflow-y:hidden;padding:0 20px 20px;
+  scrollbar-width:thin;scrollbar-color:var(--bg4) var(--bg)}
 .tl-wrap::-webkit-scrollbar{height:3px}
-.tl-wrap::-webkit-scrollbar-track{background:var(--bg3)}
-.tl-wrap::-webkit-scrollbar-thumb{background:var(--ink3);border-radius:2px}
+.tl-wrap::-webkit-scrollbar-track{background:var(--bg)}
+.tl-wrap::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px}
 .tl-inner{position:relative;min-width:100%;display:inline-block;padding-top:14px}
-.tl-road{position:relative;height:4px;background:var(--ink3);margin:80px 0 110px;border-radius:2px}
+.tl-road{position:relative;height:3px;background:var(--bg4);
+  margin:80px 0 110px;border-radius:2px}
 .tl-road::before{content:'';position:absolute;inset:0;border-radius:2px;
-  background:repeating-linear-gradient(90deg,var(--ink) 0,var(--ink) 8px,transparent 8px,transparent 16px)}
-.road-prog{position:absolute;top:0;left:0;bottom:0;background:var(--gold);border-radius:2px;transition:width .6s ease}
-.today-mk{position:absolute;top:-20px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;z-index:10}
-.today-flag{background:var(--ink);color:var(--bg);font-family:var(--mono);font-size:9px;
-  font-weight:500;letter-spacing:.06em;text-transform:uppercase;padding:3px 7px;border-radius:2px;white-space:nowrap}
-.today-line{width:2px;height:44px;background:var(--ink)}
+  background:repeating-linear-gradient(90deg,var(--ink3) 0,var(--ink3) 6px,transparent 6px,transparent 12px)}
+.road-prog{position:absolute;top:0;left:0;bottom:0;background:var(--gold);
+  border-radius:2px;transition:width .6s ease}
+.today-mk{position:absolute;top:-18px;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;z-index:10}
+.today-flag{background:var(--ink);color:var(--bg);font-family:var(--mono);
+  font-size:8px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  padding:2px 6px;border-radius:2px;white-space:nowrap}
+.today-line{width:2px;height:42px;background:var(--ink3)}
 .ms-cont{position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none}
 
 /* Jalons */
 .milestone{position:absolute;top:50%;transform:translateX(-50%);pointer-events:all}
-.m-pin{position:absolute;top:-36px;left:50%;transform:translateX(-50%);
+.m-pin{position:absolute;top:-34px;left:50%;transform:translateX(-50%);
   display:flex;flex-direction:column;align-items:center;cursor:pointer}
-.m-pin-dot{width:14px;height:14px;border-radius:50%;border:3px solid var(--bg);
-  box-shadow:0 0 0 2px currentColor,0 2px 8px rgba(0,0,0,.2);transition:transform .15s;z-index:2}
-.m-pin:hover .m-pin-dot{transform:scale(1.2)}
-.m-pin-line{width:2px;height:20px;background:currentColor;opacity:.4}
-.m-card{position:absolute;width:178px;background:var(--bg);border:1px solid var(--line);
-  border-radius:3px;box-shadow:0 4px 14px rgba(26,24,20,.08);overflow:hidden;
-  cursor:pointer;transition:box-shadow .15s,transform .15s}
-.m-card:hover{box-shadow:0 7px 20px rgba(26,24,20,.14)}
-.m-card.top{bottom:calc(100% + 36px);left:50%;transform:translateX(-50%)}
+.m-pin-dot{width:13px;height:13px;border-radius:50%;border:2px solid var(--bg2);
+  box-shadow:0 0 0 2px currentColor;transition:transform .15s;z-index:2}
+.m-pin:hover .m-pin-dot{transform:scale(1.3)}
+.m-pin-line{width:2px;height:18px;background:currentColor;opacity:.3}
+.m-card{position:absolute;width:170px;background:var(--bg2);
+  border:1px solid var(--line);border-radius:3px;
+  box-shadow:0 4px 20px rgba(0,0,0,.4);overflow:hidden;cursor:pointer;
+  transition:box-shadow .15s}
+.m-card:hover{box-shadow:0 8px 32px rgba(0,0,0,.6);border-color:var(--gold)}
+.m-card.top{bottom:calc(100% + 34px);left:50%;transform:translateX(-50%)}
 .m-card.top:hover{transform:translateX(-50%) translateY(-2px)}
-.m-card.bottom{top:calc(100% + 36px);left:50%;transform:translateX(-50%)}
+.m-card.bottom{top:calc(100% + 34px);left:50%;transform:translateX(-50%)}
 .m-card.bottom:hover{transform:translateX(-50%) translateY(2px)}
-.milestone.edge-left .m-card{left:0;transform:none}
-.milestone.edge-left .m-card:hover{transform:translateY(-2px)}
-.milestone.edge-left .m-card.bottom{transform:none}
-.milestone.edge-left .m-card.bottom:hover{transform:translateY(2px)}
-.m-card-hdr{padding:7px 9px;border-bottom:1px solid var(--line2);
-  display:flex;align-items:center;justify-content:space-between;background:var(--bg2)}
-.m-date{font-family:var(--mono);font-size:9px;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em}
+.milestone.edge-l .m-card{left:0;transform:none}
+.milestone.edge-l .m-card.top:hover,.milestone.edge-l .m-card.bottom:hover{transform:translateY(-2px)}
+.m-card-hdr{padding:6px 8px;border-bottom:1px solid var(--line2);
+  display:flex;align-items:center;justify-content:space-between;background:var(--bg3)}
+.m-date{font-family:var(--mono);font-size:8px;color:var(--ink3);
+  text-transform:uppercase;letter-spacing:.06em}
 .m-amount{font-family:var(--disp);font-size:15px}
-.m-card-body{padding:7px 9px;display:flex;flex-direction:column;gap:3px}
+.m-card-body{padding:6px 8px;display:flex;flex-direction:column;gap:3px}
 .m-row{display:flex;align-items:center;justify-content:space-between;font-size:11px}
 .m-row-l{display:flex;align-items:center;gap:4px}
-.m-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.m-row-amt{font-family:var(--mono);font-size:10px;color:var(--ink2)}
-.m-card-ftr{padding:5px 9px;background:var(--bg2);border-top:1px solid var(--line2);
+.m-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.m-row-amt{font-family:var(--mono);font-size:9px;color:var(--ink2)}
+.m-card-ftr{padding:5px 8px;background:var(--bg3);border-top:1px solid var(--line2);
   display:flex;align-items:center;justify-content:space-between}
-.m-res{font-family:var(--mono);font-size:9px;color:var(--ink3)}
+.m-res{font-family:var(--mono);font-size:8px;color:var(--ink3)}
 .m-res strong{color:var(--ink2)}
-.m-status{font-family:var(--mono);font-size:9px}
-.m-status.done{color:var(--green)}.m-status.todo{color:var(--ink3)}
-.milestone.frozen .m-pin-dot{opacity:.3}
-.milestone.frozen .m-card{opacity:.4;filter:grayscale(.8)}
-.m-reeval{position:absolute;top:-7px;right:-7px;background:var(--amber);
-  color:var(--bg);font-family:var(--mono);font-size:8px;padding:2px 5px;border-radius:2px}
-.m-frozen-b{position:absolute;top:-7px;right:-7px;background:var(--ink3);
-  color:var(--bg);font-family:var(--mono);font-size:8px;padding:2px 5px;border-radius:2px}
+.m-status{font-family:var(--mono);font-size:8px}
+.m-done-st{color:var(--green)}.m-plan-st{color:var(--ink3)}
+.milestone.stale .m-card{border-color:var(--amber)}
+.m-stale-b{position:absolute;top:-6px;right:-6px;background:var(--amber);
+  color:var(--bg);font-family:var(--mono);font-size:7px;padding:2px 4px;border-radius:2px}
 
 /* Zakat */
 .zakat-mk{position:absolute;top:50%;transform:translateX(-50%)}
-.z-pin{position:absolute;top:-28px;left:50%;transform:translateX(-50%);
+.z-pin{position:absolute;top:-24px;left:50%;transform:translateX(-50%);
   display:flex;flex-direction:column;align-items:center}
 .z-dot{width:10px;height:10px;background:var(--bg);border:2px solid var(--blue);border-radius:50%}
-.z-line{width:1px;height:14px;background:var(--blue);opacity:.5}
-.z-lbl{position:absolute;top:calc(100% + 26px);left:50%;transform:translateX(-50%);
-  background:var(--blue2);border:1px solid rgba(26,74,122,.2);border-radius:2px;
-  padding:5px 8px;text-align:center;white-space:nowrap}
-.z-title{font-family:var(--mono);font-size:9px;color:var(--blue);text-transform:uppercase;letter-spacing:.06em}
-.z-amount{font-family:var(--disp);font-size:13px;color:var(--blue);margin-top:1px}
-.z-sub{font-size:9px;color:var(--ink3);margin-top:1px}
+.z-line{width:1px;height:12px;background:var(--blue);opacity:.4}
+.z-lbl{position:absolute;top:calc(100% + 24px);left:50%;transform:translateX(-50%);
+  background:var(--blue2);border:1px solid rgba(74,143,212,.2);border-radius:2px;
+  padding:4px 7px;text-align:center;white-space:nowrap}
+.z-title{font-family:var(--mono);font-size:8px;color:var(--blue);text-transform:uppercase;letter-spacing:.06em}
+.z-amount{font-family:var(--disp);font-size:13px;color:var(--blue)}
+.z-sub{font-size:9px;color:var(--ink3)}
 
-/* OVERLAY */
-.overlay{position:fixed;inset:0;background:rgba(26,24,20,.72);
-  backdrop-filter:blur(5px);z-index:200;display:none;align-items:center;justify-content:center}
-.overlay.open{display:flex}
-
-/* MODALS commune */
-.modal-base{background:var(--bg);border:1px solid var(--line);border-radius:3px;
-  max-width:96vw;box-shadow:0 20px 60px rgba(26,24,20,.3)}
-
-/* Modal marchés */
-.mkt-modal{width:560px;border-top:3px solid var(--gold)}
-.mkt-hdr{padding:14px 20px 10px;border-bottom:1px solid var(--line2);
-  display:flex;align-items:center;justify-content:space-between}
-.mkt-title{font-family:var(--disp);font-size:20px;letter-spacing:.06em}
-.mkt-sub{font-family:var(--mono);font-size:10px;color:var(--ink3);margin-top:2px}
-.mkt-close{background:none;border:none;color:var(--ink3);cursor:pointer;font-size:16px}
-.mkt-links{display:flex;flex-wrap:wrap;gap:5px;padding:10px 20px;
-  background:var(--bg2);border-bottom:1px solid var(--line2)}
-.mkt-links a{font-family:var(--mono);font-size:9px;color:var(--blue);text-decoration:none;
-  padding:2px 7px;background:var(--blue2);border-radius:2px;border:1px solid rgba(26,74,122,.2)}
-.mkt-links a:hover{color:var(--gold)}
-.mkt-body{padding:14px 20px}
-.mkt-section{margin-bottom:14px}
-.mkt-section-title{font-family:var(--mono);font-size:9px;font-weight:500;
-  color:var(--ink3);text-transform:uppercase;letter-spacing:.1em;
-  margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--line2)}
-.mkt-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.mkt-field{display:flex;flex-direction:column;gap:3px}
-.mkt-label{font-family:var(--mono);font-size:9px;color:var(--ink3);
-  text-transform:uppercase;letter-spacing:.06em;display:flex;align-items:center;justify-content:space-between}
-.mkt-label span{font-size:8px;opacity:.6}
-.mkt-input{background:var(--bg2);border:1px solid var(--line);border-radius:3px;
-  color:var(--ink);font-family:var(--mono);font-size:12px;padding:6px 9px;
-  outline:none;transition:border-color .15s;width:100%}
-.mkt-input:focus{border-color:var(--gold)}
-/* Sélecteur Hormuz */
-.hormuz-sel{display:flex;gap:6px}
-.hz-opt{flex:1;padding:7px 4px;text-align:center;border:1px solid var(--line);
-  border-radius:3px;cursor:pointer;font-family:var(--mono);font-size:10px;
-  letter-spacing:.04em;transition:all .15s;background:var(--bg2)}
-.hz-opt:hover{background:var(--bg3)}
-.hz-opt.selected-red{background:var(--red2);border-color:rgba(139,26,26,.4);color:var(--red)}
-.hz-opt.selected-amb{background:var(--amber2);border-color:rgba(139,90,26,.4);color:var(--amber)}
-.hz-opt.selected-grn{background:var(--green2);border-color:rgba(26,96,64,.4);color:var(--green)}
-.mkt-ftr{padding:12px 20px;border-top:1px solid var(--line2);
-  display:flex;align-items:center;justify-content:space-between}
-.mkt-last{font-family:var(--mono);font-size:10px;color:var(--ink3)}
-.btn-calc{background:var(--ink);color:var(--bg);border:none;border-radius:2px;
-  padding:8px 20px;font-family:var(--mono);font-size:10px;font-weight:500;
-  letter-spacing:.05em;text-transform:uppercase;cursor:pointer}
-.btn-calc:hover{background:#333}
-
-/* Modal versement */
-.vers-modal{width:500px;border-top:3px solid var(--gold)}
-.modal-hdr{padding:14px 20px 10px;border-bottom:1px solid var(--line2)}
-.modal-title{font-family:var(--disp);font-size:20px;letter-spacing:.06em}
-.modal-sub{font-family:var(--mono);font-size:10px;color:var(--ink3);margin-top:2px}
-.modal-body{padding:14px 20px}
-.mrow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
-.mfield{display:flex;flex-direction:column;gap:3px}
-.mlabel{font-family:var(--mono);font-size:9px;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em}
-.minput,.msel{background:var(--bg2);border:1px solid var(--line);border-radius:3px;
-  color:var(--ink);font-family:var(--mono);font-size:12px;padding:6px 9px;outline:none;transition:border-color .15s}
-.minput:focus,.msel:focus{border-color:var(--gold)}
-.alloc-sec{background:var(--bg2);border:1px solid var(--line2);border-radius:3px;padding:11px;margin-bottom:11px}
-.alloc-sec-title{font-family:var(--mono);font-size:9px;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
-.alloc-row{display:grid;grid-template-columns:16px 1fr 68px 44px;align-items:center;gap:6px;margin-bottom:6px}
-.alloc-row:last-child{margin-bottom:0}
-.a-slider{-webkit-appearance:none;height:3px;background:var(--bg3);border-radius:2px;outline:none;cursor:pointer}
-.a-slider::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;border-radius:50%;
-  background:var(--ink);cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.2)}
-.a-pct{font-family:var(--mono);font-size:10px;text-align:right;font-weight:500}
-.alloc-total{display:flex;justify-content:space-between;margin-top:8px;padding-top:7px;
-  border-top:1px solid var(--line2);font-family:var(--mono);font-size:10px}
-.tok{color:var(--green)}.twarn{color:var(--red)}
-.modal-note{background:var(--gold3);border:1px solid rgba(184,134,11,.2);border-radius:3px;
-  padding:8px 11px;font-size:11px;color:var(--ink2);line-height:1.6;margin-bottom:11px}
-.modal-ftr{padding:11px 20px;border-top:1px solid var(--line2);display:flex;gap:7px;justify-content:flex-end}
-.btn-confirm{background:var(--ink);color:var(--bg);border:none;border-radius:2px;
-  padding:8px 18px;font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.04em;cursor:pointer}
-.btn-confirm:hover{background:#333}
-.btn-cancel-m{background:transparent;color:var(--ink3);border:1px solid var(--line);
-  border-radius:2px;padding:8px 11px;font-family:var(--mono);font-size:10px;cursor:pointer}
+/* Timeline vide */
+.tl-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;
+  height:100%;color:var(--ink3);font-family:var(--mono);font-size:11px;text-align:center;gap:8px}
+.tl-empty-icon{font-size:32px;opacity:.3}
 
 /* Modal détail jalon */
-.detail-modal{width:320px;max-width:96vw;border-top:3px solid var(--ink)}
-.dm-hdr{padding:11px 14px;background:var(--ink);color:var(--bg);
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(6px);
+  z-index:200;display:none;align-items:center;justify-content:center}
+.overlay.open{display:flex}
+.detail-modal{background:var(--bg2);border:1px solid var(--line);
+  border-top:2px solid var(--gold);border-radius:4px;width:320px;max-width:95vw;
+  box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.dm-hdr{padding:12px 14px;background:var(--bg3);border-bottom:1px solid var(--line);
   display:flex;align-items:center;justify-content:space-between}
 .dm-title{font-family:var(--disp);font-size:18px;letter-spacing:.06em}
-.dm-date{font-family:var(--mono);font-size:10px;color:rgba(244,241,235,.4)}
-.dm-close{background:none;border:none;color:rgba(244,241,235,.4);cursor:pointer;font-size:14px}
-.dm-body{padding:11px 14px}
-.dm-alloc{display:flex;flex-direction:column;gap:4px;margin-bottom:9px}
-.dm-row{display:flex;align-items:center;gap:6px;padding:5px 8px;background:var(--bg2);border-radius:2px}
-.dm-name{flex:1;font-size:12px}
-.dm-bar-w{width:64px;height:3px;background:var(--bg3);border-radius:2px;overflow:hidden}
+.dm-date{font-family:var(--mono);font-size:9px;color:var(--ink3)}
+.dm-close{background:none;border:none;color:var(--ink3);cursor:pointer;font-size:14px}
+.dm-body{padding:12px 14px}
+.dm-alloc{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
+.dm-row{display:flex;align-items:center;gap:6px;padding:5px 8px;
+  background:var(--bg3);border-radius:2px}
+.dm-name{flex:1;font-size:11px}
+.dm-bar-w{width:60px;height:2px;background:var(--bg4);border-radius:2px;overflow:hidden}
 .dm-bar{height:100%;border-radius:2px}
-.dm-amt{font-family:var(--mono);font-size:10px;color:var(--ink2);min-width:46px;text-align:right}
+.dm-amt{font-family:var(--mono);font-size:10px;color:var(--ink2);min-width:44px;text-align:right}
 .dm-ftr{border-top:1px solid var(--line2);padding-top:8px;display:flex;flex-direction:column;gap:4px}
-.dm-ftr-row{display:flex;justify-content:space-between;font-size:11px}
-.dm-ftr-lbl{color:var(--ink3);font-family:var(--mono)}
-.dm-ftr-val{font-family:var(--mono);font-weight:500}
+.dm-row2{display:flex;justify-content:space-between;font-size:11px}
+.dm-lbl{color:var(--ink3);font-family:var(--mono)}
+.dm-val{font-family:var(--mono);font-weight:500}
 .dm-actions{display:flex;gap:5px;margin-top:8px}
 .btn-done{flex:1;background:var(--green);color:var(--bg);border:none;border-radius:2px;
-  padding:6px;font-family:var(--mono);font-size:10px;cursor:pointer}
-.btn-done:hover{opacity:.85}.btn-done.undone{background:var(--ink3)}
-.btn-del{background:transparent;color:var(--red);border:1px solid rgba(139,26,26,.3);
-  border-radius:2px;padding:6px 9px;font-family:var(--mono);font-size:10px;cursor:pointer}
+  padding:7px;font-family:var(--mono);font-size:9px;letter-spacing:.04em;cursor:pointer}
+.btn-done:hover{opacity:.85}.btn-done.undone{background:var(--bg4);color:var(--ink3)}
+.btn-del{background:transparent;color:var(--red);border:1px solid rgba(224,79,79,.3);
+  border-radius:2px;padding:7px 9px;font-family:var(--mono);font-size:9px;cursor:pointer}
 
-/* Modal régime */
-.regime-modal{width:340px;padding:16px;border-top:3px solid var(--ink)}
-.rm-title{font-family:var(--disp);font-size:19px;letter-spacing:.06em;margin-bottom:11px}
-.rm-opts{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
-.rm-opt{display:flex;align-items:center;gap:8px;padding:8px 11px;
-  border:1px solid var(--line);border-radius:3px;cursor:pointer;transition:background .12s;font-size:12px}
-.rm-opt:hover{background:var(--bg2)}.rm-opt.selected{border-color:var(--gold);background:var(--gold3)}
-.rm-opt-info{flex:1}
-.rm-opt-name{font-family:var(--mono);font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.04em}
-.rm-opt-desc{font-size:10px;color:var(--ink3);margin-top:1px}
-
-/* Confirm dialog */
-.confirm-modal{width:380px;padding:20px;border-top:3px solid var(--amber)}
-.confirm-q{font-family:var(--disp);font-size:20px;letter-spacing:.04em;margin-bottom:8px}
-.confirm-body{font-size:12px;color:var(--ink2);line-height:1.6;margin-bottom:14px}
-.confirm-ftr{display:flex;gap:8px;justify-content:flex-end}
-.btn-confirm-yes{background:var(--amber);color:var(--bg);border:none;border-radius:2px;
-  padding:8px 18px;font-family:var(--mono);font-size:10px;font-weight:500;cursor:pointer}
-.btn-confirm-no{background:transparent;color:var(--ink3);border:1px solid var(--line);
+/* Confirm recalc */
+.confirm-modal{background:var(--bg2);border:1px solid var(--line);
+  border-top:2px solid var(--amber);border-radius:4px;width:360px;max-width:95vw;
+  padding:18px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.cm-title{font-family:var(--disp);font-size:20px;letter-spacing:.04em;margin-bottom:8px}
+.cm-body{font-size:12px;color:var(--ink2);line-height:1.7;margin-bottom:14px}
+.cm-ftr{display:flex;gap:7px;justify-content:flex-end}
+.btn-cy{background:var(--amber);color:var(--bg);border:none;border-radius:2px;
+  padding:8px 16px;font-family:var(--mono);font-size:10px;font-weight:700;cursor:pointer}
+.btn-cn{background:transparent;color:var(--ink3);border:1px solid var(--line);
   border-radius:2px;padding:8px 11px;font-family:var(--mono);font-size:10px;cursor:pointer}
 
-/* Guide */
-.guide{position:fixed;inset:0;background:rgba(26,24,20,.87);z-index:300;
-  display:flex;align-items:center;justify-content:center}
-.guide-card{background:var(--bg);border:1px solid var(--line);border-top:3px solid var(--gold);
-  border-radius:3px;width:450px;max-width:96vw;box-shadow:0 24px 64px rgba(26,24,20,.4)}
-.g-steps{display:flex;border-bottom:1px solid var(--line2)}
-.g-step{flex:1;padding:8px 10px;font-family:var(--mono);font-size:9px;text-transform:uppercase;
-  letter-spacing:.06em;color:var(--ink3);text-align:center;border-right:1px solid var(--line2)}
-.g-step:last-child{border-right:none}
-.g-step.active{color:var(--gold);background:var(--gold3)}
-.g-step.done{color:var(--green)}
-.g-body{padding:18px 20px;min-height:160px}
-.g-q{font-family:var(--disp);font-size:20px;letter-spacing:.04em;margin-bottom:5px}
-.g-sub{font-size:12px;color:var(--ink3);margin-bottom:14px;line-height:1.5}
-.g-input{background:var(--bg2);border:1px solid var(--line);border-radius:3px;
-  color:var(--ink);font-family:var(--disp);font-size:24px;padding:8px 11px;outline:none;
-  width:100%;transition:border-color .15s;letter-spacing:.04em}
-.g-input:focus{border-color:var(--gold)}
-.g-opts{display:flex;flex-direction:column;gap:6px}
-.g-opt{display:flex;align-items:center;gap:8px;padding:8px 11px;border:1px solid var(--line);
-  border-radius:3px;cursor:pointer;font-size:12px;transition:background .12s}
-.g-opt:hover{background:var(--bg2)}.g-opt.selected{border-color:var(--gold);background:var(--gold3)}
-.g-ftr{padding:11px 20px;border-top:1px solid var(--line2);display:flex;justify-content:space-between;align-items:center}
-.g-count{font-family:var(--mono);font-size:10px;color:var(--ink3)}
-.btn-next{background:var(--ink);color:var(--bg);border:none;border-radius:2px;
-  padding:7px 18px;font-family:var(--mono);font-size:10px;letter-spacing:.04em;cursor:pointer}
-.btn-next:hover{background:#333}.btn-next:disabled{background:var(--ink3);cursor:not-allowed}
+/* ALERTES */
+.alerts-row{display:flex;border-top:1px solid var(--line);flex-shrink:0;overflow-x:auto}
+.al-item{display:flex;align-items:center;gap:6px;padding:6px 12px;
+  border-right:1px solid var(--line);font-family:var(--mono);font-size:9px;flex-shrink:0}
+.al-item.triggered{background:var(--red2)}
+.al-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.al-off{background:var(--ink3)}.al-watch{background:var(--amber);animation:blink 1.5s infinite}
+.al-on{background:var(--red);animation:blink .8s infinite}
+.al-txt{color:var(--ink2)}.al-txt strong{color:var(--ink)}
+.al-arr{color:var(--ink3);font-size:9px}
+.al-item.triggered .al-arr{color:var(--red)}
+
+@media(max-width:900px){
+  .layout{grid-template-columns:1fr}
+  .wf-col{height:auto;position:static;border-right:none;border-bottom:1px solid var(--line)}
+  .tl-col{min-height:400px}
+}
 </style>
 </head>
 <body>
-
-<!-- GUIDE -->
-<div class="guide" id="guide">
-  <div class="guide-card">
-    <div class="g-steps">
-      <div class="g-step active" id="gs0">01 · Capital</div>
-      <div class="g-step" id="gs1">02 · Régime</div>
-      <div class="g-step" id="gs2">03 · Démarrer</div>
-    </div>
-    <div class="g-body">
-      <div id="gstep-0">
-        <div class="g-q">Capital de départ ?</div>
-        <div class="g-sub">Montant viré sur votre compte IBKR. Tout se recalcule automatiquement.</div>
-        <input type="number" class="g-input" id="g-capital" placeholder="10 000" min="100" step="500">
-      </div>
-      <div id="gstep-1" style="display:none">
-        <div class="g-q">Régime actuel ?</div>
-        <div class="g-sub">Définit l'allocation suggérée sur chaque versement. Modifiable à tout moment.</div>
-        <div class="g-opts">
-          <div class="g-opt" onclick="selR('crise')" id="gr-crise">
-            <div class="m-dot" style="background:var(--red)"></div>
-            <div><div style="font-family:var(--mono);font-size:10px;text-transform:uppercase">🔴 Crise — Brent &gt;$100 · Hormuz bloqué</div>
-            <div style="font-size:10px;color:var(--ink3);margin-top:1px">Surpondérer SGLN.L + XOM/CVX</div></div>
-          </div>
-          <div class="g-opt" onclick="selR('trans')" id="gr-trans">
-            <div class="m-dot" style="background:var(--amber)"></div>
-            <div><div style="font-family:var(--mono);font-size:10px;text-transform:uppercase">🟡 Transition — Brent $80-100</div>
-            <div style="font-size:10px;color:var(--ink3);margin-top:1px">Équilibrer SGLN + INRG + IGDA</div></div>
-          </div>
-          <div class="g-opt selected" onclick="selR('detente')" id="gr-detente">
-            <div class="m-dot" style="background:var(--green)"></div>
-            <div><div style="font-family:var(--mono);font-size:10px;text-transform:uppercase">🟢 Détente — Brent &lt;$80 · VIX calme</div>
-            <div style="font-size:10px;color:var(--ink3);margin-top:1px">Surpondérer INRG.L + IGDA.L</div></div>
-          </div>
-        </div>
-      </div>
-      <div id="gstep-2" style="display:none">
-        <div class="g-q">Prêt à démarrer.</div>
-        <div class="g-sub">Premier jalon créé. Mettez à jour les cours via le bouton "Marchés" pour que le régime s'ajuste automatiquement.</div>
-        <div style="background:var(--bg2);border:1px solid var(--line2);border-radius:3px;padding:10px 12px" id="g-preview"></div>
-      </div>
-    </div>
-    <div class="g-ftr">
-      <div class="g-count" id="g-count">Étape 1 / 3</div>
-      <button class="btn-next" id="btn-next" onclick="nextStep()">Suivant →</button>
-    </div>
-  </div>
-</div>
 
 <!-- OVERLAY -->
 <div class="overlay" id="overlay"></div>
 
 <!-- HEADER -->
 <div class="hdr">
-  <div class="logo"><div class="logo-dot"></div>HALAL ROBUSTE · v2.1</div>
+  <div class="logo">HALAL · ROBUSTE · v2.2</div>
   <div class="hdr-mid">
-    <div class="regime-pill" id="regime-pill" onclick="openRegimeModal()">
-      <div class="rp-dot"></div><span>—</span>
+    <div class="regime-badge rb-wait" id="regime-badge">
+      <div class="rb-dot"></div><span id="regime-label">En attente</span>
     </div>
   </div>
   <div class="hdr-right">
     <div class="cap-wrap">
-      <label>Capital</label>
-      <input type="number" class="cap-input" id="cap-input" value="10000" min="100" step="500" oninput="onCapChange()">
-      <span style="font-family:var(--mono);font-size:11px;color:rgba(244,241,235,.4)">€</span>
+      <span class="cap-lbl">Capital</span>
+      <input type="number" class="cap-in" id="cap-in" value="10000" min="100" step="500" oninput="onCapChange()">
+      <span class="hdr-eur">€</span>
     </div>
-    <button class="btn-markets stale" id="btn-markets" onclick="openMktModal()">📊 Marchés</button>
-    <button class="btn-add" onclick="openAddModal()">+ Versement</button>
   </div>
 </div>
 
-<!-- BANDE ACTION -->
-<div class="action-band">
-  <div class="action-inner">
-    <div class="ab-item">
-      <div class="ab-lbl">Investi</div>
-      <div class="ab-val" id="ab-investi" style="color:var(--gold)">—</div>
+<!-- LAYOUT -->
+<div class="layout">
+
+<!-- ── WORKFLOW (gauche) ── -->
+<div class="wf-col">
+
+  <!-- Barre de progression -->
+  <div class="progress-bar">
+    <div class="pb-step active" id="pb0">01 · Marchés</div>
+    <div class="pb-step" id="pb1">02 · Régime</div>
+    <div class="pb-step" id="pb2">03 · Actions</div>
+    <div class="pb-step" id="pb3">04 · Date</div>
+    <div class="pb-step" id="pb4">05 · IBKR</div>
+  </div>
+
+  <!-- ÉTAPE 1 — Marchés -->
+  <div class="step active" id="step-0">
+    <div class="step-hdr">
+      <div class="step-num">Étape 01 / 05</div>
+      <div class="step-title">Saisir les cours</div>
+      <div class="step-sub">Renseigne les données depuis Yahoo Finance. Le régime se calcule automatiquement.</div>
     </div>
-    <div class="ab-item">
-      <div class="ab-lbl">Poudre sèche</div>
-      <div class="ab-val" id="ab-reserve" style="color:rgba(244,241,235,.9)">—</div>
+    <div class="step-body">
+      <div class="links-row">
+        <a class="lnk" href="https://finance.yahoo.com/quote/BZ=F" target="_blank">Brent</a>
+        <a class="lnk" href="https://finance.yahoo.com/quote/%5EVIX" target="_blank">VIX</a>
+        <a class="lnk" href="https://finance.yahoo.com/quote/GC=F" target="_blank">Or</a>
+        <a class="lnk" href="https://finance.yahoo.com/quote/SGLN.L" target="_blank">SGLN.L</a>
+        <a class="lnk" href="https://finance.yahoo.com/quote/INRG.L" target="_blank">INRG.L</a>
+        <a class="lnk" href="https://finance.yahoo.com/quote/IGDA.L" target="_blank">IGDA.L</a>
+        <a class="lnk" href="https://finance.yahoo.com/quote/PHSP.L" target="_blank">PHSP.L</a>
+        <a class="lnk" href="https://finance.yahoo.com/quote/COPA.L" target="_blank">COPA.L</a>
+        <a class="lnk" href="https://finance.yahoo.com/quote/XOM" target="_blank">XOM</a>
+        <a class="lnk" href="https://finance.yahoo.com/quote/CVX" target="_blank">CVX</a>
+      </div>
+      <div class="mkt-section">
+        <div class="mkt-stitle">Signaux régime — requis</div>
+        <div class="mkt-grid">
+          <div class="mf"><label class="mf-lbl">Brent <span>$/bbl</span></label><input type="number" step="0.1" class="mf-in" id="mk-brent" placeholder="ex: 102.4"></div>
+          <div class="mf"><label class="mf-lbl">VIX</label><input type="number" step="0.1" class="mf-in" id="mk-vix" placeholder="ex: 21.3"></div>
+          <div class="mf"><label class="mf-lbl">Or spot <span>$/oz</span></label><input type="number" step="1" class="mf-in" id="mk-gold" placeholder="ex: 4750"></div>
+        </div>
+        <div class="mkt-stitle">Hormuz · État du trafic</div>
+        <div class="hz-sel">
+          <div class="hz-opt hz-red" onclick="selHz('bloque',this)">🔴 Bloqué<br><span style="font-size:8px;opacity:.7">&lt;5/j</span></div>
+          <div class="hz-opt hz-amb" onclick="selHz('perturbe',this)">🟡 Perturbé<br><span style="font-size:8px;opacity:.7">5–14/j</span></div>
+          <div class="hz-opt hz-grn sel" onclick="selHz('normal',this)">🟢 Normal<br><span style="font-size:8px;opacity:.7">&gt;14/j</span></div>
+        </div>
+      </div>
+      <div class="mkt-section">
+        <div class="mkt-stitle">Cours actifs UCITS — optionnel</div>
+        <div class="mkt-grid">
+          <div class="mf"><label class="mf-lbl">SGLN.L <span>£</span></label><input type="number" step="0.01" class="mf-in" id="mk-sgln" placeholder="ex: 47.20"></div>
+          <div class="mf"><label class="mf-lbl">INRG.L <span>£</span></label><input type="number" step="0.01" class="mf-in" id="mk-inrg" placeholder="ex: 8.06"></div>
+          <div class="mf"><label class="mf-lbl">IGDA.L <span>$</span></label><input type="number" step="0.01" class="mf-in" id="mk-igda" placeholder="ex: 34.78"></div>
+          <div class="mf"><label class="mf-lbl">PHSP.L <span>£</span></label><input type="number" step="0.01" class="mf-in" id="mk-phsp" placeholder="ex: 31.5"></div>
+          <div class="mf"><label class="mf-lbl">COPA.L/FCX <span>$</span></label><input type="number" step="0.01" class="mf-in" id="mk-copa" placeholder="ex: 44.2"></div>
+          <div class="mf"><label class="mf-lbl">XOM <span>$</span></label><input type="number" step="0.01" class="mf-in" id="mk-xom" placeholder="ex: 108.5"></div>
+          <div class="mf"><label class="mf-lbl">CVX <span>$</span></label><input type="number" step="0.01" class="mf-in" id="mk-cvx" placeholder="ex: 152.3"></div>
+          <div class="mf"><label class="mf-lbl">ISWD.L <span>GBp</span></label><input type="number" step="1" class="mf-in" id="mk-iswd" placeholder="ex: 4431"></div>
+        </div>
+      </div>
     </div>
-    <div class="ab-item">
-      <div class="ab-lbl">Jalons</div>
-      <div class="ab-val" id="ab-jalons" style="color:rgba(244,241,235,.9)">—</div>
+    <div class="step-ftr">
+      <button class="btn-main" onclick="calcRegime()">Calculer le régime →</button>
+      <div style="font-family:var(--mono);font-size:9px;color:var(--ink3);text-align:center" id="mkt-last">Jamais mis à jour</div>
     </div>
-    <div class="ab-sep"></div>
-    <!-- ACTION PRIORITAIRE avec montants -->
-    <div class="ab-action">
-      <div class="ab-action-lbl">Action prioritaire · ce versement</div>
-      <div class="ab-action-content" id="ab-actions">
-        <span style="font-family:var(--mono);font-size:10px;color:rgba(244,241,235,.3)">En attente de données marchés...</span>
+  </div>
+
+  <!-- ÉTAPE 2 — Régime -->
+  <div class="step" id="step-1">
+    <div class="step-hdr">
+      <div class="step-num">Étape 02 / 05</div>
+      <div class="step-title">Régime détecté</div>
+      <div class="step-sub">Voici pourquoi et ce que ça implique pour ton portefeuille.</div>
+    </div>
+    <div class="step-body">
+      <div class="regime-result">
+        <div class="rr-hdr">
+          <div class="rr-label">Régime de marché</div>
+          <div class="rr-regime" id="rr-regime">—</div>
+        </div>
+        <div class="rr-body">
+          <div class="rr-why" id="rr-why">—</div>
+          <div class="rr-signals" id="rr-sigs"></div>
+        </div>
+      </div>
+    </div>
+    <div class="step-ftr">
+      <button class="btn-main" onclick="goStep(2)">Voir les actions à faire →</button>
+      <button class="btn-sec" onclick="goStep(0)">← Modifier les cours</button>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 3 — Actions -->
+  <div class="step" id="step-2">
+    <div class="step-hdr">
+      <div class="step-num">Étape 03 / 05</div>
+      <div class="step-title">Quoi acheter</div>
+      <div class="step-sub" id="step3-sub">—</div>
+    </div>
+    <div class="step-body">
+      <div class="mf" style="margin-bottom:4px">
+        <label class="mf-lbl" style="font-size:9px">Montant de ce versement (€)</label>
+        <input type="number" class="mf-in" id="vers-amount" value="2000" min="100" step="100" oninput="renderActions()">
+      </div>
+      <div class="action-list" id="action-list"></div>
+      <div class="total-row">
+        <span style="color:var(--ink3);font-family:var(--mono);font-size:10px">Investi · Réserve N3</span>
+        <div>
+          <span class="total-inv" id="total-inv">—</span>
+          <span class="total-res" id="total-res"> · —</span>
+        </div>
+      </div>
+    </div>
+    <div class="step-ftr">
+      <button class="btn-main" onclick="goStep(3)">Planifier ce versement →</button>
+      <button class="btn-sec" onclick="goStep(1)">← Régime</button>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 4 — Date -->
+  <div class="step" id="step-3">
+    <div class="step-hdr">
+      <div class="step-num">Étape 04 / 05</div>
+      <div class="step-title">Quand investir</div>
+      <div class="step-sub">Date calculée selon le régime et ton dernier versement.</div>
+    </div>
+    <div class="step-body">
+      <div class="date-proposal">
+        <div class="dp-label">Date suggérée</div>
+        <div class="dp-date" id="dp-date">—</div>
+        <div class="dp-reason" id="dp-reason">—</div>
+        <div class="dp-interval" id="dp-interval">—</div>
+      </div>
+      <div class="date-adjust">
+        <label>Ajuster si nécessaire</label>
+        <input type="date" class="date-in" id="date-in">
+      </div>
+    </div>
+    <div class="step-ftr">
+      <button class="btn-main" onclick="addToTimeline()">Ajouter à la timeline →</button>
+      <button class="btn-sec" onclick="goStep(2)">← Modifier les montants</button>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 5 — Ordres IBKR -->
+  <div class="step" id="step-4">
+    <div class="step-hdr">
+      <div class="step-num">Étape 05 / 05</div>
+      <div class="step-title">Passer les ordres</div>
+      <div class="step-sub">Connecte-toi à Interactive Brokers et saisis ces ordres un par un.</div>
+    </div>
+    <div class="step-body">
+      <div class="ibkr-list" id="ibkr-list"></div>
+      <div class="ibkr-note">
+        <strong>Rappel :</strong> ordres Market ou Limit sur IBKR Web. Compte Cash Account uniquement. Virement préalable obligatoire.
+      </div>
+    </div>
+    <div class="step-ftr">
+      <button class="btn-main" id="btn-execute" onclick="markExecuted()">✓ Marquer ce jalon exécuté</button>
+      <button class="btn-sec" onclick="startNewCycle()">Nouveau cycle →</button>
+    </div>
+  </div>
+
+</div><!-- /wf-col -->
+
+<!-- ── TIMELINE (droite) ── -->
+<div class="tl-col">
+  <div class="tl-hdr">
+    <div class="tl-title">Timeline · DCA</div>
+    <div class="tl-stats">
+      <div class="ts-item">
+        <div class="ts-lbl">Investi</div>
+        <div class="ts-val" id="ts-investi" style="color:var(--gold)">—</div>
+      </div>
+      <div class="ts-item">
+        <div class="ts-lbl">Réserve</div>
+        <div class="ts-val" id="ts-reserve">—</div>
+      </div>
+      <div class="ts-item">
+        <div class="ts-lbl">Jalons</div>
+        <div class="ts-val" id="ts-jalons">—</div>
       </div>
     </div>
   </div>
-</div>
-
-<!-- ALERTES -->
-<div class="alerts">
-  <div class="alert-item" id="al-gold">
-    <div class="a-dot a-watch"></div>
-    <div class="a-txt"><strong>Or &lt; $4 400</strong></div>
-    <div class="a-arrow">→ opportunité d'achat SGLN</div>
-  </div>
-  <div class="alert-item" id="al-brent">
-    <div class="a-dot a-off"></div>
-    <div class="a-txt"><strong>Brent &gt; $100</strong></div>
-    <div class="a-arrow">→ renforcer SGLN + XOM/CVX</div>
-  </div>
-  <div class="alert-item" id="al-vix">
-    <div class="a-dot a-off"></div>
-    <div class="a-txt"><strong>VIX &gt; 35</strong></div>
-    <div class="a-arrow">→ SGLN uniquement</div>
-  </div>
-  <div class="alert-item" id="al-hz">
-    <div class="a-dot a-watch"></div>
-    <div class="a-txt"><strong>Hormuz perturbé</strong></div>
-    <div class="a-arrow">→ maintenir défensif</div>
-  </div>
-</div>
-
-<!-- MAIN / TIMELINE -->
-<div class="main">
   <div class="tl-wrap" id="tl-wrap">
     <div class="tl-inner" id="tl-inner">
-      <div class="tl-road" id="tl-road">
+      <div id="tl-empty" class="tl-empty">
+        <div class="tl-empty-icon">◈</div>
+        <div>Aucun jalon planifié</div>
+        <div style="font-size:10px;color:var(--ink3)">Complète les 5 étapes pour créer ton premier versement</div>
+      </div>
+      <div class="tl-road" id="tl-road" style="display:none">
         <div class="road-prog" id="road-prog"></div>
         <div class="today-mk" id="today-mk">
-          <div class="today-flag" id="today-flag">Aujourd'hui</div>
+          <div class="today-flag" id="today-flag">—</div>
           <div class="today-line"></div>
         </div>
         <div class="ms-cont" id="ms-cont"></div>
       </div>
     </div>
   </div>
+  <div class="alerts-row">
+    <div class="al-item" id="al-gold"><div class="al-dot al-watch"></div><div class="al-txt"><strong>Or &lt;$4 400</strong></div><div class="al-arr"> → DCA SGLN.L</div></div>
+    <div class="al-item" id="al-brent"><div class="al-dot al-off"></div><div class="al-txt"><strong>Brent &gt;$100</strong></div><div class="al-arr"> → SGLN+XOM</div></div>
+    <div class="al-item" id="al-vix"><div class="al-dot al-off"></div><div class="al-txt"><strong>VIX &gt;35</strong></div><div class="al-arr"> → SGLN only</div></div>
+    <div class="al-item" id="al-hz"><div class="al-dot al-watch"></div><div class="al-txt"><strong>Hormuz</strong></div><div class="al-arr" id="al-hz-txt"> → surveiller</div></div>
+  </div>
 </div>
 
+</div><!-- /layout -->
+
 <script>
-const SK='hv4';
-let S=loadState();
-function loadState(){
-  const s=localStorage.getItem(SK);
-  if(s)try{return JSON.parse(s);}catch(e){}
-  return{capital:10000,regime:'detente',milestones:[],mkt:{},hormuz:null,guideOk:false,simCrise:false,mktTs:null};
-}
+const SK='hv5';
+let S=load();
+function load(){const s=localStorage.getItem(SK);if(s)try{return JSON.parse(s);}catch(e){}
+  return{capital:10000,regime:'wait',mkt:{},hormuz:'normal',milestones:[],mktTs:null,lastJalonId:null};}
 function save(){localStorage.setItem(SK,JSON.stringify(S))}
 
 // ── RÉGIMES ──
 const RG={
-  crise:{label:'🔴 CRISE',cls:'rp-crise',
-    actions:[
-      {key:'SGLN',name:'Or SGLN.L',pct:30,color:'var(--gold)',type:'buy'},
-      {key:'XOM',name:'XOM+CVX',pct:22,color:'var(--blue)',type:'buy'},
-      {key:'INRG',name:'INRG.L',pct:15,color:'#2a5a9a',type:'hold'},
-      {key:'IGDA',name:'IGDA.L',pct:3,color:'var(--green)',type:'reduce'},
-      {key:'PHSP',name:'Argent PHSP.L',pct:9,color:'#8a7a5a',type:'hold'},
-      {key:'COPA',name:'COPA.L',pct:6,color:'#a0520a',type:'hold'},
+  crise:{label:'🔴 CRISE',col:'var(--red)',badge:'rb-crise',
+    why:'Brent élevé ou Hormuz bloqué/perturbé. Les actifs tangibles surperforment. Les indices halal sont sous pression.',
+    interval:21,intervalLabel:'3 semaines — urgence crise',
+    alloc:[
+      {k:'SGLN',n:'Or SGLN.L',p:30,c:'var(--gold)',t:'buy'},
+      {k:'XOM',n:'XOM + CVX',p:22,c:'var(--blue)',t:'buy'},
+      {k:'INRG',n:'Renouvelable INRG.L',p:15,c:'#2a6ab0',t:'hold'},
+      {k:'PHSP',n:'Argent PHSP.L',p:9,c:'#7a8090',t:'hold'},
+      {k:'COPA',n:'Cuivre COPA.L',p:6,c:'var(--amber)',t:'hold'},
+      {k:'IGDA',n:'Indice halal IGDA.L',p:3,c:'var(--green)',t:'reduce'},
     ]},
-  trans:{label:'🟡 TRANSITION',cls:'rp-trans',
-    actions:[
-      {key:'SGLN',name:'Or SGLN.L',pct:27,color:'var(--gold)',type:'hold'},
-      {key:'INRG',name:'INRG.L',pct:15,color:'#2a5a9a',type:'buy'},
-      {key:'IGDA',name:'IGDA.L+ISWD',pct:20,color:'var(--green)',type:'buy'},
-      {key:'XOM',name:'XOM+CVX',pct:10,color:'var(--blue)',type:'reduce'},
-      {key:'PHSP',name:'Argent PHSP.L',pct:8,color:'#8a7a5a',type:'hold'},
+  choc:{label:'⚡ CHOC LIQUIDITÉ',col:'var(--teal)',badge:'rb-trans',
+    why:'VIX > 35. Panique de marché — tout baisse. Garder uniquement l\'or physique et la liquidité. Ne rien faire d\'autre.',
+    interval:7,intervalLabel:'1 semaine — saisir l\'opportunité',
+    alloc:[
+      {k:'SGLN',n:'Or SGLN.L',p:72,c:'var(--gold)',t:'buy'},
+      {k:'CASH',n:'Réserve cash',p:13,c:'var(--ink3)',t:'hold'},
     ]},
-  detente:{label:'🟢 DÉTENTE',cls:'rp-detente',
-    actions:[
-      {key:'INRG',name:'INRG.L',pct:20,color:'#2a5a9a',type:'buy'},
-      {key:'IGDA',name:'IGDA.L+ISWD',pct:27,color:'var(--green)',type:'buy'},
-      {key:'SGLN',name:'Or SGLN.L',pct:23,color:'var(--gold)',type:'hold'},
-      {key:'XOM',name:'XOM+CVX',pct:3,color:'var(--blue)',type:'reduce'},
-      {key:'PHSP',name:'Argent PHSP.L',pct:7,color:'#8a7a5a',type:'hold'},
+  trans:{label:'🟡 TRANSITION',col:'var(--amber)',badge:'rb-trans',
+    why:'Brent entre $80 et $100 ou Hormuz perturbé. Signaux mixtes. Équilibrer robustesse et indices halal.',
+    interval:35,intervalLabel:'5 semaines — lissage équilibré',
+    alloc:[
+      {k:'SGLN',n:'Or SGLN.L',p:27,c:'var(--gold)',t:'hold'},
+      {k:'INRG',n:'Renouvelable INRG.L',p:15,c:'#2a6ab0',t:'buy'},
+      {k:'IGDA',n:'Indice halal IGDA.L',p:20,c:'var(--green)',t:'buy'},
+      {k:'XOM',n:'XOM + CVX',p:10,c:'var(--blue)',t:'reduce'},
+      {k:'PHSP',n:'Argent PHSP.L',p:8,c:'#7a8090',t:'hold'},
+      {k:'COPA',n:'Cuivre COPA.L',p:5,c:'var(--amber)',t:'hold'},
+    ]},
+  detente:{label:'🟢 DÉTENTE',col:'var(--green)',badge:'rb-detente',
+    why:'Brent bas, VIX calme, Hormuz normal. Environnement favorable. Surpondérer les indices halal et INRG.L.',
+    interval:56,intervalLabel:'8 semaines — DCA long terme',
+    alloc:[
+      {k:'INRG',n:'Renouvelable INRG.L',p:20,c:'#2a6ab0',t:'buy'},
+      {k:'IGDA',n:'Indice halal IGDA.L',p:27,c:'var(--green)',t:'buy'},
+      {k:'SGLN',n:'Or SGLN.L',p:23,c:'var(--gold)',t:'hold'},
+      {k:'PHSP',n:'Argent PHSP.L',p:7,c:'#7a8090',t:'hold'},
+      {k:'COPA',n:'Cuivre COPA.L',p:5,c:'var(--amber)',t:'hold'},
+      {k:'XOM',n:'XOM + CVX',p:3,c:'var(--blue)',t:'reduce'},
     ]}
 };
-const typeLabel={buy:'ACHETER',hold:'CONSERVER',reduce:'RÉDUIRE'};
-const typeCls={buy:'at-buy',hold:'at-hold',reduce:'at-reduce'};
-
-// ── GUIDE ──
-let guideStep=0,selRegime=S.regime||'detente';
-function selR(r){selRegime=r;['crise','trans','detente'].forEach(x=>document.getElementById('gr-'+x)?.classList.toggle('selected',x===r));}
-function nextStep(){
-  if(guideStep===0){
-    const v=parseFloat(document.getElementById('g-capital').value);
-    if(!v||v<100){document.getElementById('g-capital').focus();return;}
-    S.capital=v;document.getElementById('cap-input').value=v;
-    guideStep=1;
-    hide('gstep-0');show('gstep-1');
-    document.getElementById('gs0').className='g-step done';
-    document.getElementById('gs1').className='g-step active';
-    document.getElementById('g-count').textContent='Étape 2 / 3';
-  } else if(guideStep===1){
-    S.regime=selRegime;
-    const j=genJalon(new Date(),S.capital*0.4,false);
-    S.milestones=[j];
-    guideStep=2;
-    hide('gstep-1');show('gstep-2');
-    document.getElementById('gs1').className='g-step done';
-    document.getElementById('gs2').className='g-step active';
-    document.getElementById('g-count').textContent='Étape 3 / 3';
-    document.getElementById('btn-next').textContent='Lancer →';
-    const amt=S.capital*0.4*0.85;
-    document.getElementById('g-preview').innerHTML=
-      RG[selRegime].actions.map(a=>`<div style="display:flex;align-items:center;gap:7px;margin-bottom:3px">
-        <div style="width:6px;height:6px;border-radius:50%;background:${a.color};flex-shrink:0"></div>
-        <span style="flex:1;font-size:11px">${typeLabel[a.type]} ${a.name}</span>
-        <span style="font-family:var(--mono);font-size:10px;color:var(--ink2)">${fE(amt*a.pct/100)}</span>
-      </div>`).join('')+
-      `<div style="border-top:1px solid var(--line2);padding-top:5px;margin-top:5px;font-family:var(--mono);font-size:10px;color:var(--ink3);display:flex;justify-content:space-between">
-        <span>Réserve N3 (15%)</span><span>${fE(S.capital*0.4*0.15)}</span></div>`;
-  } else {S.guideOk=true;save();hide('guide');renderAll();}
-}
+const tLbl={buy:'ACHETER',hold:'CONSERVER',reduce:'RÉDUIRE'};
+const tCol={buy:'var(--green)',hold:'var(--amber)',reduce:'var(--red)'};
 
 // ── UTILS ──
 const fE=v=>'€'+Math.round(v).toLocaleString('fr-FR');
-const fDate=d=>new Date(d).toLocaleDateString('fr-FR',{month:'short',year:'2-digit'});
+const fDate=d=>new Date(d).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'2-digit'});
 const fDateFull=d=>new Date(d).toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'});
-function show(id){const e=document.getElementById(id);if(e)e.style.display='';}
-function hide(id){const e=document.getElementById(id);if(e)e.style.display='none';}
+const fDateInput=d=>{const dt=new Date(d);return dt.toISOString().split('T')[0];};
+function addDays(d,n){const dt=new Date(d);dt.setDate(dt.getDate()+n);return dt;}
 function closeOverlay(){const o=document.getElementById('overlay');o.classList.remove('open');o.innerHTML='';}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeOverlay();});
 
-function genJalon(date,amount,future=false){
-  const reg=(S.simCrise&&future)?'crise':S.regime;
-  const r=RG[reg];
-  const inv=amount*0.85;
-  return{
-    id:Date.now()+Math.random(),
-    date:date instanceof Date?date.toISOString().split('T')[0]:date,
-    amount:Math.round(amount),
-    alloc:r.actions.map(a=>({...a,amount:Math.round(inv*a.pct/100)})),
-    regime:reg,done:false,note:'',future,stale:false
-  };
+// ── NAVIGATION ÉTAPES ──
+let currentStep=0;
+function goStep(n){
+  for(let i=0;i<5;i++){
+    document.getElementById('step-'+i).classList.toggle('active',i===n);
+    const pb=document.getElementById('pb'+i);
+    if(i<n)pb.className='pb-step done';
+    else if(i===n)pb.className='pb-step active';
+    else pb.className='pb-step';
+  }
+  currentStep=n;
+  document.querySelector('.wf-col').scrollTop=0;
 }
 
-// ── MARCHÉS ──
-function openMktModal(){
-  const m=S.mkt,hz=S.hormuz;
-  const ov=document.getElementById('overlay');
-  ov.innerHTML=`<div class="modal-base mkt-modal">
-    <div class="mkt-hdr">
-      <div><div class="mkt-title">DONNÉES DE MARCHÉS</div>
-      <div class="mkt-sub">Saisir les cours depuis Yahoo Finance · Le régime se met à jour automatiquement</div></div>
-      <button class="mkt-close" onclick="closeOverlay()">✕</button>
-    </div>
-    <div class="mkt-links">
-      <a href="https://finance.yahoo.com/quote/BZ=F" target="_blank">Brent BZ=F</a>
-      <a href="https://finance.yahoo.com/quote/%5EVIX" target="_blank">VIX</a>
-      <a href="https://finance.yahoo.com/quote/GC=F" target="_blank">Or GC=F</a>
-      <a href="https://finance.yahoo.com/quote/SGLN.L" target="_blank">SGLN.L</a>
-      <a href="https://finance.yahoo.com/quote/INRG.L" target="_blank">INRG.L</a>
-      <a href="https://finance.yahoo.com/quote/IGDA.L" target="_blank">IGDA.L</a>
-      <a href="https://finance.yahoo.com/quote/ISWD.L" target="_blank">ISWD.L</a>
-      <a href="https://finance.yahoo.com/quote/PHSP.L" target="_blank">PHSP.L</a>
-      <a href="https://finance.yahoo.com/quote/COPA.L" target="_blank">COPA.L</a>
-      <a href="https://finance.yahoo.com/quote/XOM" target="_blank">XOM</a>
-      <a href="https://finance.yahoo.com/quote/CVX" target="_blank">CVX</a>
-    </div>
-    <div class="mkt-body">
-      <div class="mkt-section">
-        <div class="mkt-section-title">Signaux macro · Déclencheurs du régime</div>
-        <div class="mkt-grid">
-          <div class="mkt-field"><label class="mkt-label">Brent <span>$/bbl · BZ=F</span></label>
-            <input type="number" step="0.1" class="mkt-input" id="mk-brent" placeholder="ex: 102.4" value="${m.brent||''}"></div>
-          <div class="mkt-field"><label class="mkt-label">VIX <span>^VIX</span></label>
-            <input type="number" step="0.1" class="mkt-input" id="mk-vix" placeholder="ex: 21.3" value="${m.vix||''}"></div>
-          <div class="mkt-field"><label class="mkt-label">Or spot <span>$/oz · GC=F</span></label>
-            <input type="number" step="1" class="mkt-input" id="mk-gold" placeholder="ex: 4750" value="${m.gold||''}"></div>
-        </div>
-      </div>
-      <div class="mkt-section">
-        <div class="mkt-section-title">Détroit d'Hormuz · État du trafic maritime</div>
-        <div class="hormuz-sel">
-          <div class="hz-opt ${hz==='bloque'?'selected-red':''}" onclick="selHz('bloque')">🔴 Bloqué<br><span style="font-size:9px;opacity:.7">&lt; 5 navires/j</span></div>
-          <div class="hz-opt ${hz==='perturbe'?'selected-amb':''}" onclick="selHz('perturbe')">🟡 Perturbé<br><span style="font-size:9px;opacity:.7">5–14 navires/j</span></div>
-          <div class="hz-opt ${hz==='normal'?'selected-grn':''}" onclick="selHz('normal')">🟢 Normal<br><span style="font-size:9px;opacity:.7">&gt; 14 navires/j</span></div>
-        </div>
-      </div>
-      <div class="mkt-section">
-        <div class="mkt-section-title">Cours des actifs UCITS (optionnel)</div>
-        <div class="mkt-grid">
-          <div class="mkt-field"><label class="mkt-label">SGLN.L <span>£</span></label>
-            <input type="number" step="0.01" class="mkt-input" id="mk-sgln" placeholder="ex: 47.20" value="${m.sgln||''}"></div>
-          <div class="mkt-field"><label class="mkt-label">INRG.L <span>£</span></label>
-            <input type="number" step="0.01" class="mkt-input" id="mk-inrg" placeholder="ex: 8.06" value="${m.inrg||''}"></div>
-          <div class="mkt-field"><label class="mkt-label">IGDA.L <span>$</span></label>
-            <input type="number" step="0.01" class="mkt-input" id="mk-igda" placeholder="ex: 34.78" value="${m.igda||''}"></div>
-          <div class="mkt-field"><label class="mkt-label">ISWD.L <span>GBp</span></label>
-            <input type="number" step="1" class="mkt-input" id="mk-iswd" placeholder="ex: 4431" value="${m.iswd||''}"></div>
-          <div class="mkt-field"><label class="mkt-label">PHSP.L <span>£</span></label>
-            <input type="number" step="0.01" class="mkt-input" id="mk-phsp" placeholder="ex: 31.5" value="${m.phsp||''}"></div>
-          <div class="mkt-field"><label class="mkt-label">COPA.L / FCX <span>$</span></label>
-            <input type="number" step="0.01" class="mkt-input" id="mk-copa" placeholder="ex: 44.2" value="${m.copa||''}"></div>
-          <div class="mkt-field"><label class="mkt-label">XOM <span>$</span></label>
-            <input type="number" step="0.01" class="mkt-input" id="mk-xom" placeholder="ex: 108.5" value="${m.xom||''}"></div>
-          <div class="mkt-field"><label class="mkt-label">CVX <span>$</span></label>
-            <input type="number" step="0.01" class="mkt-input" id="mk-cvx" placeholder="ex: 152.3" value="${m.cvx||''}"></div>
-        </div>
-      </div>
-    </div>
-    <div class="mkt-ftr">
-      <span class="mkt-last" id="mkt-last">${S.mktTs?'Mis à jour '+new Date(S.mktTs).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}):'Jamais mis à jour'}</span>
-      <button class="btn-calc" onclick="calcMkt()">Calculer le régime →</button>
-    </div>
-  </div>`;
-  ov.classList.add('open');
+// ── HORMUZ ──
+let hzVal=S.hormuz||'normal';
+function selHz(v,el){
+  hzVal=v;
+  document.querySelectorAll('.hz-opt').forEach(x=>x.classList.remove('sel'));
+  el.classList.add('sel');
 }
-
-let hzSel=null;
-function selHz(v){
-  hzSel=v;
-  ['bloque','perturbe','normal'].forEach(x=>{
-    const el=document.querySelector(`.hz-opt:nth-child(${x==='bloque'?1:x==='perturbe'?2:3})`);
-    if(el)el.className='hz-opt '+(x===v?(v==='bloque'?'selected-red':v==='perturbe'?'selected-amb':'selected-grn'):'');
+// init sel
+window.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('.hz-opt').forEach(el=>{
+    if((hzVal==='bloque'&&el.classList.contains('hz-red'))||
+       (hzVal==='perturbe'&&el.classList.contains('hz-amb'))||
+       (hzVal==='normal'&&el.classList.contains('hz-grn')))el.classList.add('sel');
+    else el.classList.remove('sel');
   });
-}
+  // Pré-remplir si données existantes
+  const m=S.mkt;
+  ['brent','vix','gold','sgln','inrg','igda','phsp','copa','xom','cvx','iswd'].forEach(k=>{
+    const el=document.getElementById('mk-'+k);
+    if(el&&m[k]!=null)el.value=m[k];
+  });
+  if(S.capital)document.getElementById('cap-in').value=S.capital;
+  if(S.mktTs)document.getElementById('mkt-last').textContent=
+    'Mis à jour '+new Date(S.mktTs).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
+  renderTimeline();
+  updateStats();
+  if(S.regime&&S.regime!=='wait'){updateRegimeBadge();updateAlerts();}
+});
 
-function calcMkt(){
-  const fields=['brent','vix','gold','sgln','inrg','igda','iswd','phsp','copa','xom','cvx'];
-  fields.forEach(k=>{
+// ── CALCUL RÉGIME ──
+function calcRegime(){
+  // Sauvegarder données
+  ['brent','vix','gold','sgln','inrg','igda','phsp','copa','xom','cvx','iswd'].forEach(k=>{
     const v=parseFloat(document.getElementById('mk-'+k)?.value);
     if(!isNaN(v))S.mkt[k]=v;
   });
-  if(hzSel)S.hormuz=hzSel;
+  S.hormuz=hzVal;
   S.mktTs=Date.now();
-  // Détecter régime
+  document.getElementById('mkt-last').textContent=
+    'Mis à jour '+new Date().toLocaleDateString('fr-FR',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
+
   const b=S.mkt.brent,vix=S.mkt.vix,hz=S.hormuz;
-  let prevR=S.regime;
-  if(vix>35||b>110||(hz==='bloque'))S.regime='crise';
-  else if(b>85||hz==='perturbe')S.regime='trans';
-  else S.regime='detente';
-  // Si régime a changé et jalons futurs existent → proposer recalcul
-  const futurJalons=S.milestones.filter(m=>new Date(m.date)>new Date()&&!m.done);
-  if(prevR!==S.regime&&futurJalons.length>0){
-    save();closeOverlay();openConfirmRecalc(futurJalons.length,prevR);
-  } else {
-    save();closeOverlay();renderAll();
-    document.getElementById('btn-markets').classList.remove('stale');
+  let reg='detente';
+  if(vix>35)reg='choc';
+  else if(b>100||hz==='bloque')reg='crise';
+  else if(b>80||hz==='perturbe')reg='trans';
+
+  const prev=S.regime;
+  S.regime=reg;
+
+  // Signaux détaillés
+  const sigs=[];
+  if(b!=null){
+    if(b>100)sigs.push({s:'bad',t:`Brent $${b.toFixed(0)} — Au-dessus de $100`});
+    else if(b>80)sigs.push({s:'warn',t:`Brent $${b.toFixed(0)} — Zone de transition`});
+    else sigs.push({s:'ok',t:`Brent $${b.toFixed(0)} — Sous $80`});
   }
-}
+  if(vix!=null){
+    if(vix>35)sigs.push({s:'bad',t:`VIX ${vix.toFixed(1)} — Choc de liquidité`});
+    else if(vix>25)sigs.push({s:'warn',t:`VIX ${vix.toFixed(1)} — Stress élevé`});
+    else sigs.push({s:'ok',t:`VIX ${vix.toFixed(1)} — Calme`});
+  }
+  const hzMap={bloque:{s:'bad',t:'Hormuz bloqué — mode crise géopolitique'},
+    perturbe:{s:'warn',t:'Hormuz perturbé — régime transition'},
+    normal:{s:'ok',t:'Hormuz normal — flux rétablis'}};
+  sigs.push(hzMap[hz]);
+  if(S.mkt.gold){
+    if(S.mkt.gold<4400)sigs.push({s:'warn',t:`Or $${Math.round(S.mkt.gold)} — Sous $4 400, opportunité`});
+    else sigs.push({s:'ok',t:`Or $${Math.round(S.mkt.gold)} — Niveau nominal`});
+  }
 
-function openConfirmRecalc(n,prevR){
-  const ov=document.getElementById('overlay');
-  ov.innerHTML=`<div class="modal-base confirm-modal">
-    <div class="confirm-q">Régime modifié</div>
-    <div class="confirm-body">
-      Le régime est passé de <strong>${RG[prevR].label}</strong> vers <strong>${RG[S.regime].label}</strong>.<br><br>
-      Vous avez <strong>${n} jalon(s) futur(s)</strong> non-exécutés.<br>
-      Recalculer leurs allocations selon le nouveau régime ?<br><br>
-      <span style="color:var(--ink3);font-size:11px">Les jalons déjà exécutés (✓) ne seront pas modifiés.</span>
-    </div>
-    <div class="confirm-ftr">
-      <button class="btn-confirm-no" onclick="noRecalc()">Garder les allocations actuelles</button>
-      <button class="btn-confirm-yes" onclick="doRecalc()">Recalculer les jalons futurs</button>
-    </div>
-  </div>`;
-  ov.classList.add('open');
-}
+  // Afficher étape 2
+  const r=RG[reg];
+  document.getElementById('rr-regime').textContent=r.label;
+  document.getElementById('rr-regime').style.color=r.col;
+  document.getElementById('rr-why').textContent=r.why;
+  document.getElementById('rr-sigs').innerHTML=sigs.map(s=>`
+    <div class="rr-sig"><div class="sig-dot ${s.s==='ok'?'sig-ok':s.s==='warn'?'sig-warn':'sig-bad'}"></div>${s.t}</div>`).join('');
 
-function doRecalc(){
-  const today=new Date();
-  S.milestones=S.milestones.map(m=>{
-    if(new Date(m.date)>today&&!m.done){
-      const r=RG[S.regime];
-      const inv=m.amount*0.85;
-      return{...m,alloc:r.actions.map(a=>({...a,amount:Math.round(inv*a.pct/100)})),regime:S.regime};
-    }
-    return m;
-  });
-  save();closeOverlay();renderAll();
-  document.getElementById('btn-markets').classList.remove('stale');
-}
-
-function noRecalc(){
-  // Marquer jalons futurs comme "à réévaluer"
-  const today=new Date();
-  S.milestones=S.milestones.map(m=>{
-    if(new Date(m.date)>today&&!m.done)return{...m,stale:true};
-    return m;
-  });
-  save();closeOverlay();renderAll();
-  document.getElementById('btn-markets').classList.remove('stale');
-}
-
-// ── RENDER GLOBAL ──
-function renderAll(){
-  updateHeader();
-  updateActionBand();
+  updateRegimeBadge();
   updateAlerts();
-  renderTimeline();
+
+  // Proposer recalcul si régime changé
+  const futurs=S.milestones.filter(m=>new Date(m.date)>new Date()&&!m.done);
+  if(prev!=='wait'&&prev!==reg&&futurs.length>0){
+    save();
+    openConfirm(futurs.length,prev,()=>{doRecalc();goStep(1);},()=>{markStale();goStep(1);});
+  } else {save();goStep(1);}
 }
 
-function updateHeader(){
-  const r=RG[S.regime];
-  const pill=document.getElementById('regime-pill');
-  pill.className='regime-pill '+r.cls;
-  pill.innerHTML=`<div class="rp-dot"></div><span>${r.label}</span>`;
-  document.getElementById('cap-input').value=S.capital;
-  // Bouton marchés stale si >12h sans mise à jour
-  const btn=document.getElementById('btn-markets');
-  if(!S.mktTs||(Date.now()-S.mktTs>12*3600*1000))btn.classList.add('stale');
-  else btn.classList.remove('stale');
+function updateRegimeBadge(){
+  const r=RG[S.regime]||RG.detente;
+  const badge=document.getElementById('regime-badge');
+  badge.className='regime-badge '+r.badge;
+  document.getElementById('regime-label').textContent=r.label;
 }
-
-function updateActionBand(){
-  const total=S.milestones.reduce((s,m)=>s+m.amount,0);
-  const reserve=Math.max(0,S.capital-total);
-  document.getElementById('ab-investi').textContent=fE(total);
-  document.getElementById('ab-reserve').textContent=fE(reserve);
-  document.getElementById('ab-jalons').textContent=S.milestones.length;
-  // Actions avec montants concrets
-  const nextAmt=S.capital*0.15; // prochain versement estimé = 15% si rien planifié
-  const r=RG[S.regime];
-  const inv=nextAmt*0.85;
-  const el=document.getElementById('ab-actions');
-  if(!S.mktTs){
-    el.innerHTML=`<span style="font-family:var(--mono);font-size:10px;color:rgba(244,241,235,.3)">Cliquez "Marchés" pour saisir les cours et obtenir les actions prioritaires</span>`;
-    return;
-  }
-  // Afficher les 3 premières actions avec montants
-  el.innerHTML=r.actions.slice(0,4).map(a=>`
-    <div class="action-tag ${typeCls[a.type]}">
-      <div class="at-dot" style="background:${a.color}"></div>
-      ${typeLabel[a.type]} ${a.name} · ${fE(inv*a.pct/100)}
-    </div>`).join('');
-}
-
 function updateAlerts(){
   const m=S.mkt,hz=S.hormuz;
-  setAlert('al-gold',m.gold&&m.gold<4400,'a-watch','a-on');
-  setAlert('al-brent',m.brent&&m.brent>100,'a-off','a-on');
-  setAlert('al-vix',m.vix&&m.vix>35,'a-off','a-on');
-  setAlert('al-hz',hz==='bloque'||hz==='perturbe','a-off',hz==='bloque'?'a-on':'a-watch');
-  // Mettre à jour texte alerte Hormuz
-  const hzEl=document.getElementById('al-hz');
-  if(hzEl){
-    const txt=hzEl.querySelector('.a-txt strong');
-    if(txt)txt.textContent=hz==='bloque'?'Hormuz bloqué':hz==='perturbe'?'Hormuz perturbé':'Hormuz normal';
-    const arrow=hzEl.querySelector('.a-arrow');
-    if(arrow)arrow.textContent=hz==='bloque'?'→ mode crise actif':hz==='perturbe'?'→ maintenir défensif':'→ rotation possible';
-  }
+  setAl('al-gold',m.gold&&m.gold<4400,'al-watch','al-on');
+  setAl('al-brent',m.brent&&m.brent>100,'al-off','al-on');
+  setAl('al-vix',m.vix&&m.vix>35,'al-off','al-on');
+  setAl('al-hz',hz==='bloque'||hz==='perturbe','al-off',hz==='bloque'?'al-on':'al-watch');
+  const hzTxt={bloque:'→ mode crise actif',perturbe:'→ maintenir défensif',normal:'→ flux normaux'};
+  document.getElementById('al-hz-txt').textContent=hzTxt[hz]||'→ surveiller';
 }
-function setAlert(id,triggered,offCls,onCls){
+function setAl(id,on,offCls,onCls){
   const el=document.getElementById(id);if(!el)return;
-  el.classList.toggle('triggered',!!triggered);
-  const dot=el.querySelector('.a-dot');
-  if(dot)dot.className='a-dot '+(triggered?onCls:offCls);
+  el.classList.toggle('triggered',!!on);
+  const dot=el.querySelector('.al-dot');
+  if(dot)dot.className='al-dot '+(on?onCls:offCls);
+}
+
+// ── ÉTAPE 3 : ACTIONS ──
+function renderActions(){
+  const amt=parseFloat(document.getElementById('vers-amount')?.value)||2000;
+  const r=RG[S.regime]||RG.detente;
+  const inv=amt*0.85;
+  const sub=`Régime ${r.label} · Versement ${fE(amt)} · 85% investi, 15% réserve`;
+  document.getElementById('step3-sub').textContent=sub;
+  document.getElementById('action-list').innerHTML=r.alloc.map((a,i)=>`
+    <div class="action-item">
+      <div class="ai-rank">${String(i+1).padStart(2,'0')}</div>
+      <div class="ai-dot" style="background:${a.c}"></div>
+      <div class="ai-info">
+        <div class="ai-action" style="color:${tCol[a.t]}">${tLbl[a.t]}</div>
+        <div class="ai-name">${a.n}</div>
+        <div class="ai-pct">${a.p}% du versement</div>
+      </div>
+      <div class="ai-amt" style="color:${a.t==='reduce'?'var(--red)':'var(--gold)'}">${fE(inv*a.p/100)}</div>
+    </div>`).join('');
+  document.getElementById('total-inv').textContent=fE(inv);
+  document.getElementById('total-res').textContent=' · '+fE(amt*0.15)+' N3';
+}
+
+// ── ÉTAPE 4 : DATE ──
+function calcDate(){
+  const r=RG[S.regime]||RG.detente;
+  // Trouver dernier jalon
+  const last=S.milestones.length?new Date(S.milestones[S.milestones.length-1].date):new Date();
+  const base=S.milestones.length?last:new Date();
+  const proposed=addDays(base,r.interval);
+  const dateStr=fDateInput(proposed);
+  document.getElementById('dp-date').textContent=proposed.toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'});
+  document.getElementById('dp-reason').textContent=
+    S.milestones.length?`${r.interval} jours après le dernier versement (${fDate(last)})`:'Premier versement · date suggérée';
+  document.getElementById('dp-interval').textContent=r.intervalLabel;
+  document.getElementById('date-in').value=dateStr;
+}
+
+// ── ÉTAPE 5 : IBKR ──
+let currentJalonId=null;
+function buildIBKROrders(alloc,amount){
+  const inv=amount*0.85;
+  document.getElementById('ibkr-list').innerHTML=alloc
+    .filter(a=>a.t==='buy')
+    .map((a,i)=>`
+      <div class="ibkr-row" style="border-color:${a.c}">
+        <div class="ibkr-action" style="color:${a.c}">ACHETER</div>
+        <div class="ibkr-ticker">${a.n}</div>
+        <div class="ibkr-amount">${fE(inv*a.p/100)}</div>
+        <div class="ibkr-check" onclick="toggleCheck(this)" id="chk-${i}">○</div>
+      </div>`).join('')+
+    alloc.filter(a=>a.t==='hold').map((a,i)=>`
+      <div class="ibkr-row" style="border-color:${a.c};opacity:.5">
+        <div class="ibkr-action" style="color:${a.c}">CONSERVER</div>
+        <div class="ibkr-ticker">${a.n}</div>
+        <div class="ibkr-amount" style="color:var(--ink3)">—</div>
+        <div></div>
+      </div>`).join('');
+}
+function toggleCheck(el){
+  el.classList.toggle('checked');
+  el.textContent=el.classList.contains('checked')?'✓':'○';
+}
+function markExecuted(){
+  if(currentJalonId!=null){
+    const m=S.milestones.find(x=>x.id===currentJalonId);
+    if(m){m.done=true;m.stale=false;}
+    save();renderTimeline();updateStats();
+  }
+  startNewCycle();
+}
+function startNewCycle(){goStep(0);}
+
+// ── AJOUTER À LA TIMELINE ──
+function addToTimeline(){
+  const date=document.getElementById('date-in').value;
+  const amount=parseFloat(document.getElementById('vers-amount').value)||2000;
+  if(!date)return;
+  const r=RG[S.regime]||RG.detente;
+  const jalon={
+    id:Date.now(),date,amount:Math.round(amount),
+    alloc:r.alloc.map(a=>({...a,amount:Math.round(amount*0.85*a.p/100)})),
+    regime:S.regime,done:false,stale:false
+  };
+  S.milestones.push(jalon);
+  S.milestones.sort((a,b)=>new Date(a.date)-new Date(b.date));
+  currentJalonId=jalon.id;
+  save();renderTimeline();updateStats();
+  // Construire ordres IBKR
+  buildIBKROrders(r.alloc,amount);
+  goStep(4);
 }
 
 // ── TIMELINE ──
 function renderTimeline(){
   const ms=S.milestones;
-  const cont=document.getElementById('ms-cont');
+  const empty=document.getElementById('tl-empty');
   const road=document.getElementById('tl-road');
   const inner=document.getElementById('tl-inner');
-  if(!ms.length){cont.innerHTML='';road.style.width='100%';return;}
-  const totalDays=getTotalDays();
+  const cont=document.getElementById('ms-cont');
+  if(!ms.length){empty.style.display='flex';road.style.display='none';return;}
+  empty.style.display='none';road.style.display='block';
   const today=new Date();
   const start=new Date(ms[0].date);
+  const totalDays=Math.max(180,(new Date(ms[ms.length-1].date)-start)/864e5+60);
   const todayD=Math.max(0,(today-start)/864e5);
-  const minW=Math.max(1200,window.innerWidth-48);
+  const minW=Math.max(1100,window.innerWidth-460);
   const totalW=Math.max(minW,totalDays*(minW/totalDays)+80);
   inner.style.width=totalW+'px';
-  road.style.width=(totalW-44)+'px';
+  road.style.width=(totalW-40)+'px';
   const todayPct=Math.min(97,Math.max(2,(todayD/totalDays)*100));
   document.getElementById('today-mk').style.left=todayPct+'%';
   document.getElementById('today-flag').textContent=today.toLocaleDateString('fr-FR',{day:'2-digit',month:'short'});
@@ -804,12 +892,11 @@ function renderTimeline(){
   const zDate=new Date(start);zDate.setFullYear(zDate.getFullYear()+1);
   const zD=(zDate-start)/864e5;
   if(zD<=totalDays+30){
-    const zPct=(zD/totalDays)*100;
     const zAmt=S.capital*0.37*0.025;
     const zm=document.createElement('div');zm.className='zakat-mk';
-    zm.style.left=Math.min(93,zPct)+'%';
+    zm.style.left=Math.min(93,(zD/totalDays)*100)+'%';
     zm.innerHTML=`<div class="z-pin"><div class="z-dot"></div><div class="z-line"></div></div>
-      <div class="z-lbl"><div class="z-title">⚖ Zakat due</div>
+      <div class="z-lbl"><div class="z-title">⚖ Zakat</div>
       <div class="z-amount">${fE(zAmt)}</div>
       <div class="z-sub">${zDate.toLocaleDateString('fr-FR',{month:'short',year:'numeric'})}</div></div>`;
     cont.appendChild(zm);
@@ -817,141 +904,49 @@ function renderTimeline(){
   // Jalons
   ms.forEach((m,i)=>{
     const mD=(new Date(m.date)-start)/864e5;
-    const pct=Math.max(3,Math.min(95,(mD/totalDays)*100));
+    const pct=Math.max(2,Math.min(95,(mD/totalDays)*100));
     const isFuture=new Date(m.date)>today;
-    const isFrozen=S.simCrise&&isFuture&&m.regime!=='crise';
-    const cats=m.alloc.reduce((a,x)=>{a[x.cat||x.type]=(a[x.cat||x.type]||0)+x.pct;return a},{});
-    // Couleur dominante
-    let col=((cats.buy||0)>30&&m.regime==='detente')?'var(--green)':
-            (m.regime==='crise')?'var(--gold)':'var(--blue)';
+    const r=RG[m.regime]||RG.detente;
+    const domBuy=m.alloc.reduce((a,x)=>x.t==='buy'?a+x.p:a,0);
+    const col=domBuy>30?r.col:'var(--ink3)';
     const isTop=i%2===0;
     const el=document.createElement('div');
-    const isEdgeLeft=pct<12;
-    el.className='milestone'+(isFrozen?' frozen':'')+(isEdgeLeft?' edge-left':'');
-    el.style.cssText=`left:${pct}%;margin-top:-8px`;
+    el.className='milestone'+(m.stale?' stale':'')+(pct<10?' edge-l':'');
+    el.style.cssText=`left:${pct}%;margin-top:-6px`;
     el.innerHTML=`
       <div class="m-pin" style="color:${col}">
-        <div class="m-pin-dot" style="background:${col}"></div>
+        <div class="m-pin-dot" style="background:${m.done?'var(--green)':col}"></div>
         <div class="m-pin-line"></div>
       </div>
       <div class="m-card ${isTop?'top':'bottom'}" onclick="openDetail('${m.id}')">
-        ${m.stale?'<div class="m-reeval">⟳ À réévaluer</div>':''}
-        ${isFrozen?'<div class="m-frozen-b">⏸ GELÉ</div>':''}
+        ${m.stale?'<div class="m-stale-b">⟳ Réévaluer</div>':''}
         <div class="m-card-hdr">
           <div class="m-date">${fDate(m.date)}</div>
           <div class="m-amount">${fE(m.amount)}</div>
         </div>
         <div class="m-card-body">
-          ${m.alloc.slice(0,4).map(a=>`
+          ${m.alloc.filter(a=>a.t==='buy').slice(0,3).map(a=>`
             <div class="m-row">
-              <div class="m-row-l"><div class="m-dot" style="background:${a.color}"></div>
-              <span style="font-size:11px">${typeLabel[a.type]||''} ${a.name}</span></div>
+              <div class="m-row-l"><div class="m-dot" style="background:${a.c}"></div>
+              <span>${a.n}</span></div>
               <div class="m-row-amt">${fE(a.amount)}</div>
             </div>`).join('')}
-          ${m.alloc.length>4?`<div style="font-size:9px;color:var(--ink3);font-family:var(--mono)">+${m.alloc.length-4} actifs...</div>`:''}
         </div>
         <div class="m-card-ftr">
           <div class="m-res">Réserve : <strong>${fE(m.amount*0.15)}</strong></div>
-          <div class="m-status ${m.done?'done':'todo'}">${m.done?'✓ Exécuté':isFuture?'○ Planifié':'○ À faire'}</div>
+          <div class="m-status ${m.done?'m-done-st':'m-plan-st'}">${m.done?'✓ Exécuté':isFuture?'○ Planifié':'○ À faire'}</div>
         </div>
       </div>`;
     cont.appendChild(el);
   });
 }
 
-function getTotalDays(){
-  const ms=S.milestones;
-  if(ms.length<2)return 180;
-  const s=new Date(ms[0].date);
-  const e=new Date(ms[ms.length-1].date);
-  return Math.max(180,(e-s)/864e5+60);
-}
-
-// ── MODAL VERSEMENT ──
-let sliderAlloc=[];
-function openAddModal(){
-  const r=RG[S.regime];
-  sliderAlloc=r.actions.map(a=>({...a}));
-  let suggestDate=new Date().toISOString().split('T')[0];
-  if(S.milestones.length>0){
-    const last=new Date(S.milestones[S.milestones.length-1].date);
-    last.setMonth(last.getMonth()+1);
-    suggestDate=last.toISOString().split('T')[0];
-  }
-  const ov=document.getElementById('overlay');
-  ov.innerHTML=`<div class="modal-base vers-modal">
-    <div class="modal-hdr">
-      <div class="modal-title">NOUVEAU VERSEMENT</div>
-      <div class="modal-sub">Allocation suggérée · ${r.label} · Ajustable via les sliders</div>
-    </div>
-    <div class="modal-body">
-      <div class="mrow">
-        <div class="mfield"><label class="mlabel">Date du versement</label>
-          <input type="date" class="minput" id="mv-date" value="${suggestDate}"></div>
-        <div class="mfield"><label class="mlabel">Montant à virer sur IBKR (€)</label>
-          <input type="number" class="minput" id="mv-amount" value="2000" min="100" step="100" oninput="updSliderAmts()"></div>
-      </div>
-      <div class="alloc-sec">
-        <div class="alloc-sec-title">Allocation · Ajustable</div>
-        <div id="alloc-rows"></div>
-        <div class="alloc-total">
-          <span style="color:var(--ink2)">Total investi</span>
-          <span id="total-pct" class="tok">85%</span>
-          <span style="color:var(--ink3)" id="total-res">Réserve N3 : 15%</span>
-        </div>
-      </div>
-      <div class="modal-note"><strong>Rappel :</strong> Ces ordres sont à passer manuellement sur Interactive Brokers après le virement.</div>
-    </div>
-    <div class="modal-ftr">
-      <button class="btn-cancel-m" onclick="closeOverlay()">Annuler</button>
-      <button class="btn-confirm" onclick="confirmAdd()">Ajouter →</button>
-    </div>
-  </div>`;
-  renderAllocRows();
-  ov.classList.add('open');
-}
-
-function renderAllocRows(){
-  const rows=document.getElementById('alloc-rows');if(!rows)return;
-  rows.innerHTML=sliderAlloc.map((a,i)=>`
-    <div class="alloc-row">
-      <div class="m-dot" style="background:${a.color}"></div>
-      <div style="font-size:11px">${a.name}</div>
-      <input type="range" class="a-slider" min="0" max="40" value="${a.pct}"
-        oninput="updSlider(${i},this.value)" style="accent-color:${a.color}">
-      <div class="a-pct" id="ap-${i}" style="color:${a.color}">${a.pct}%</div>
-    </div>`).join('');
-  updSliderAmts();
-}
-function updSlider(i,v){
-  sliderAlloc[i].pct=parseInt(v);
-  const t=sliderAlloc.reduce((s,a)=>s+a.pct,0);
-  document.getElementById('ap-'+i).textContent=v+'%';
-  const tp=document.getElementById('total-pct');
-  const tr=document.getElementById('total-res');
-  if(tp){tp.textContent=t+'%';tp.className=t<=85?'tok':'twarn';}
-  if(tr)tr.textContent='Réserve N3 : '+(100-t)+'%';
-  updSliderAmts();
-}
-function updSliderAmts(){
-  const amt=parseFloat(document.getElementById('mv-amount')?.value)||2000;
-  sliderAlloc.forEach((a,i)=>{
-    const el=document.getElementById('ap-'+i);
-    if(el)el.textContent=a.pct+'% · '+fE(amt*a.pct/100);
-  });
-}
-function confirmAdd(){
-  const date=document.getElementById('mv-date')?.value;
-  const amount=parseFloat(document.getElementById('mv-amount')?.value);
-  if(!date||!amount||amount<100)return;
-  const j={
-    id:Date.now(),date,amount:Math.round(amount),
-    alloc:sliderAlloc.map(a=>({...a,amount:Math.round(amount*a.pct/100)})),
-    regime:S.regime,done:false,note:'',future:new Date(date)>new Date(),stale:false
-  };
-  S.milestones.push(j);
-  S.milestones.sort((a,b)=>new Date(a.date)-new Date(b.date));
-  save();closeOverlay();renderAll();
+function updateStats(){
+  const total=S.milestones.reduce((s,m)=>s+m.amount,0);
+  const reserve=Math.max(0,S.capital-total);
+  document.getElementById('ts-investi').textContent=fE(total);
+  document.getElementById('ts-reserve').textContent=fE(reserve);
+  document.getElementById('ts-jalons').textContent=S.milestones.length;
 }
 
 // ── MODAL DÉTAIL ──
@@ -959,7 +954,7 @@ function openDetail(id){
   const m=S.milestones.find(x=>String(x.id)===String(id));if(!m)return;
   const ov=document.getElementById('overlay');
   const inv=m.alloc.reduce((s,a)=>s+a.amount,0);
-  ov.innerHTML=`<div class="modal-base detail-modal">
+  ov.innerHTML=`<div class="detail-modal">
     <div class="dm-hdr">
       <div><div class="dm-title">${fE(m.amount)}</div><div class="dm-date">${fDateFull(m.date)}</div></div>
       <button class="dm-close" onclick="closeOverlay()">✕</button>
@@ -967,16 +962,16 @@ function openDetail(id){
     <div class="dm-body">
       <div class="dm-alloc">
         ${m.alloc.map(a=>`<div class="dm-row">
-          <div class="m-dot" style="background:${a.color}"></div>
-          <div class="dm-name">${typeLabel[a.type]||''} ${a.name}</div>
-          <div class="dm-bar-w"><div class="dm-bar" style="background:${a.color};width:${a.pct}%"></div></div>
+          <div class="m-dot" style="background:${a.c}"></div>
+          <div class="dm-name">${tLbl[a.t]||''} ${a.n}</div>
+          <div class="dm-bar-w"><div class="dm-bar" style="background:${a.c};width:${a.p}%"></div></div>
           <div class="dm-amt">${fE(a.amount)}</div>
         </div>`).join('')}
       </div>
       <div class="dm-ftr">
-        <div class="dm-ftr-row"><span class="dm-ftr-lbl">Total investi</span><span class="dm-ftr-val">${fE(inv)}</span></div>
-        <div class="dm-ftr-row"><span class="dm-ftr-lbl">Réserve N3</span><span class="dm-ftr-val" style="color:var(--green)">${fE(m.amount-inv)}</span></div>
-        <div class="dm-ftr-row"><span class="dm-ftr-lbl">Régime</span><span class="dm-ftr-val" style="font-size:10px">${RG[m.regime]?.label||m.regime}</span></div>
+        <div class="dm-row2"><span class="dm-lbl">Total investi</span><span class="dm-val">${fE(inv)}</span></div>
+        <div class="dm-row2"><span class="dm-lbl">Réserve N3</span><span class="dm-val" style="color:var(--green)">${fE(m.amount-inv)}</span></div>
+        <div class="dm-row2"><span class="dm-lbl">Régime</span><span class="dm-val" style="font-size:10px">${RG[m.regime]?.label||m.regime}</span></div>
       </div>
       <div class="dm-actions">
         <button class="btn-done ${m.done?'undone':''}" onclick="toggleDone('${m.id}')">
@@ -989,65 +984,75 @@ function openDetail(id){
 }
 function toggleDone(id){
   const m=S.milestones.find(x=>String(x.id)===String(id));
-  if(m){m.done=!m.done;if(m.done)m.stale=false;save();closeOverlay();renderAll();}
+  if(m){m.done=!m.done;m.stale=false;save();closeOverlay();renderTimeline();updateStats();}
 }
 function delM(id){
   if(confirm('Supprimer ce jalon ?')){
     S.milestones=S.milestones.filter(x=>String(x.id)!==String(id));
-    save();closeOverlay();renderAll();
+    save();closeOverlay();renderTimeline();updateStats();
   }
 }
 
-// ── MODAL RÉGIME ──
-function openRegimeModal(){
+// ── CONFIRM RECALC ──
+function openConfirm(n,prevR,onYes,onNo){
   const ov=document.getElementById('overlay');
-  ov.innerHTML=`<div class="modal-base regime-modal">
-    <div class="rm-title">CHANGER LE RÉGIME</div>
-    <div class="rm-opts">
-      ${Object.entries(RG).map(([k,r])=>`
-        <div class="rm-opt ${S.regime===k?'selected':''}" onclick="setRegime('${k}')">
-          <div class="m-dot" style="background:${k==='crise'?'var(--red)':k==='trans'?'var(--amber)':'var(--green)'}"></div>
-          <div class="rm-opt-info">
-            <div class="rm-opt-name">${r.label}</div>
-            <div class="rm-opt-desc">${k==='crise'?'Brent &gt;$100 · Hormuz bloqué/perturbé':k==='trans'?'Brent $80–100 · Signaux mixtes':'Brent &lt;$80 · VIX calme · Croissance'}</div>
-          </div>
-        </div>`).join('')}
+  ov.innerHTML=`<div class="confirm-modal">
+    <div class="cm-title">Régime modifié</div>
+    <div class="cm-body">
+      Passage de <strong>${RG[prevR]?.label||prevR}</strong> vers <strong>${RG[S.regime].label}</strong>.<br><br>
+      <strong>${n} jalon(s) futur(s)</strong> non-exécutés détectés.<br>
+      Recalculer leurs allocations selon le nouveau régime ?
     </div>
-    <div style="font-size:11px;color:var(--ink3);margin-bottom:11px">Le régime se détecte aussi automatiquement via "Marchés".</div>
-    <div style="display:flex;justify-content:flex-end"><button class="btn-cancel-m" onclick="closeOverlay()">Fermer</button></div>
+    <div class="cm-ftr">
+      <button class="btn-cn" id="btn-cn">Garder actuels</button>
+      <button class="btn-cy" id="btn-cy">Recalculer →</button>
+    </div>
   </div>`;
+  document.getElementById('btn-cy').onclick=()=>{closeOverlay();onYes();};
+  document.getElementById('btn-cn').onclick=()=>{closeOverlay();onNo();};
   ov.classList.add('open');
 }
-function setRegime(r){
-  const prev=S.regime;S.regime=r;save();
-  const futurJalons=S.milestones.filter(m=>new Date(m.date)>new Date()&&!m.done);
-  closeOverlay();
-  if(prev!==r&&futurJalons.length>0)openConfirmRecalc(futurJalons.length,prev);
-  else renderAll();
+function doRecalc(){
+  const today=new Date();
+  S.milestones=S.milestones.map(m=>{
+    if(new Date(m.date)>today&&!m.done){
+      const r=RG[S.regime];
+      return{...m,alloc:r.alloc.map(a=>({...a,amount:Math.round(m.amount*0.85*a.p/100)})),regime:S.regime,stale:false};
+    }
+    return m;
+  });
+  save();renderTimeline();
+}
+function markStale(){
+  const today=new Date();
+  S.milestones=S.milestones.map(m=>{
+    if(new Date(m.date)>today&&!m.done)return{...m,stale:true};
+    return m;
+  });
+  save();renderTimeline();
 }
 
 // ── CAPITAL ──
 function onCapChange(){
-  const v=parseFloat(document.getElementById('cap-input').value);
-  if(v&&v>=100){S.capital=v;save();updateActionBand();}
+  const v=parseFloat(document.getElementById('cap-in').value);
+  if(v&&v>=100){S.capital=v;save();updateStats();}
 }
 
-// ── EVENTS ──
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeOverlay();});
-document.getElementById('overlay').addEventListener('click',e=>{
-  if(e.target===document.getElementById('overlay'))closeOverlay();
-});
+// Hooks étapes
+document.getElementById('pb1').addEventListener('click',()=>{if(currentStep>1||S.regime!=='wait')goStep(1);});
+document.getElementById('pb2').addEventListener('click',()=>{if(currentStep>=2){renderActions();goStep(2);}});
+document.getElementById('pb3').addEventListener('click',()=>{if(currentStep>=3){calcDate();goStep(3);}});
+document.getElementById('pb4').addEventListener('click',()=>{if(currentStep>=4)goStep(4);});
+
+// Appeler calcDate et renderActions quand on navigue
+const origGoStep=goStep;
+window.goStep=function(n){
+  origGoStep(n);
+  if(n===2)renderActions();
+  if(n===3)calcDate();
+};
+
 window.addEventListener('resize',()=>renderTimeline());
-
-// ── INIT ──
-if(S.guideOk){
-  hide('guide');
-  renderAll();
-  if(!S.mktTs)document.getElementById('btn-markets').classList.add('stale');
-} else {
-  document.getElementById('g-capital').value=S.capital||10000;
-  selR(S.regime||'detente');
-}
 </script>
 </body>
 </html>

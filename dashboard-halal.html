@@ -358,7 +358,7 @@ body::after{content:'';position:fixed;inset:0;
 
 <!-- HEADER -->
 <div class="hdr">
-  <div class="logo">HALAL · ROBUSTE · v2.2</div>
+  <div class="logo">HALAL · ROBUSTE · v2.3</div>
   <div class="hdr-mid">
     <div class="regime-badge rb-wait" id="regime-badge">
       <div class="rb-dot"></div><span id="regime-label">En attente</span>
@@ -408,6 +408,8 @@ body::after{content:'';position:fixed;inset:0;
         <a class="lnk" href="https://finance.yahoo.com/quote/XOM" target="_blank">XOM</a>
         <a class="lnk" href="https://finance.yahoo.com/quote/CVX" target="_blank">CVX</a>
         <a class="lnk" href="https://finance.yahoo.com/quote/ISWD.L" target="_blank">ISWD.L</a>
+        <a class="lnk" href="https://finance.yahoo.com/quote/COHR" target="_blank">Coherent</a>
+        <a class="lnk" href="https://finance.yahoo.com/quote/LITE" target="_blank">Lumentum</a>
       </div>
       <div class="mkt-section">
         <div class="mkt-stitle">Signaux régime — requis</div>
@@ -434,6 +436,8 @@ body::after{content:'';position:fixed;inset:0;
           <div class="mf"><label class="mf-lbl">XOM <span>$</span></label><input type="number" step="0.01" class="mf-in" id="mk-xom" placeholder="ex: 108.5"></div>
           <div class="mf"><label class="mf-lbl">CVX <span>$</span></label><input type="number" step="0.01" class="mf-in" id="mk-cvx" placeholder="ex: 152.3"></div>
           <div class="mf"><label class="mf-lbl">ISWD.L <span>GBp</span></label><input type="number" step="1" class="mf-in" id="mk-iswd" placeholder="ex: 4431"></div>
+          <div class="mf"><label class="mf-lbl">Coherent 0LHO-LN <span>£ · Optique IA</span></label><input type="number" step="0.01" class="mf-in" id="mk-cohr" placeholder="ex: 58.20"></div>
+          <div class="mf"><label class="mf-lbl">Lumentum 0JVV-LN <span>£ · Optique IA</span></label><input type="number" step="0.01" class="mf-in" id="mk-lite" placeholder="ex: 42.50"></div>
         </div>
       </div>
     </div>
@@ -459,6 +463,10 @@ body::after{content:'';position:fixed;inset:0;
         <div class="rr-body">
           <div class="rr-why" id="rr-why">—</div>
           <div class="rr-signals" id="rr-sigs"></div>
+        <div id="r9-note" style="display:none;margin-top:10px;background:rgba(46,184,184,.08);border:1px solid rgba(46,184,184,.2);border-radius:3px;padding:8px 10px;font-family:var(--mono);font-size:10px;color:var(--teal);line-height:1.6">
+          ★ Règle 9 · Régime Détente<br>
+          <span style="color:var(--ink2)">Coherent 0LHO-LN + Lumentum 0JVV-LN activés · Max 3-5% chacun · IBKR LSE</span>
+        </div>
         </div>
       </div>
     </div>
@@ -582,6 +590,7 @@ body::after{content:'';position:fixed;inset:0;
     <div class="al-item" id="al-brent"><div class="al-dot al-off"></div><div class="al-txt"><strong>Brent &gt;$100</strong></div><div class="al-arr"> → SGLN+XOM</div></div>
     <div class="al-item" id="al-vix"><div class="al-dot al-off"></div><div class="al-txt"><strong>VIX &gt;35</strong></div><div class="al-arr"> → SGLN only</div></div>
     <div class="al-item" id="al-hz"><div class="al-dot al-watch"></div><div class="al-txt"><strong>Hormuz</strong></div><div class="al-arr" id="al-hz-txt"> → surveiller</div></div>
+    <div class="al-item" id="al-ia" style="border-left:1px solid var(--line)"><div class="al-dot" style="background:var(--teal)"></div><div class="al-txt"><strong>Règle 9 · IA</strong></div><div class="al-arr" id="al-ia-txt"> → Coherent + Lumentum en Détente</div></div>
   </div>
 </div>
 
@@ -626,15 +635,17 @@ const RG={
       {k:'COPA',n:'Cuivre COPA.L',p:5,c:'var(--amber)',t:'hold'},
     ]},
   detente:{label:'🟢 DÉTENTE',col:'var(--green)',badge:'rb-detente',
-    why:'Brent bas, VIX calme, Hormuz normal. Environnement favorable. Surpondérer les indices halal et INRG.L.',
+    why:'Brent bas, VIX calme, Hormuz normal. Environnement favorable. Surpondérer indices halal, INRG.L et actifs optiques IA (Phase 3).',
     interval:56,intervalLabel:'8 semaines — DCA long terme',
     alloc:[
       {k:'INRG',n:'Renouvelable INRG.L',p:20,c:'#2a6ab0',t:'buy'},
-      {k:'IGDA',n:'Indice halal IGDA.L',p:27,c:'var(--green)',t:'buy'},
+      {k:'IGDA',n:'Indice halal IGDA.L',p:22,c:'var(--green)',t:'buy'},
       {k:'SGLN',n:'Or SGLN.L',p:23,c:'var(--gold)',t:'hold'},
       {k:'PHSP',n:'Argent PHSP.L',p:7,c:'#7a8090',t:'hold'},
       {k:'COPA',n:'Cuivre COPA.L',p:5,c:'var(--amber)',t:'hold'},
       {k:'XOM',n:'XOM + CVX',p:3,c:'var(--blue)',t:'reduce'},
+      {k:'COHR',n:'Coherent 0LHO-LN ★IA',p:3,c:'var(--teal)',t:'buy'},
+      {k:'LITE',n:'Lumentum 0JVV-LN ★IA',p:2,c:'var(--teal)',t:'buy'},
     ]}
 };
 const tLbl={buy:'ACHETER',hold:'CONSERVER',reduce:'RÉDUIRE'};
@@ -680,7 +691,7 @@ window.addEventListener('DOMContentLoaded',()=>{
   });
   // Pré-remplir si données existantes
   const m=S.mkt;
-  ['brent','vix','gold','sgln','inrg','igda','phsp','copa','xom','cvx','iswd'].forEach(k=>{
+  ['brent','vix','gold','sgln','inrg','igda','phsp','copa','xom','cvx','iswd','cohr','lite'].forEach(k=>{
     const el=document.getElementById('mk-'+k);
     if(el&&m[k]!=null)el.value=m[k];
   });
@@ -695,7 +706,7 @@ window.addEventListener('DOMContentLoaded',()=>{
 // ── CALCUL RÉGIME ──
 function calcRegime(){
   // Sauvegarder données
-  ['brent','vix','gold','sgln','inrg','igda','phsp','copa','xom','cvx','iswd'].forEach(k=>{
+  ['brent','vix','gold','sgln','inrg','igda','phsp','copa','xom','cvx','iswd','cohr','lite'].forEach(k=>{
     const v=parseFloat(document.getElementById('mk-'+k)?.value);
     if(!isNaN(v))S.mkt[k]=v;
   });
@@ -729,6 +740,10 @@ function calcRegime(){
     perturbe:{s:'warn',t:'Hormuz perturbé — régime transition'},
     normal:{s:'ok',t:'Hormuz normal — flux rétablis'}};
   sigs.push(hzMap[hz]);
+  // Règle 9 — Signal optique IA
+  if(S.mkt.cohr&&S.mkt.lite){
+    sigs.push({s:'ok',t:`Optique IA : Coherent £${S.mkt.cohr.toFixed(2)} · Lumentum £${S.mkt.lite.toFixed(2)}`});
+  }
   if(S.mkt.gold){
     if(S.mkt.gold<4400)sigs.push({s:'warn',t:`Or $${Math.round(S.mkt.gold)} — Sous $4 400, opportunité`});
     else sigs.push({s:'ok',t:`Or $${Math.round(S.mkt.gold)} — Niveau nominal`});
@@ -766,6 +781,21 @@ function updateAlerts(){
   setAl('al-vix',m.vix&&m.vix>35,'al-off','al-on');
   setAl('al-hz',hz==='bloque'||hz==='perturbe','al-off',hz==='bloque'?'al-on':'al-watch');
   const hzTxt={bloque:'→ mode crise actif',perturbe:'→ maintenir défensif',normal:'→ flux normaux'};
+  // Règle 9 alerte IA
+  const iaEl=document.getElementById('al-ia');
+  const iaTxt=document.getElementById('al-ia-txt');
+  if(iaEl&&iaTxt){
+    if(S.regime==='detente'){
+      iaEl.querySelector('.al-dot').className='al-dot al-watch';
+      iaTxt.textContent=' → Acheter 0LHO-LN + 0JVV-LN · Max 5% chacun';
+    } else if(S.regime==='crise'||S.regime==='choc'){
+      iaEl.querySelector('.al-dot').className='al-dot al-on';
+      iaTxt.textContent=' → Sortir Coherent/Lumentum · Renforcer SGLN';
+    } else {
+      iaEl.querySelector('.al-dot').className='al-dot al-off';
+      iaTxt.textContent=' → Neutre · Attendre Détente';
+    }
+  }
   document.getElementById('al-hz-txt').textContent=hzTxt[hz]||'→ surveiller';
 }
 function setAl(id,on,offCls,onCls){

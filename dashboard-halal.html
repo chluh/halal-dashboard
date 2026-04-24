@@ -358,7 +358,7 @@ body::after{content:'';position:fixed;inset:0;
 
 <!-- HEADER -->
 <div class="hdr">
-  <div class="logo">HALAL · ROBUSTE · v2.3</div>
+  <div class="logo">HALAL · ROBUSTE · v3.0</div>
   <div class="hdr-mid">
     <div class="regime-badge rb-wait" id="regime-badge">
       <div class="rb-dot"></div><span id="regime-label">En attente</span>
@@ -410,6 +410,10 @@ body::after{content:'';position:fixed;inset:0;
         <a class="lnk" href="https://finance.yahoo.com/quote/ISWD.L" target="_blank">ISWD.L</a>
         <a class="lnk" href="https://finance.yahoo.com/quote/COHR" target="_blank">Coherent</a>
         <a class="lnk" href="https://finance.yahoo.com/quote/LITE" target="_blank">Lumentum</a>
+        <a class="lnk" href="https://finance.yahoo.com/quote/WGLD.L" target="_blank">WGLD.L</a>
+        <a class="lnk" href="https://finance.yahoo.com/quote/PPFB.L" target="_blank">PPFB.L</a>
+        <a class="lnk" href="https://finance.yahoo.com/quote/%5ETNX" target="_blank">T10Y</a>
+        <a class="lnk" href="https://finance.yahoo.com/quote/%5EIXIC" target="_blank">NASDAQ</a>
       </div>
       <div class="mkt-section">
         <div class="mkt-stitle">Signaux régime — requis</div>
@@ -438,6 +442,9 @@ body::after{content:'';position:fixed;inset:0;
           <div class="mf"><label class="mf-lbl">ISWD.L <span>GBp</span></label><input type="number" step="1" class="mf-in" id="mk-iswd" placeholder="ex: 4431"></div>
           <div class="mf"><label class="mf-lbl">Coherent 0LHO-LN <span>£ · Optique IA</span></label><input type="number" step="0.01" class="mf-in" id="mk-cohr" placeholder="ex: 58.20"></div>
           <div class="mf"><label class="mf-lbl">Lumentum 0JVV-LN <span>£ · Optique IA</span></label><input type="number" step="0.01" class="mf-in" id="mk-lite" placeholder="ex: 42.50"></div>
+          <div class="mf"><label class="mf-lbl">WGLD/PPFB <span>£ · Or #2</span></label><input type="number" step="0.01" class="mf-in" id="mk-wgld" placeholder="Redondance"></div>
+          <div class="mf"><label class="mf-lbl">Spread EM <span>bps</span></label><input type="number" step="1" class="mf-in" id="mk-spread" placeholder="ex: 350"></div>
+          <div class="mf"><label class="mf-lbl">NASDAQ vs pic <span>%</span></label><input type="number" step="0.1" class="mf-in" id="mk-ndx" placeholder="ex: -8.5"></div>
         </div>
       </div>
     </div>
@@ -605,47 +612,54 @@ function save(){localStorage.setItem(SK,JSON.stringify(S))}
 
 // ── RÉGIMES ──
 const RG={
-  crise:{label:'🔴 CRISE',col:'var(--red)',badge:'rb-crise',
-    why:'Brent élevé ou Hormuz bloqué/perturbé. Les actifs tangibles surperforment. Les indices halal sont sous pression.',
-    interval:21,intervalLabel:'3 semaines — urgence crise',
+  crise:{label:'🔴 DÉFENSIF · Score 5-7',col:'var(--red)',badge:'rb-crise',
+    why:'Zone défensive. Sortir optique IA. Maintenir noyau. Renforcer or et XOM/CVX si Brent > $90.',
+    interval:21,intervalLabel:'3 semaines — défensif',
     alloc:[
-      {k:'SGLN',n:'Or SGLN.L',p:30,c:'var(--gold)',t:'buy'},
-      {k:'XOM',n:'XOM + CVX',p:22,c:'var(--blue)',t:'buy'},
-      {k:'INRG',n:'Renouvelable INRG.L',p:15,c:'#2a6ab0',t:'hold'},
-      {k:'PHSP',n:'Argent PHSP.L',p:9,c:'#7a8090',t:'hold'},
-      {k:'COPA',n:'Cuivre COPA.L',p:6,c:'var(--amber)',t:'hold'},
-      {k:'IGDA',n:'Indice halal IGDA.L',p:3,c:'var(--green)',t:'reduce'},
+      {k:'SGLN',n:'Or SGLN.L',p:20,c:'var(--gold)',t:'buy'},
+      {k:'WGLD',n:'WGLD/PPFB (Or #2)',p:7,c:'#c48a2a',t:'buy'},
+      {k:'INRG',n:'Renouvelable INRG.L',p:20,c:'#2a6ab0',t:'hold'},
+      {k:'IGDA',n:'Indice halal IGDA.L',p:22,c:'var(--green)',t:'hold'},
+      {k:'XOM',n:'XOM + CVX',p:7,c:'var(--blue)',t:'buy'},
+      {k:'PHSP',n:'Argent PHSP.L',p:6,c:'#7a8090',t:'hold'},
+      {k:'COPA',n:'Cuivre COPA.L',p:4,c:'var(--amber)',t:'hold'},
+      {k:'COHR',n:'Coherent — STOP-LOSS',p:0,c:'var(--teal)',t:'reduce'},
+      {k:'LITE',n:'Lumentum — STOP-LOSS',p:0,c:'var(--teal)',t:'reduce'},
     ]},
-  choc:{label:'⚡ CHOC LIQUIDITÉ',col:'var(--teal)',badge:'rb-trans',
-    why:'VIX > 35. Panique de marché — tout baisse. Garder uniquement l\'or physique et la liquidité. Ne rien faire d\'autre.',
-    interval:7,intervalLabel:'1 semaine — saisir l\'opportunité',
+  choc:{label:'⚡ ROBUSTESSE MAX · Score 7-10',col:'var(--teal)',badge:'rb-trans',
+    why:'Robustesse maximale. Sortir satellite complet sauf cuivre. Descendre la réserve hors-IBKR. Achat SGLN uniquement.',
+    interval:7,intervalLabel:'1 semaine — déclencheur réserve',
     alloc:[
-      {k:'SGLN',n:'Or SGLN.L',p:72,c:'var(--gold)',t:'buy'},
-      {k:'CASH',n:'Réserve cash',p:13,c:'var(--ink3)',t:'hold'},
+      {k:'SGLN',n:'Or SGLN.L',p:35,c:'var(--gold)',t:'buy'},
+      {k:'WGLD',n:'WGLD/PPFB (Or #2)',p:10,c:'#c48a2a',t:'buy'},
+      {k:'INRG',n:'Renouvelable INRG.L',p:18,c:'#2a6ab0',t:'hold'},
+      {k:'IGDA',n:'Indice halal IGDA.L',p:18,c:'var(--green)',t:'hold'},
+      {k:'COPA',n:'Cuivre COPA.L',p:4,c:'var(--amber)',t:'hold'},
     ]},
-  trans:{label:'🟡 TRANSITION',col:'var(--amber)',badge:'rb-trans',
-    why:'Brent entre $80 et $100 ou Hormuz perturbé. Signaux mixtes. Équilibrer robustesse et indices halal.',
+  trans:{label:'🟡 TRANSITION · Score 3-5',col:'var(--amber)',badge:'rb-trans',
+    why:'Zone de transition. Maintenir les allocations cibles du noyau. Satellite conservé sans renforcement.',
     interval:35,intervalLabel:'5 semaines — lissage équilibré',
     alloc:[
-      {k:'SGLN',n:'Or SGLN.L',p:27,c:'var(--gold)',t:'hold'},
-      {k:'INRG',n:'Renouvelable INRG.L',p:15,c:'#2a6ab0',t:'buy'},
-      {k:'IGDA',n:'Indice halal IGDA.L',p:20,c:'var(--green)',t:'buy'},
-      {k:'XOM',n:'XOM + CVX',p:10,c:'var(--blue)',t:'reduce'},
-      {k:'PHSP',n:'Argent PHSP.L',p:8,c:'#7a8090',t:'hold'},
-      {k:'COPA',n:'Cuivre COPA.L',p:5,c:'var(--amber)',t:'hold'},
+      {k:'SGLN',n:'Or SGLN.L',p:20,c:'var(--gold)',t:'hold'},
+      {k:'INRG',n:'Renouvelable INRG.L',p:20,c:'#2a6ab0',t:'hold'},
+      {k:'IGDA',n:'Indice halal IGDA.L',p:22,c:'var(--green)',t:'hold'},
+      {k:'WGLD',n:'WGLD/PPFB (Or #2)',p:6,c:'#c48a2a',t:'hold'},
+      {k:'PHSP',n:'Argent PHSP.L',p:4,c:'#7a8090',t:'hold'},
+      {k:'COPA',n:'Cuivre COPA.L',p:4,c:'var(--amber)',t:'hold'},
+      {k:'XOM',n:'XOM + CVX',p:4,c:'var(--blue)',t:'hold'},
     ]},
-  detente:{label:'🟢 DÉTENTE',col:'var(--green)',badge:'rb-detente',
-    why:'Brent bas, VIX calme, Hormuz normal. Environnement favorable. Surpondérer indices halal, INRG.L et actifs optiques IA (Phase 3).',
+  detente:{label:'🟢 CROISSANCE · Score 0-3',col:'var(--green)',badge:'rb-detente',
+    why:'Score régime bas. Environnement favorable. Noyau 60% + redondance or 6% + satellite IA activé (stop-loss -15% NASDAQ).',
     interval:56,intervalLabel:'8 semaines — DCA long terme',
     alloc:[
+      {k:'SGLN',n:'Or SGLN.L',p:18,c:'var(--gold)',t:'hold'},
       {k:'INRG',n:'Renouvelable INRG.L',p:20,c:'#2a6ab0',t:'buy'},
       {k:'IGDA',n:'Indice halal IGDA.L',p:22,c:'var(--green)',t:'buy'},
-      {k:'SGLN',n:'Or SGLN.L',p:23,c:'var(--gold)',t:'hold'},
-      {k:'PHSP',n:'Argent PHSP.L',p:7,c:'#7a8090',t:'hold'},
-      {k:'COPA',n:'Cuivre COPA.L',p:5,c:'var(--amber)',t:'hold'},
-      {k:'XOM',n:'XOM + CVX',p:3,c:'var(--blue)',t:'reduce'},
-      {k:'COHR',n:'Coherent 0LHO-LN ★IA',p:3,c:'var(--teal)',t:'buy'},
-      {k:'LITE',n:'Lumentum 0JVV-LN ★IA',p:2,c:'var(--teal)',t:'buy'},
+      {k:'WGLD',n:'WGLD/PPFB (Or #2)',p:6,c:'#c48a2a',t:'hold'},
+      {k:'PHSP',n:'Argent PHSP.L',p:4,c:'#7a8090',t:'hold'},
+      {k:'COPA',n:'Cuivre COPA.L',p:4,c:'var(--amber)',t:'hold'},
+      {k:'COHR',n:'Coherent 0LHO-LN ★',p:2,c:'var(--teal)',t:'buy'},
+      {k:'LITE',n:'Lumentum 0JVV-LN ★',p:2,c:'var(--teal)',t:'buy'},
     ]}
 };
 const tLbl={buy:'ACHETER',hold:'CONSERVER',reduce:'RÉDUIRE'};
@@ -691,7 +705,7 @@ window.addEventListener('DOMContentLoaded',()=>{
   });
   // Pré-remplir si données existantes
   const m=S.mkt;
-  ['brent','vix','gold','sgln','inrg','igda','phsp','copa','xom','cvx','iswd','cohr','lite'].forEach(k=>{
+  ['brent','vix','gold','sgln','inrg','igda','phsp','copa','xom','cvx','iswd','cohr','lite','wgld','spread','ndx','t10y'].forEach(k=>{
     const el=document.getElementById('mk-'+k);
     if(el&&m[k]!=null)el.value=m[k];
   });
@@ -706,7 +720,7 @@ window.addEventListener('DOMContentLoaded',()=>{
 // ── CALCUL RÉGIME ──
 function calcRegime(){
   // Sauvegarder données
-  ['brent','vix','gold','sgln','inrg','igda','phsp','copa','xom','cvx','iswd','cohr','lite'].forEach(k=>{
+  ['brent','vix','gold','sgln','inrg','igda','phsp','copa','xom','cvx','iswd','cohr','lite','wgld','spread','ndx','t10y'].forEach(k=>{
     const v=parseFloat(document.getElementById('mk-'+k)?.value);
     if(!isNaN(v))S.mkt[k]=v;
   });
@@ -715,14 +729,34 @@ function calcRegime(){
   document.getElementById('mkt-last').textContent=
     'Mis à jour '+new Date().toLocaleDateString('fr-FR',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
 
-  const b=S.mkt.brent,vix=S.mkt.vix,hz=S.hormuz;
-  let reg='detente';
-  if(vix>35)reg='choc';
-  else if(b>100||hz==='bloque')reg='crise';
-  else if(b>80||hz==='perturbe')reg='trans';
-
+  // v3.0 — Score continu 0-10 avec hystérèse
+  const b=S.mkt.brent,vix=S.mkt.vix,hz=S.hormuz,t10y=S.mkt.t10y,spread=S.mkt.spread;
+  const bs=b?Math.min(10,Math.max(0,(b-60)/6)):5;
+  const vs=vix?Math.min(10,Math.max(0,(vix-10)/3)):3;
+  const hs=hz==='bloque'?10:hz==='perturbe'?6:1;
+  const ts=t10y?Math.min(10,Math.max(0,(t10y-2)/0.5)):5;
+  const ss=spread?Math.min(10,Math.max(0,(spread-150)/50)):3;
+  const score=(0.35*bs+0.25*vs+0.20*hs+0.10*ts+0.10*ss);
+  S.score=score;
+  let reg;
+  if(score<3)reg='detente';
+  else if(score<5)reg='trans';
+  else if(score<7)reg='crise';
+  else reg='choc';
+  // Hystérèse simple — stocker candidat, confirmer après 7 jours si même zone
+  const now=Date.now();
+  if(S.regimeCandidate!==reg){
+    S.regimeCandidate=reg;
+    S.candidateSince=now;
+  }
+  const daysSince=S.candidateSince?(now-S.candidateSince)/864e5:0;
   const prev=S.regime;
-  S.regime=reg;
+  // Confirmation : 7 jours OU premier calcul OU régime identique
+  if(daysSince>=7||!S.regime||S.regime===reg||prev==='wait'){
+    S.regime=reg;
+    S.candidateSince=now;
+  }
+  S.mkt.score=score;
 
   // Signaux détaillés
   const sigs=[];

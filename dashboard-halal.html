@@ -358,7 +358,7 @@ body::after{content:'';position:fixed;inset:0;
 
 <!-- HEADER -->
 <div class="hdr">
-  <div class="logo">HALAL · ROBUSTE · v3.0</div>
+  <div class="logo">HALAL · ROBUSTE · v3.1</div>
   <div class="hdr-mid">
     <div class="regime-badge rb-wait" id="regime-badge">
       <div class="rb-dot"></div><span id="regime-label">En attente</span>
@@ -408,8 +408,8 @@ body::after{content:'';position:fixed;inset:0;
         <a class="lnk" href="https://finance.yahoo.com/quote/XOM" target="_blank">XOM</a>
         <a class="lnk" href="https://finance.yahoo.com/quote/CVX" target="_blank">CVX</a>
         <a class="lnk" href="https://finance.yahoo.com/quote/ISWD.L" target="_blank">ISWD.L</a>
-        <a class="lnk" href="https://finance.yahoo.com/quote/COHR" target="_blank">Coherent</a>
-        <a class="lnk" href="https://finance.yahoo.com/quote/LITE" target="_blank">Lumentum</a>
+        <a class="lnk" href="https://finance.yahoo.com/quote/ASML.AS" target="_blank">ASML.AS</a>
+        <a class="lnk" href="https://finance.yahoo.com/quote/ASML" target="_blank">ASML (US)</a>
         <a class="lnk" href="https://finance.yahoo.com/quote/WGLD.L" target="_blank">WGLD.L</a>
         <a class="lnk" href="https://finance.yahoo.com/quote/PPFB.L" target="_blank">PPFB.L</a>
         <a class="lnk" href="https://finance.yahoo.com/quote/%5ETNX" target="_blank">T10Y</a>
@@ -440,8 +440,7 @@ body::after{content:'';position:fixed;inset:0;
           <div class="mf"><label class="mf-lbl">XOM <span>$</span></label><input type="number" step="0.01" class="mf-in" id="mk-xom" placeholder="ex: 108.5"></div>
           <div class="mf"><label class="mf-lbl">CVX <span>$</span></label><input type="number" step="0.01" class="mf-in" id="mk-cvx" placeholder="ex: 152.3"></div>
           <div class="mf"><label class="mf-lbl">ISWD.L <span>GBp</span></label><input type="number" step="1" class="mf-in" id="mk-iswd" placeholder="ex: 4431"></div>
-          <div class="mf"><label class="mf-lbl">Coherent 0LHO-LN <span>£ · Optique IA</span></label><input type="number" step="0.01" class="mf-in" id="mk-cohr" placeholder="ex: 58.20"></div>
-          <div class="mf"><label class="mf-lbl">Lumentum 0JVV-LN <span>£ · Optique IA</span></label><input type="number" step="0.01" class="mf-in" id="mk-lite" placeholder="ex: 42.50"></div>
+          <div class="mf"><label class="mf-lbl">ASML (ASME-GY/ASML.AS) <span>€ · EUV monopole</span></label><input type="number" step="0.01" class="mf-in" id="mk-asml" placeholder="ex: 720.50"></div>
           <div class="mf"><label class="mf-lbl">WGLD/PPFB <span>£ · Or #2</span></label><input type="number" step="0.01" class="mf-in" id="mk-wgld" placeholder="Redondance"></div>
           <div class="mf"><label class="mf-lbl">Spread EM <span>bps</span></label><input type="number" step="1" class="mf-in" id="mk-spread" placeholder="ex: 350"></div>
           <div class="mf"><label class="mf-lbl">NASDAQ vs pic <span>%</span></label><input type="number" step="0.1" class="mf-in" id="mk-ndx" placeholder="ex: -8.5"></div>
@@ -613,7 +612,7 @@ function save(){localStorage.setItem(SK,JSON.stringify(S))}
 // ── RÉGIMES ──
 const RG={
   crise:{label:'🔴 DÉFENSIF · Score 5-7',col:'var(--red)',badge:'rb-crise',
-    why:'Zone défensive. Sortir optique IA. Maintenir noyau. Renforcer or et XOM/CVX si Brent > $90.',
+    why:'Zone défensive. Sortir ASML. Maintenir noyau. Renforcer or et XOM/CVX si Brent > $90.',
     interval:21,intervalLabel:'3 semaines — défensif',
     alloc:[
       {k:'SGLN',n:'Or SGLN.L',p:20,c:'var(--gold)',t:'buy'},
@@ -623,8 +622,7 @@ const RG={
       {k:'XOM',n:'XOM + CVX',p:7,c:'var(--blue)',t:'buy'},
       {k:'PHSP',n:'Argent PHSP.L',p:6,c:'#7a8090',t:'hold'},
       {k:'COPA',n:'Cuivre COPA.L',p:4,c:'var(--amber)',t:'hold'},
-      {k:'COHR',n:'Coherent — STOP-LOSS',p:0,c:'var(--teal)',t:'reduce'},
-      {k:'LITE',n:'Lumentum — STOP-LOSS',p:0,c:'var(--teal)',t:'reduce'},
+      {k:'ASML',n:'ASML — STOP-LOSS si NDX -15%',p:0,c:'var(--teal)',t:'reduce'},
     ]},
   choc:{label:'⚡ ROBUSTESSE MAX · Score 7-10',col:'var(--teal)',badge:'rb-trans',
     why:'Robustesse maximale. Sortir satellite complet sauf cuivre. Descendre la réserve hors-IBKR. Achat SGLN uniquement.',
@@ -658,8 +656,7 @@ const RG={
       {k:'WGLD',n:'WGLD/PPFB (Or #2)',p:6,c:'#c48a2a',t:'hold'},
       {k:'PHSP',n:'Argent PHSP.L',p:4,c:'#7a8090',t:'hold'},
       {k:'COPA',n:'Cuivre COPA.L',p:4,c:'var(--amber)',t:'hold'},
-      {k:'COHR',n:'Coherent 0LHO-LN ★',p:2,c:'var(--teal)',t:'buy'},
-      {k:'LITE',n:'Lumentum 0JVV-LN ★',p:2,c:'var(--teal)',t:'buy'},
+      {k:'ASML',n:'ASML (ASME-GY) ★EUV',p:4,c:'var(--teal)',t:'buy'},
     ]}
 };
 const tLbl={buy:'ACHETER',hold:'CONSERVER',reduce:'RÉDUIRE'};
@@ -705,7 +702,7 @@ window.addEventListener('DOMContentLoaded',()=>{
   });
   // Pré-remplir si données existantes
   const m=S.mkt;
-  ['brent','vix','gold','sgln','inrg','igda','phsp','copa','xom','cvx','iswd','cohr','lite','wgld','spread','ndx','t10y'].forEach(k=>{
+  ['brent','vix','gold','sgln','inrg','igda','phsp','copa','xom','cvx','iswd','asml','wgld','spread','ndx','t10y'].forEach(k=>{
     const el=document.getElementById('mk-'+k);
     if(el&&m[k]!=null)el.value=m[k];
   });
@@ -720,7 +717,7 @@ window.addEventListener('DOMContentLoaded',()=>{
 // ── CALCUL RÉGIME ──
 function calcRegime(){
   // Sauvegarder données
-  ['brent','vix','gold','sgln','inrg','igda','phsp','copa','xom','cvx','iswd','cohr','lite','wgld','spread','ndx','t10y'].forEach(k=>{
+  ['brent','vix','gold','sgln','inrg','igda','phsp','copa','xom','cvx','iswd','asml','wgld','spread','ndx','t10y'].forEach(k=>{
     const v=parseFloat(document.getElementById('mk-'+k)?.value);
     if(!isNaN(v))S.mkt[k]=v;
   });
@@ -774,9 +771,9 @@ function calcRegime(){
     perturbe:{s:'warn',t:'Hormuz perturbé — régime transition'},
     normal:{s:'ok',t:'Hormuz normal — flux rétablis'}};
   sigs.push(hzMap[hz]);
-  // Règle 9 — Signal optique IA
-  if(S.mkt.cohr&&S.mkt.lite){
-    sigs.push({s:'ok',t:`Optique IA : Coherent £${S.mkt.cohr.toFixed(2)} · Lumentum £${S.mkt.lite.toFixed(2)}`});
+  // Règle 9 v3.1 — Signal ASML monopole EUV
+  if(S.mkt.asml){
+    sigs.push({s:'ok',t:`ASML (EUV monopole) : €${S.mkt.asml.toFixed(2)}`});
   }
   if(S.mkt.gold){
     if(S.mkt.gold<4400)sigs.push({s:'warn',t:`Or $${Math.round(S.mkt.gold)} — Sous $4 400, opportunité`});
@@ -821,10 +818,10 @@ function updateAlerts(){
   if(iaEl&&iaTxt){
     if(S.regime==='detente'){
       iaEl.querySelector('.al-dot').className='al-dot al-watch';
-      iaTxt.textContent=' → Acheter 0LHO-LN + 0JVV-LN · Max 5% chacun';
+      iaTxt.textContent=' → Acheter ASML (Xetra/Amsterdam) · Max 5%';
     } else if(S.regime==='crise'||S.regime==='choc'){
       iaEl.querySelector('.al-dot').className='al-dot al-on';
-      iaTxt.textContent=' → Sortir Coherent/Lumentum · Renforcer SGLN';
+      iaTxt.textContent=' → Sortir ASML · Renforcer SGLN';
     } else {
       iaEl.querySelector('.al-dot').className='al-dot al-off';
       iaTxt.textContent=' → Neutre · Attendre Détente';

@@ -3,348 +3,522 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Halal Robuste · v2.2</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;500;700&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>Halal Robuste · v3.2</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Literata:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#080b10;--bg2:#0d1117;--bg3:#131a24;--bg4:#1a2333;
-  --ink:#e8edf5;--ink2:#8a9bb0;--ink3:#3a4a5c;
-  --gold:#d4a843;--gold2:rgba(212,168,67,.15);--gold3:rgba(212,168,67,.06);
-  --blue:#4a8fd4;--blue2:rgba(74,143,212,.15);
-  --green:#2ec97a;--green2:rgba(46,201,122,.12);
-  --red:#e04f4f;--red2:rgba(224,79,79,.12);
-  --amber:#e08c30;--amber2:rgba(224,140,48,.12);
-  --teal:#2eb8b8;
-  --line:rgba(255,255,255,.06);--line2:rgba(255,255,255,.03);
-  --mono:'JetBrains Mono',monospace;--sans:'Syne',sans-serif;--disp:'Bebas Neue',sans-serif;
+  --bg:#f7f4ef;--bg2:#eeebe4;--bg3:#e4e0d8;--bg4:#d8d3c8;
+  --ink:#1c1812;--ink2:#4a4535;--ink3:#8a8070;
+  --gold:#9a7a2a;--gold2:rgba(154,122,42,.14);--gold3:rgba(154,122,42,.07);
+  --green:#1a5c35;--green2:rgba(26,92,53,.12);
+  --red:#6b1f1f;--red2:rgba(107,31,31,.10);
+  --blue:#1a3d6b;--blue2:rgba(26,61,107,.10);
+  --amber:#7a4a1a;--amber2:rgba(122,74,26,.10);
+  --teal:#1a5c58;--teal2:rgba(26,92,88,.10);
+  --line:rgba(28,24,18,.10);--line2:rgba(28,24,18,.05);
+  --mono:'JetBrains Mono',monospace;
+  --serif:'Literata',Georgia,serif;
+  --disp:'Bebas Neue',sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:13px;min-height:100vh;overflow-x:hidden}
-body::after{content:'';position:fixed;inset:0;
-  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.04) 2px,rgba(0,0,0,.04) 4px);
-  pointer-events:none;z-index:999}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:14px;min-height:100vh;line-height:1.6}
+
+/* Geometric background pattern */
+body::before{
+  content:'';position:fixed;inset:0;opacity:.04;pointer-events:none;
+  background-image:
+    repeating-linear-gradient(45deg,var(--ink) 0,var(--ink) 1px,transparent 0,transparent 50%),
+    repeating-linear-gradient(-45deg,var(--ink) 0,var(--ink) 1px,transparent 0,transparent 50%);
+  background-size:40px 40px;
+}
 
 /* HEADER */
-.hdr{position:sticky;top:0;z-index:100;background:rgba(8,11,16,.95);
-  border-bottom:1px solid var(--line);backdrop-filter:blur(12px);
-  padding:0 20px;height:48px;display:flex;align-items:center;justify-content:space-between}
-.logo{font-family:var(--disp);font-size:20px;letter-spacing:.1em;
-  background:linear-gradient(135deg,var(--gold),#f0c060);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hdr-mid{display:flex;align-items:center;gap:8px}
-.regime-badge{display:flex;align-items:center;gap:6px;padding:4px 12px;
-  border-radius:2px;font-family:var(--mono);font-size:10px;letter-spacing:.06em;
-  text-transform:uppercase;border:1px solid;transition:all .3s}
+.hdr{
+  position:sticky;top:0;z-index:100;
+  background:var(--ink);color:var(--bg);
+  padding:0 22px;height:52px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:2px solid var(--gold);
+}
+.logo{
+  font-family:var(--disp);font-size:21px;letter-spacing:.1em;
+  display:flex;align-items:center;gap:10px;
+}
+.logo-ornament{
+  width:18px;height:18px;
+  border:1.5px solid var(--gold);
+  transform:rotate(45deg);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.logo-ornament::after{
+  content:'';width:8px;height:8px;
+  background:var(--gold);transform:rotate(0deg);
+}
+.regime-badge{
+  display:flex;align-items:center;gap:6px;
+  padding:4px 12px;border-radius:2px;
+  font-family:var(--mono);font-size:10px;
+  letter-spacing:.06em;text-transform:uppercase;
+  border:1px solid;cursor:pointer;transition:all .2s;
+}
+.rb-wait{background:rgba(255,255,255,.06);color:rgba(247,244,239,.5);border-color:rgba(255,255,255,.1)}
+.rb-crise{background:rgba(107,31,31,.25);color:#e8a0a0;border-color:rgba(107,31,31,.4)}
+.rb-trans{background:rgba(122,74,26,.25);color:#e8c080;border-color:rgba(122,74,26,.4)}
+.rb-detente{background:rgba(26,92,53,.25);color:#80e8a8;border-color:rgba(26,92,53,.4)}
 .rb-dot{width:5px;height:5px;border-radius:50%}
-.rb-crise{background:var(--red2);color:var(--red);border-color:rgba(224,79,79,.3)}
-.rb-crise .rb-dot{background:var(--red);animation:blink .8s infinite}
-.rb-trans{background:var(--amber2);color:var(--amber);border-color:rgba(224,140,48,.3)}
-.rb-trans .rb-dot{background:var(--amber);animation:blink 1.5s infinite}
-.rb-detente{background:var(--green2);color:var(--green);border-color:rgba(46,201,122,.3)}
-.rb-detente .rb-dot{background:var(--green)}
-.rb-wait{background:var(--bg3);color:var(--ink3);border-color:var(--line)}
-.rb-wait .rb-dot{background:var(--ink3)}
-.hdr-right{display:flex;align-items:center;gap:8px}
-.cap-wrap{display:flex;align-items:center;gap:5px;background:var(--bg3);
-  border:1px solid var(--line);border-radius:2px;padding:3px 9px}
-.cap-lbl{font-family:var(--mono);font-size:8px;color:var(--ink3);text-transform:uppercase;letter-spacing:.08em}
-.cap-in{background:transparent;border:none;color:var(--gold);
-  font-family:var(--disp);font-size:16px;width:76px;outline:none;text-align:right}
-.hdr-eur{font-family:var(--mono);font-size:10px;color:var(--ink3)}
+.hdr-right{display:flex;align-items:center;gap:10px}
+.cap-wrap{
+  display:flex;align-items:center;gap:6px;
+  background:rgba(247,244,239,.07);
+  border:1px solid rgba(247,244,239,.12);
+  border-radius:2px;padding:3px 10px;
+}
+.cap-lbl{font-family:var(--mono);font-size:8px;color:rgba(247,244,239,.35);text-transform:uppercase;letter-spacing:.1em}
+.cap-in{
+  background:transparent;border:none;color:var(--bg);
+  font-family:var(--disp);font-size:17px;
+  width:80px;outline:none;text-align:right;
+}
 
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
-@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(212,168,67,.4)}70%{box-shadow:0 0 0 8px rgba(212,168,67,0)}}
+/* LAYOUT */
+.layout{display:grid;grid-template-columns:400px 1fr;min-height:calc(100vh - 52px)}
 
-/* LAYOUT PRINCIPAL */
-.layout{display:grid;grid-template-columns:420px 1fr;min-height:calc(100vh - 48px)}
+/* WORKFLOW COL */
+.wf-col{
+  background:var(--bg2);border-right:1px solid var(--line);
+  display:flex;flex-direction:column;
+  height:calc(100vh - 52px);
+  position:sticky;top:52px;overflow-y:auto;
+}
+.wf-col::-webkit-scrollbar{width:3px}
+.wf-col::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px}
 
-/* ── COLONNE GAUCHE : WORKFLOW ── */
-.wf-col{background:var(--bg2);border-right:1px solid var(--line);
-  display:flex;flex-direction:column;overflow-y:auto;height:calc(100vh - 48px);
-  position:sticky;top:48px}
-
-/* Indicateur de progression */
-.progress-bar{display:flex;border-bottom:1px solid var(--line);background:var(--bg)}
-.pb-step{flex:1;padding:8px 0;text-align:center;font-family:var(--mono);
-  font-size:8px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);
-  border-right:1px solid var(--line);transition:all .3s;cursor:default}
+/* Progress tabs */
+.prog-bar{display:flex;border-bottom:1px solid var(--line);background:var(--bg)}
+.pb-step{
+  flex:1;padding:8px 4px;text-align:center;
+  font-family:var(--mono);font-size:8px;color:var(--ink3);
+  text-transform:uppercase;letter-spacing:.05em;
+  border-right:1px solid var(--line2);
+  transition:all .2s;cursor:default;
+}
 .pb-step:last-child{border-right:none}
 .pb-step.active{color:var(--gold);background:var(--gold3);border-bottom:2px solid var(--gold)}
 .pb-step.done{color:var(--green)}
 .pb-step.done::before{content:'✓ '}
 
-/* Étapes */
-.step{display:none;flex-direction:column;flex:1;animation:fadeIn .3s ease}
+/* Steps */
+.step{display:none;flex-direction:column;flex:1;animation:stepIn .25s ease}
 .step.active{display:flex}
+@keyframes stepIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
 .step-hdr{padding:20px 20px 0}
-.step-num{font-family:var(--mono);font-size:9px;color:var(--ink3);
-  text-transform:uppercase;letter-spacing:.12em;margin-bottom:6px}
-.step-title{font-family:var(--disp);font-size:28px;letter-spacing:.06em;
-  color:var(--ink);line-height:1.1;margin-bottom:6px}
-.step-sub{font-size:12px;color:var(--ink2);line-height:1.6}
+.step-eyebrow{
+  font-family:var(--mono);font-size:9px;color:var(--ink3);
+  text-transform:uppercase;letter-spacing:.12em;margin-bottom:5px;
+}
+.step-title{
+  font-family:var(--disp);font-size:30px;letter-spacing:.06em;
+  color:var(--ink);line-height:1;margin-bottom:6px;
+}
+.step-sub{font-size:12px;color:var(--ink2);line-height:1.6;font-style:italic}
+.step-body{padding:14px 20px;flex:1;display:flex;flex-direction:column;gap:10px}
+.step-ftr{
+  padding:12px 20px;border-top:1px solid var(--line);
+  display:flex;flex-direction:column;gap:7px;
+  background:var(--bg);
+}
 
-.step-body{padding:16px 20px;flex:1;display:flex;flex-direction:column;gap:10px}
-.step-ftr{padding:12px 20px;border-top:1px solid var(--line);
-  display:flex;flex-direction:column;gap:8px;background:var(--bg)}
-
-/* Bouton principal */
-.btn-main{background:var(--gold);color:var(--bg);border:none;border-radius:3px;
-  padding:12px 20px;font-family:var(--mono);font-size:11px;font-weight:700;
-  letter-spacing:.06em;text-transform:uppercase;cursor:pointer;
-  transition:all .15s;width:100%;animation:pulse 2s infinite}
-.btn-main:hover{background:#e8b840;animation:none}
-.btn-main:disabled{background:var(--bg4);color:var(--ink3);animation:none;cursor:not-allowed}
-.btn-sec{background:transparent;color:var(--ink3);border:1px solid var(--line);
-  border-radius:3px;padding:8px 14px;font-family:var(--mono);font-size:10px;
-  cursor:pointer;transition:all .15s;text-align:center}
+/* Main button */
+.btn-main{
+  background:var(--ink);color:var(--bg);border:none;border-radius:2px;
+  padding:12px 18px;font-family:var(--mono);font-size:11px;font-weight:700;
+  letter-spacing:.07em;text-transform:uppercase;cursor:pointer;
+  transition:all .15s;width:100%;position:relative;overflow:hidden;
+}
+.btn-main::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(154,122,42,.15),transparent);
+  transform:translateX(-100%);transition:transform .4s;
+}
+.btn-main:hover::after{transform:translateX(100%)}
+.btn-main:hover{background:#333}
+.btn-sec{
+  background:transparent;color:var(--ink3);border:1px solid var(--line);
+  border-radius:2px;padding:8px 12px;font-family:var(--mono);font-size:10px;
+  cursor:pointer;transition:all .15s;text-align:center;
+}
 .btn-sec:hover{border-color:var(--ink2);color:var(--ink2)}
 
-/* Champs de saisie marchés */
-.mkt-section{margin-bottom:4px}
-.mkt-stitle{font-family:var(--mono);font-size:8px;font-weight:700;
+/* Market inputs */
+.mkt-section{margin-bottom:2px}
+.mkt-stitle{
+  font-family:var(--mono);font-size:8px;font-weight:700;
   color:var(--ink3);text-transform:uppercase;letter-spacing:.12em;
-  margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--line2)}
+  margin-bottom:7px;padding-bottom:4px;
+  border-bottom:1px solid var(--line2);
+  display:flex;align-items:center;gap:6px;
+}
+.mkt-stitle::before{content:'▸';color:var(--gold)}
+.links-row{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px}
+.lnk{
+  font-family:var(--mono);font-size:8px;color:var(--blue);
+  text-decoration:none;padding:2px 7px;
+  background:var(--blue2);border-radius:2px;
+  border:1px solid rgba(26,61,107,.2);
+  transition:all .15s;
+}
+.lnk:hover{color:var(--gold);background:var(--gold3);border-color:rgba(154,122,42,.3)}
 .mkt-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px}
 .mf{display:flex;flex-direction:column;gap:3px}
-.mf-lbl{font-family:var(--mono);font-size:8px;color:var(--ink3);
-  text-transform:uppercase;letter-spacing:.06em;display:flex;align-items:center;justify-content:space-between}
-.mf-lbl span{opacity:.5;font-size:8px}
-.mf-in{background:var(--bg3);border:1px solid var(--line);border-radius:2px;
-  color:var(--ink);font-family:var(--mono);font-size:12px;padding:6px 8px;
-  outline:none;transition:border-color .15s;width:100%}
+.mf-lbl{
+  font-family:var(--mono);font-size:8px;color:var(--ink3);
+  text-transform:uppercase;letter-spacing:.06em;
+}
+.mf-in{
+  background:var(--bg);border:1px solid var(--line);border-radius:2px;
+  color:var(--ink);font-family:var(--mono);font-size:12px;
+  padding:6px 8px;outline:none;transition:border-color .15s;width:100%;
+}
 .mf-in:focus{border-color:var(--gold)}
-/* Hormuz selector */
-.hz-sel{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px}
-.hz-opt{padding:7px 4px;text-align:center;border:1px solid var(--line);
+.hz-sel{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px}
+.hz-opt{
+  padding:8px 4px;text-align:center;border:1px solid var(--line);
   border-radius:2px;cursor:pointer;font-family:var(--mono);font-size:9px;
-  letter-spacing:.03em;transition:all .15s;background:var(--bg3);color:var(--ink3)}
-.hz-opt:hover{background:var(--bg4)}
-.hz-red.sel{background:var(--red2);border-color:rgba(224,79,79,.4);color:var(--red)}
-.hz-amb.sel{background:var(--amber2);border-color:rgba(224,140,48,.4);color:var(--amber)}
-.hz-grn.sel{background:var(--green2);border-color:rgba(46,201,122,.4);color:var(--green)}
-.links-row{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px}
-.lnk{font-family:var(--mono);font-size:9px;color:var(--blue);text-decoration:none;
-  padding:2px 6px;background:var(--blue2);border-radius:2px;border:1px solid rgba(74,143,212,.2)}
-.lnk:hover{color:var(--gold)}
+  transition:all .15s;background:var(--bg);color:var(--ink3);
+  line-height:1.4;
+}
+.hz-opt:hover{background:var(--bg3)}
+.hz-red.sel{background:var(--red2);border-color:rgba(107,31,31,.35);color:var(--red)}
+.hz-amb.sel{background:var(--amber2);border-color:rgba(122,74,26,.35);color:var(--amber)}
+.hz-grn.sel{background:var(--green2);border-color:rgba(26,92,53,.35);color:var(--green)}
 
-/* Étape 2 — Régime */
-.regime-result{background:var(--bg3);border-radius:4px;border:1px solid var(--line);
-  overflow:hidden;margin-bottom:6px}
-.rr-hdr{padding:12px 14px;border-bottom:1px solid var(--line)}
-.rr-label{font-family:var(--mono);font-size:9px;color:var(--ink3);
-  text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
-.rr-regime{font-family:var(--disp);font-size:32px;letter-spacing:.06em}
+/* Regime result */
+.regime-result{
+  background:var(--bg);border:1px solid var(--line);border-radius:3px;
+  overflow:hidden;
+}
+.rr-hdr{padding:12px 14px;border-bottom:1px solid var(--line2)}
+.rr-eyebrow{font-family:var(--mono);font-size:8px;color:var(--ink3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px}
+.rr-regime{font-family:var(--disp);font-size:30px;letter-spacing:.06em;line-height:1}
+.rr-score{font-family:var(--mono);font-size:10px;color:var(--ink3);margin-top:4px}
 .rr-body{padding:12px 14px}
-.rr-why{font-size:12px;color:var(--ink2);line-height:1.7;margin-bottom:10px}
-.rr-signals{display:flex;flex-direction:column;gap:4px}
-.rr-sig{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10px}
-.sig-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.rr-why{font-size:12px;color:var(--ink2);line-height:1.7;font-style:italic;margin-bottom:10px}
+.rr-sigs{display:flex;flex-direction:column;gap:4px}
+.rr-sig{display:flex;align-items:flex-start;gap:7px;font-family:var(--mono);font-size:10px}
+.sig-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:2px}
 .sig-ok{background:var(--green)}.sig-warn{background:var(--amber)}.sig-bad{background:var(--red)}
+.score-bar{
+  margin-top:10px;height:3px;background:var(--bg3);border-radius:2px;overflow:hidden;
+}
+.score-fill{height:100%;border-radius:2px;transition:width .6s ease}
 
-/* Étape 3 — Actions */
+/* Avertissement sans or */
+.or-warning{
+  background:var(--amber2);border:1px solid rgba(122,74,26,.25);
+  border-radius:3px;padding:10px 12px;font-size:11px;
+  color:var(--amber);line-height:1.6;font-family:var(--mono);
+}
+.or-warning strong{color:var(--amber);display:block;margin-bottom:3px}
+
+/* Actions liste */
 .action-list{display:flex;flex-direction:column;gap:5px}
-.action-item{display:flex;align-items:center;gap:10px;padding:10px 12px;
-  border-radius:3px;border:1px solid var(--line);background:var(--bg3);
-  transition:all .15s}
+.action-item{
+  display:flex;align-items:center;gap:9px;
+  padding:10px 12px;border-radius:2px;
+  border:1px solid var(--line);background:var(--bg);
+  transition:all .15s;cursor:default;
+}
 .action-item:hover{border-color:var(--gold);background:var(--gold3)}
-.ai-rank{font-family:var(--mono);font-size:11px;color:var(--ink3);min-width:16px}
-.ai-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.ai-rank{font-family:var(--mono);font-size:10px;color:var(--ink3);min-width:18px}
+.ai-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
 .ai-info{flex:1}
-.ai-action{font-family:var(--mono);font-size:8px;font-weight:700;
-  text-transform:uppercase;letter-spacing:.08em;margin-bottom:1px}
-.ai-name{font-size:12px;font-weight:500}
-.ai-pct{font-family:var(--mono);font-size:10px;color:var(--ink3)}
-.ai-amt{font-family:var(--disp);font-size:18px;letter-spacing:.04em}
-.ai-act-buy{color:var(--green)}.ai-act-hold{color:var(--amber)}.ai-act-reduce{color:var(--red)}
+.ai-badge{
+  font-family:var(--mono);font-size:8px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.08em;margin-bottom:1px;
+}
+.ai-name{font-size:12px;font-weight:500;font-family:var(--serif)}
+.ai-ticker{font-family:var(--mono);font-size:9px;color:var(--ink3)}
+.ai-amt{font-family:var(--disp);font-size:19px;letter-spacing:.04em}
+.total-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:8px 12px;background:var(--bg3);border-radius:2px;
+  font-family:var(--mono);font-size:10px;border:1px solid var(--line2);
+}
+.total-inv{color:var(--gold);font-size:15px;font-family:var(--disp)}
+.reserve-note{
+  background:var(--green2);border:1px solid rgba(26,92,53,.2);
+  border-radius:2px;padding:7px 10px;font-family:var(--mono);font-size:10px;
+  color:var(--green);line-height:1.5;
+}
 
-.total-row{display:flex;justify-content:space-between;align-items:center;
-  padding:8px 12px;background:var(--bg4);border-radius:3px;
-  font-family:var(--mono);font-size:11px}
-.total-inv{color:var(--gold);font-size:14px;font-family:var(--disp)}
-.total-res{color:var(--ink3)}
-
-/* Étape 4 — Date */
-.date-proposal{background:var(--bg3);border:1px solid var(--gold);
-  border-radius:4px;padding:16px;margin-bottom:8px}
-.dp-label{font-family:var(--mono);font-size:9px;color:var(--ink3);
-  text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
-.dp-date{font-family:var(--disp);font-size:36px;color:var(--gold);letter-spacing:.04em;margin-bottom:4px}
-.dp-reason{font-size:11px;color:var(--ink2);margin-bottom:10px}
-.dp-interval{font-family:var(--mono);font-size:10px;color:var(--ink3);
-  padding:4px 8px;background:var(--bg4);border-radius:2px;display:inline-block}
-.date-adjust{margin-top:8px}
-.date-adjust label{font-family:var(--mono);font-size:9px;color:var(--ink3);
-  text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:4px}
-.date-in{background:var(--bg3);border:1px solid var(--line);border-radius:2px;
-  color:var(--ink);font-family:var(--mono);font-size:13px;padding:6px 9px;
-  outline:none;width:100%;transition:border-color .15s}
+/* Date */
+.date-card{
+  background:var(--bg);border:1px solid var(--gold);
+  border-radius:3px;padding:14px;
+}
+.dc-eyebrow{font-family:var(--mono);font-size:8px;color:var(--ink3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px}
+.dc-date{font-family:var(--disp);font-size:36px;color:var(--gold);letter-spacing:.04em;line-height:1;margin-bottom:4px}
+.dc-reason{font-size:11px;color:var(--ink2);font-style:italic;margin-bottom:8px}
+.dc-badge{
+  display:inline-block;font-family:var(--mono);font-size:9px;
+  padding:3px 8px;background:var(--gold3);
+  border:1px solid rgba(154,122,42,.3);border-radius:2px;color:var(--gold);
+}
+.date-adj{margin-top:9px}
+.date-adj label{font-family:var(--mono);font-size:8px;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:4px}
+.date-in{
+  background:var(--bg2);border:1px solid var(--line);border-radius:2px;
+  color:var(--ink);font-family:var(--mono);font-size:12px;
+  padding:6px 9px;outline:none;width:100%;transition:border-color .15s;
+}
 .date-in:focus{border-color:var(--gold)}
 
-/* Étape 5 — Ordres IBKR */
+/* IBKR ordres */
 .ibkr-list{display:flex;flex-direction:column;gap:4px}
-.ibkr-row{display:flex;align-items:center;gap:10px;padding:10px 12px;
-  background:var(--bg3);border-radius:3px;border-left:3px solid}
-.ibkr-action{font-family:var(--mono);font-size:9px;font-weight:700;
-  text-transform:uppercase;letter-spacing:.06em;min-width:52px}
-.ibkr-ticker{font-size:13px;font-weight:600;flex:1}
-.ibkr-amount{font-family:var(--disp);font-size:18px;color:var(--gold)}
-.ibkr-check{width:18px;height:18px;border:1px solid var(--line);border-radius:2px;
+.ibkr-row{
+  display:flex;align-items:center;gap:9px;
+  padding:9px 12px;background:var(--bg);
+  border-radius:2px;border-left:3px solid;
+}
+.ibkr-act{font-family:var(--mono);font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;min-width:48px}
+.ibkr-name{font-size:12px;font-family:var(--serif);flex:1}
+.ibkr-ticker{font-family:var(--mono);font-size:9px;color:var(--ink3)}
+.ibkr-amt{font-family:var(--disp);font-size:18px;color:var(--gold)}
+.ibkr-chk{
+  width:18px;height:18px;border:1px solid var(--line);border-radius:2px;
   cursor:pointer;display:flex;align-items:center;justify-content:center;
-  font-size:11px;transition:all .15s;flex-shrink:0}
-.ibkr-check.checked{background:var(--green);border-color:var(--green);color:#000}
+  font-size:10px;transition:all .15s;flex-shrink:0;font-family:var(--mono);
+}
+.ibkr-chk.done{background:var(--green);border-color:var(--green);color:white}
+.ibkr-note{
+  background:var(--gold3);border:1px solid rgba(154,122,42,.2);
+  border-radius:2px;padding:8px 10px;font-size:11px;
+  color:var(--ink2);line-height:1.6;font-style:italic;
+}
+.ibkr-note strong{color:var(--gold);font-style:normal}
 
-.ibkr-note{background:var(--gold3);border:1px solid rgba(212,168,67,.2);
-  border-radius:3px;padding:8px 10px;font-size:11px;color:var(--ink2);line-height:1.6}
-.ibkr-note strong{color:var(--gold)}
+/* TIMELINE COL */
+.tl-col{display:flex;flex-direction:column;overflow:hidden;background:var(--bg)}
+.tl-hdr{
+  padding:14px 20px;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between;flex-shrink:0;
+  background:var(--bg2);
+}
+.tl-title{font-family:var(--mono);font-size:9px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.1em}
+.tl-stats{display:flex;gap:20px}
+.ts{text-align:right}
+.ts-lbl{font-family:var(--mono);font-size:8px;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:1px}
+.ts-val{font-family:var(--disp);font-size:17px;letter-spacing:.04em}
 
-/* ── COLONNE DROITE : TIMELINE ── */
-.tl-col{display:flex;flex-direction:column;overflow:hidden}
+/* Alerte poudre sèche */
+.poudre-banner{
+  padding:8px 20px;
+  background:var(--green2);
+  border-bottom:1px solid rgba(26,92,53,.2);
+  font-family:var(--mono);font-size:10px;color:var(--green);
+  display:flex;align-items:center;gap:8px;flex-shrink:0;
+}
+.poudre-banner.warn{background:var(--amber2);color:var(--amber);border-color:rgba(122,74,26,.2)}
+.poudre-banner.alert{background:var(--red2);color:var(--red);border-color:rgba(107,31,31,.2)}
 
-.tl-hdr{padding:14px 20px;border-bottom:1px solid var(--line);
-  display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-.tl-title{font-family:var(--mono);font-size:9px;font-weight:700;
-  color:var(--ink3);text-transform:uppercase;letter-spacing:.1em}
-.tl-stats{display:flex;gap:16px}
-.ts-item{text-align:right}
-.ts-lbl{font-family:var(--mono);font-size:8px;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em}
-.ts-val{font-family:var(--disp);font-size:16px;letter-spacing:.04em}
-
-/* Timeline wrap */
-.tl-wrap{flex:1;overflow-x:auto;overflow-y:hidden;padding:0 20px 20px;
-  scrollbar-width:thin;scrollbar-color:var(--bg4) var(--bg)}
+.tl-wrap{
+  flex:1;overflow-x:auto;overflow-y:hidden;
+  padding:0 20px 20px;
+  scrollbar-width:thin;scrollbar-color:var(--bg4) var(--bg2);
+}
 .tl-wrap::-webkit-scrollbar{height:3px}
-.tl-wrap::-webkit-scrollbar-track{background:var(--bg)}
+.tl-wrap::-webkit-scrollbar-track{background:var(--bg2)}
 .tl-wrap::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px}
 .tl-inner{position:relative;min-width:100%;display:inline-block;padding-top:14px}
-.tl-road{position:relative;height:3px;background:var(--bg4);
-  margin:80px 0 110px;border-radius:2px}
-.tl-road::before{content:'';position:absolute;inset:0;border-radius:2px;
-  background:repeating-linear-gradient(90deg,var(--ink3) 0,var(--ink3) 6px,transparent 6px,transparent 12px)}
-.road-prog{position:absolute;top:0;left:0;bottom:0;background:var(--gold);
-  border-radius:2px;transition:width .6s ease}
-.today-mk{position:absolute;top:-18px;transform:translateX(-50%);
-  display:flex;flex-direction:column;align-items:center;z-index:10}
-.today-flag{background:var(--ink);color:var(--bg);font-family:var(--mono);
-  font-size:8px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
-  padding:2px 6px;border-radius:2px;white-space:nowrap}
-.today-line{width:2px;height:42px;background:var(--ink3)}
+.tl-road{
+  position:relative;height:3px;background:var(--bg4);
+  margin:80px 0 110px;border-radius:2px;
+}
+.tl-road::before{
+  content:'';position:absolute;inset:0;border-radius:2px;
+  background:repeating-linear-gradient(90deg,var(--ink3) 0,var(--ink3) 5px,transparent 5px,transparent 10px);
+  opacity:.4;
+}
+.road-prog{position:absolute;top:0;left:0;bottom:0;background:var(--gold);border-radius:2px;transition:width .6s ease}
+.today-mk{position:absolute;top:-18px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;z-index:10}
+.today-flag{
+  background:var(--ink);color:var(--bg);
+  font-family:var(--mono);font-size:8px;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;
+  padding:2px 7px;border-radius:2px;white-space:nowrap;
+}
+.today-line{width:2px;height:42px;background:var(--ink);opacity:.5}
 .ms-cont{position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none}
 
 /* Jalons */
 .milestone{position:absolute;top:50%;transform:translateX(-50%);pointer-events:all}
-.m-pin{position:absolute;top:-34px;left:50%;transform:translateX(-50%);
-  display:flex;flex-direction:column;align-items:center;cursor:pointer}
-.m-pin-dot{width:13px;height:13px;border-radius:50%;border:2px solid var(--bg2);
-  box-shadow:0 0 0 2px currentColor;transition:transform .15s;z-index:2}
-.m-pin:hover .m-pin-dot{transform:scale(1.3)}
-.m-pin-line{width:2px;height:18px;background:currentColor;opacity:.3}
-.m-card{position:absolute;width:170px;background:var(--bg2);
+.m-pin{
+  position:absolute;top:-32px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;cursor:pointer;
+}
+.m-pin-diamond{
+  width:14px;height:14px;
+  border:2px solid var(--bg2);
+  transform:rotate(45deg);
+  box-shadow:0 0 0 2px currentColor, 0 2px 8px rgba(0,0,0,.15);
+  transition:transform .15s;
+  background:currentColor;
+}
+.m-pin:hover .m-pin-diamond{transform:rotate(45deg) scale(1.2)}
+.m-pin-line{width:2px;height:16px;background:currentColor;opacity:.3}
+.m-card{
+  position:absolute;width:176px;background:var(--bg2);
   border:1px solid var(--line);border-radius:3px;
-  box-shadow:0 4px 20px rgba(0,0,0,.4);overflow:hidden;cursor:pointer;
-  transition:box-shadow .15s}
-.m-card:hover{box-shadow:0 8px 32px rgba(0,0,0,.6);border-color:var(--gold)}
-.m-card.top{bottom:calc(100% + 34px);left:50%;transform:translateX(-50%)}
+  box-shadow:0 3px 14px rgba(28,24,18,.08);overflow:hidden;
+  cursor:pointer;transition:all .15s;
+}
+.m-card:hover{box-shadow:0 6px 20px rgba(28,24,18,.14);border-color:var(--gold)}
+.m-card.top{bottom:calc(100% + 32px);left:50%;transform:translateX(-50%)}
 .m-card.top:hover{transform:translateX(-50%) translateY(-2px)}
-.m-card.bottom{top:calc(100% + 34px);left:50%;transform:translateX(-50%)}
+.m-card.bottom{top:calc(100% + 32px);left:50%;transform:translateX(-50%)}
 .m-card.bottom:hover{transform:translateX(-50%) translateY(2px)}
-.milestone.edge-l .m-card{left:0;transform:none}
-.milestone.edge-l .m-card.top:hover,.milestone.edge-l .m-card.bottom:hover{transform:translateY(-2px)}
-.m-card-hdr{padding:6px 8px;border-bottom:1px solid var(--line2);
-  display:flex;align-items:center;justify-content:space-between;background:var(--bg3)}
-.m-date{font-family:var(--mono);font-size:8px;color:var(--ink3);
-  text-transform:uppercase;letter-spacing:.06em}
-.m-amount{font-family:var(--disp);font-size:15px}
-.m-card-body{padding:6px 8px;display:flex;flex-direction:column;gap:3px}
+.milestone.el .m-card{left:0;transform:none}
+.milestone.el .m-card.top:hover,.milestone.el .m-card.bottom:hover{transform:translateY(-2px)}
+.m-card-hdr{
+  padding:6px 9px;border-bottom:1px solid var(--line2);
+  display:flex;justify-content:space-between;align-items:center;
+  background:var(--bg3);
+}
+.m-date{font-family:var(--mono);font-size:8px;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em}
+.m-amt{font-family:var(--disp);font-size:16px}
+.m-card-body{padding:6px 9px;display:flex;flex-direction:column;gap:3px}
 .m-row{display:flex;align-items:center;justify-content:space-between;font-size:11px}
 .m-row-l{display:flex;align-items:center;gap:4px}
-.m-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.m-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 .m-row-amt{font-family:var(--mono);font-size:9px;color:var(--ink2)}
-.m-card-ftr{padding:5px 8px;background:var(--bg3);border-top:1px solid var(--line2);
-  display:flex;align-items:center;justify-content:space-between}
+.m-card-ftr{
+  padding:5px 9px;background:var(--bg3);border-top:1px solid var(--line2);
+  display:flex;justify-content:space-between;align-items:center;
+}
 .m-res{font-family:var(--mono);font-size:8px;color:var(--ink3)}
 .m-res strong{color:var(--ink2)}
 .m-status{font-family:var(--mono);font-size:8px}
-.m-done-st{color:var(--green)}.m-plan-st{color:var(--ink3)}
+.m-s-done{color:var(--green)}.m-s-plan{color:var(--ink3)}
 .milestone.stale .m-card{border-color:var(--amber)}
-.m-stale-b{position:absolute;top:-6px;right:-6px;background:var(--amber);
-  color:var(--bg);font-family:var(--mono);font-size:7px;padding:2px 4px;border-radius:2px}
+.m-stale-b{
+  position:absolute;top:-6px;right:-6px;background:var(--amber);
+  color:var(--bg);font-family:var(--mono);font-size:7px;
+  padding:2px 4px;border-radius:2px;
+}
 
 /* Zakat */
 .zakat-mk{position:absolute;top:50%;transform:translateX(-50%)}
-.z-pin{position:absolute;top:-24px;left:50%;transform:translateX(-50%);
-  display:flex;flex-direction:column;align-items:center}
-.z-dot{width:10px;height:10px;background:var(--bg);border:2px solid var(--blue);border-radius:50%}
+.z-pin{position:absolute;top:-24px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center}
+.z-diamond{
+  width:10px;height:10px;
+  border:2px solid var(--blue);
+  transform:rotate(45deg);background:var(--bg);
+}
 .z-line{width:1px;height:12px;background:var(--blue);opacity:.4}
-.z-lbl{position:absolute;top:calc(100% + 24px);left:50%;transform:translateX(-50%);
-  background:var(--blue2);border:1px solid rgba(74,143,212,.2);border-radius:2px;
-  padding:4px 7px;text-align:center;white-space:nowrap}
+.z-lbl{
+  position:absolute;top:calc(100% + 24px);left:50%;transform:translateX(-50%);
+  background:var(--blue2);border:1px solid rgba(26,61,107,.2);border-radius:2px;
+  padding:5px 8px;text-align:center;white-space:nowrap;
+}
 .z-title{font-family:var(--mono);font-size:8px;color:var(--blue);text-transform:uppercase;letter-spacing:.06em}
-.z-amount{font-family:var(--disp);font-size:13px;color:var(--blue)}
-.z-sub{font-size:9px;color:var(--ink3)}
+.z-amt{font-family:var(--disp);font-size:13px;color:var(--blue)}
+.z-sub{font-size:9px;color:var(--ink3);font-style:italic}
 
 /* Timeline vide */
-.tl-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;
-  height:100%;color:var(--ink3);font-family:var(--mono);font-size:11px;text-align:center;gap:8px}
-.tl-empty-icon{font-size:32px;opacity:.3}
+.tl-empty{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  height:80%;color:var(--ink3);font-family:var(--mono);font-size:11px;
+  text-align:center;gap:10px;
+}
+.tl-empty-ornament{
+  width:40px;height:40px;border:1px solid var(--bg4);
+  transform:rotate(45deg);display:flex;align-items:center;justify-content:center;
+  opacity:.4;
+}
+.tl-empty-ornament::after{content:'◈';transform:rotate(-45deg);font-size:18px;display:block}
 
-/* Modal détail jalon */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(6px);
-  z-index:200;display:none;align-items:center;justify-content:center}
-.overlay.open{display:flex}
-.detail-modal{background:var(--bg2);border:1px solid var(--line);
-  border-top:2px solid var(--gold);border-radius:4px;width:320px;max-width:95vw;
-  box-shadow:0 20px 60px rgba(0,0,0,.6)}
-.dm-hdr{padding:12px 14px;background:var(--bg3);border-bottom:1px solid var(--line);
-  display:flex;align-items:center;justify-content:space-between}
-.dm-title{font-family:var(--disp);font-size:18px;letter-spacing:.06em}
-.dm-date{font-family:var(--mono);font-size:9px;color:var(--ink3)}
-.dm-close{background:none;border:none;color:var(--ink3);cursor:pointer;font-size:14px}
-.dm-body{padding:12px 14px}
-.dm-alloc{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
-.dm-row{display:flex;align-items:center;gap:6px;padding:5px 8px;
-  background:var(--bg3);border-radius:2px}
-.dm-name{flex:1;font-size:11px}
-.dm-bar-w{width:60px;height:2px;background:var(--bg4);border-radius:2px;overflow:hidden}
-.dm-bar{height:100%;border-radius:2px}
-.dm-amt{font-family:var(--mono);font-size:10px;color:var(--ink2);min-width:44px;text-align:right}
-.dm-ftr{border-top:1px solid var(--line2);padding-top:8px;display:flex;flex-direction:column;gap:4px}
-.dm-row2{display:flex;justify-content:space-between;font-size:11px}
-.dm-lbl{color:var(--ink3);font-family:var(--mono)}
-.dm-val{font-family:var(--mono);font-weight:500}
-.dm-actions{display:flex;gap:5px;margin-top:8px}
-.btn-done{flex:1;background:var(--green);color:var(--bg);border:none;border-radius:2px;
-  padding:7px;font-family:var(--mono);font-size:9px;letter-spacing:.04em;cursor:pointer}
-.btn-done:hover{opacity:.85}.btn-done.undone{background:var(--bg4);color:var(--ink3)}
-.btn-del{background:transparent;color:var(--red);border:1px solid rgba(224,79,79,.3);
-  border-radius:2px;padding:7px 9px;font-family:var(--mono);font-size:9px;cursor:pointer}
-
-/* Confirm recalc */
-.confirm-modal{background:var(--bg2);border:1px solid var(--line);
-  border-top:2px solid var(--amber);border-radius:4px;width:360px;max-width:95vw;
-  padding:18px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
-.cm-title{font-family:var(--disp);font-size:20px;letter-spacing:.04em;margin-bottom:8px}
-.cm-body{font-size:12px;color:var(--ink2);line-height:1.7;margin-bottom:14px}
-.cm-ftr{display:flex;gap:7px;justify-content:flex-end}
-.btn-cy{background:var(--amber);color:var(--bg);border:none;border-radius:2px;
-  padding:8px 16px;font-family:var(--mono);font-size:10px;font-weight:700;cursor:pointer}
-.btn-cn{background:transparent;color:var(--ink3);border:1px solid var(--line);
-  border-radius:2px;padding:8px 11px;font-family:var(--mono);font-size:10px;cursor:pointer}
-
-/* ALERTES */
-.alerts-row{display:flex;border-top:1px solid var(--line);flex-shrink:0;overflow-x:auto}
-.al-item{display:flex;align-items:center;gap:6px;padding:6px 12px;
-  border-right:1px solid var(--line);font-family:var(--mono);font-size:9px;flex-shrink:0}
+/* Alertes bas */
+.alerts-row{
+  display:flex;border-top:1px solid var(--line);
+  flex-shrink:0;overflow-x:auto;background:var(--bg2);
+}
+.al-item{
+  display:flex;align-items:center;gap:6px;padding:7px 14px;
+  border-right:1px solid var(--line);
+  font-family:var(--mono);font-size:9px;flex-shrink:0;
+}
+.al-item:last-child{border-right:none}
 .al-item.triggered{background:var(--red2)}
-.al-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
-.al-off{background:var(--ink3)}.al-watch{background:var(--amber);animation:blink 1.5s infinite}
-.al-on{background:var(--red);animation:blink .8s infinite}
+.al-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.al-off{background:var(--ink3)}
+.al-watch{background:var(--amber);animation:pulse 1.5s infinite}
+.al-on{background:var(--red);animation:pulse .8s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}
 .al-txt{color:var(--ink2)}.al-txt strong{color:var(--ink)}
 .al-arr{color:var(--ink3);font-size:9px}
 .al-item.triggered .al-arr{color:var(--red)}
 
-@media(max-width:900px){
+/* OVERLAY */
+.overlay{
+  position:fixed;inset:0;background:rgba(28,24,18,.75);
+  backdrop-filter:blur(6px);z-index:200;
+  display:none;align-items:center;justify-content:center;
+}
+.overlay.open{display:flex}
+.detail-modal{
+  background:var(--bg2);border:1px solid var(--line);
+  border-top:2px solid var(--gold);border-radius:3px;
+  width:320px;max-width:96vw;
+  box-shadow:0 20px 60px rgba(28,24,18,.25);
+}
+.dm-hdr{
+  padding:12px 14px;background:var(--ink);color:var(--bg);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.dm-title{font-family:var(--disp);font-size:18px;letter-spacing:.06em}
+.dm-date{font-family:var(--mono);font-size:9px;color:rgba(247,244,239,.4)}
+.dm-close{background:none;border:none;color:rgba(247,244,239,.4);cursor:pointer;font-size:14px}
+.dm-body{padding:12px 14px}
+.dm-alloc{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
+.dm-row{
+  display:flex;align-items:center;gap:7px;
+  padding:6px 9px;background:var(--bg3);border-radius:2px;
+}
+.dm-name{flex:1;font-size:12px;font-family:var(--serif)}
+.dm-bar-w{width:64px;height:2px;background:var(--bg4);border-radius:2px;overflow:hidden}
+.dm-bar{height:100%;border-radius:2px}
+.dm-amt{font-family:var(--mono);font-size:10px;color:var(--ink2);min-width:46px;text-align:right}
+.dm-ftr{border-top:1px solid var(--line2);padding-top:9px;display:flex;flex-direction:column;gap:4px}
+.dm-ftr-row{display:flex;justify-content:space-between;font-size:11px}
+.dm-ftr-lbl{color:var(--ink3);font-family:var(--mono)}
+.dm-ftr-val{font-family:var(--mono);font-weight:500}
+.dm-actions{display:flex;gap:5px;margin-top:8px}
+.btn-done{
+  flex:1;background:var(--green);color:var(--bg);border:none;border-radius:2px;
+  padding:7px;font-family:var(--mono);font-size:9px;cursor:pointer;
+}
+.btn-done:hover{opacity:.85}.btn-done.undone{background:var(--ink3)}
+.btn-del{
+  background:transparent;color:var(--red);
+  border:1px solid rgba(107,31,31,.3);border-radius:2px;
+  padding:7px 9px;font-family:var(--mono);font-size:9px;cursor:pointer;
+}
+.confirm-modal{
+  background:var(--bg2);border:1px solid var(--line);
+  border-top:2px solid var(--amber);border-radius:3px;
+  width:360px;max-width:96vw;padding:18px;
+  box-shadow:0 20px 60px rgba(28,24,18,.25);
+}
+.cm-title{font-family:var(--disp);font-size:20px;letter-spacing:.04em;margin-bottom:8px}
+.cm-body{font-size:12px;color:var(--ink2);line-height:1.7;margin-bottom:14px;font-style:italic}
+.cm-ftr{display:flex;gap:7px;justify-content:flex-end}
+.btn-cy{background:var(--amber);color:var(--bg);border:none;border-radius:2px;padding:8px 16px;font-family:var(--mono);font-size:10px;font-weight:700;cursor:pointer}
+.btn-cn{background:transparent;color:var(--ink3);border:1px solid var(--line);border-radius:2px;padding:8px 11px;font-family:var(--mono);font-size:10px;cursor:pointer}
+
+@media(max-width:860px){
   .layout{grid-template-columns:1fr}
   .wf-col{height:auto;position:static;border-right:none;border-bottom:1px solid var(--line)}
   .tl-col{min-height:400px}
@@ -353,97 +527,83 @@ body::after{content:'';position:fixed;inset:0;
 </head>
 <body>
 
-<!-- OVERLAY -->
 <div class="overlay" id="overlay"></div>
 
 <!-- HEADER -->
 <div class="hdr">
-  <div class="logo">HALAL · ROBUSTE · v3.1</div>
-  <div class="hdr-mid">
-    <div class="regime-badge rb-wait" id="regime-badge">
-      <div class="rb-dot"></div><span id="regime-label">En attente</span>
-    </div>
+  <div class="logo">
+    <div class="logo-ornament"></div>
+    HALAL · ROBUSTE · v3.2
+  </div>
+  <div class="regime-badge rb-wait" id="regime-badge">
+    <div class="rb-dot"></div>
+    <span id="regime-label">En attente</span>
   </div>
   <div class="hdr-right">
     <div class="cap-wrap">
       <span class="cap-lbl">Capital</span>
       <input type="number" class="cap-in" id="cap-in" value="10000" min="100" step="500" oninput="onCapChange()">
-      <span class="hdr-eur">€</span>
+      <span style="font-family:var(--mono);font-size:11px;color:rgba(247,244,239,.35)">€</span>
     </div>
   </div>
 </div>
 
-<!-- LAYOUT -->
 <div class="layout">
 
-<!-- ── WORKFLOW (gauche) ── -->
+<!-- WORKFLOW -->
 <div class="wf-col">
-
-  <!-- Barre de progression -->
-  <div class="progress-bar">
-    <div class="pb-step active" id="pb0">01 · Marchés</div>
-    <div class="pb-step" id="pb1">02 · Régime</div>
-    <div class="pb-step" id="pb2">03 · Actions</div>
-    <div class="pb-step" id="pb3">04 · Date</div>
-    <div class="pb-step" id="pb4">05 · IBKR</div>
+  <div class="prog-bar">
+    <div class="pb-step active" id="pb0">01·Marchés</div>
+    <div class="pb-step" id="pb1">02·Régime</div>
+    <div class="pb-step" id="pb2">03·Actions</div>
+    <div class="pb-step" id="pb3">04·Date</div>
+    <div class="pb-step" id="pb4">05·IBKR</div>
   </div>
 
-  <!-- ÉTAPE 1 — Marchés -->
+  <!-- ÉTAPE 1 -->
   <div class="step active" id="step-0">
     <div class="step-hdr">
-      <div class="step-num">Étape 01 / 05</div>
+      <div class="step-eyebrow">Étape 01 / 05</div>
       <div class="step-title">Saisir les cours</div>
-      <div class="step-sub">Renseigne les données depuis Yahoo Finance. Le régime se calcule automatiquement.</div>
+      <div class="step-sub">Données depuis Yahoo Finance. Le régime se détecte automatiquement.</div>
     </div>
     <div class="step-body">
       <div class="links-row">
         <a class="lnk" href="https://finance.yahoo.com/quote/BZ=F" target="_blank">Brent</a>
         <a class="lnk" href="https://finance.yahoo.com/quote/%5EVIX" target="_blank">VIX</a>
-        <a class="lnk" href="https://finance.yahoo.com/quote/GC=F" target="_blank">Or</a>
-        <a class="lnk" href="https://finance.yahoo.com/quote/SGLN.L" target="_blank">SGLN.L</a>
-        <a class="lnk" href="https://finance.yahoo.com/quote/INRG.L" target="_blank">INRG.L</a>
-        <a class="lnk" href="https://finance.yahoo.com/quote/IGDA.L" target="_blank">IGDA.L</a>
-        <a class="lnk" href="https://finance.yahoo.com/quote/PHSP.L" target="_blank">PHSP.L</a>
-        <a class="lnk" href="https://finance.yahoo.com/quote/COPA.L" target="_blank">COPA.L</a>
-        <a class="lnk" href="https://finance.yahoo.com/quote/XOM" target="_blank">XOM</a>
-        <a class="lnk" href="https://finance.yahoo.com/quote/CVX" target="_blank">CVX</a>
-        <a class="lnk" href="https://finance.yahoo.com/quote/ISWD.L" target="_blank">ISWD.L</a>
-        <a class="lnk" href="https://finance.yahoo.com/quote/ASML.AS" target="_blank">ASML.AS</a>
-        <a class="lnk" href="https://finance.yahoo.com/quote/ASML" target="_blank">ASML (US)</a>
-        <a class="lnk" href="https://finance.yahoo.com/quote/WGLD.L" target="_blank">WGLD.L</a>
-        <a class="lnk" href="https://finance.yahoo.com/quote/PPFB.L" target="_blank">PPFB.L</a>
         <a class="lnk" href="https://finance.yahoo.com/quote/%5ETNX" target="_blank">T10Y</a>
+        <a class="lnk" href="https://finance.yahoo.com/quote/IGDA.L" target="_blank">IGDA.L</a>
+        <a class="lnk" href="https://finance.yahoo.com/quote/ISWD.L" target="_blank">ISWD.L</a>
+        <a class="lnk" href="https://finance.yahoo.com/quote/ISDE.L" target="_blank">ISDE.L</a>
+        <a class="lnk" href="https://finance.yahoo.com/quote/HIUS.L" target="_blank">HIUS.L</a>
+        <a class="lnk" href="https://finance.yahoo.com/quote/FCX" target="_blank">FCX</a>
         <a class="lnk" href="https://finance.yahoo.com/quote/%5EIXIC" target="_blank">NASDAQ</a>
+        <a class="lnk" href="https://finance.yahoo.com/quote/ASML.AS" target="_blank">ASML.AS</a>
       </div>
       <div class="mkt-section">
         <div class="mkt-stitle">Signaux régime — requis</div>
         <div class="mkt-grid">
-          <div class="mf"><label class="mf-lbl">Brent <span>$/bbl</span></label><input type="number" step="0.1" class="mf-in" id="mk-brent" placeholder="ex: 102.4"></div>
-          <div class="mf"><label class="mf-lbl">VIX</label><input type="number" step="0.1" class="mf-in" id="mk-vix" placeholder="ex: 21.3"></div>
-          <div class="mf"><label class="mf-lbl">Or spot <span>$/oz</span></label><input type="number" step="1" class="mf-in" id="mk-gold" placeholder="ex: 4750"></div>
+          <div class="mf"><label class="mf-lbl">Brent <span style="opacity:.5">$/bbl</span></label><input type="number" step="0.1" class="mf-in" id="mk-brent" placeholder="ex: 95.4"></div>
+          <div class="mf"><label class="mf-lbl">VIX</label><input type="number" step="0.1" class="mf-in" id="mk-vix" placeholder="ex: 18.9"></div>
+          <div class="mf"><label class="mf-lbl">T10Y <span style="opacity:.5">%</span></label><input type="number" step="0.01" class="mf-in" id="mk-t10y" placeholder="ex: 4.39"></div>
+          <div class="mf"><label class="mf-lbl">NASDAQ vs pic <span style="opacity:.5">%</span></label><input type="number" step="0.1" class="mf-in" id="mk-ndx" placeholder="ex: -8.5"></div>
         </div>
-        <div class="mkt-stitle">Hormuz · État du trafic</div>
+        <div class="mkt-stitle" style="margin-top:8px">Hormuz · État du trafic</div>
         <div class="hz-sel">
-          <div class="hz-opt hz-red" onclick="selHz('bloque',this)">🔴 Bloqué<br><span style="font-size:8px;opacity:.7">&lt;5/j</span></div>
-          <div class="hz-opt hz-amb" onclick="selHz('perturbe',this)">🟡 Perturbé<br><span style="font-size:8px;opacity:.7">5–14/j</span></div>
-          <div class="hz-opt hz-grn sel" onclick="selHz('normal',this)">🟢 Normal<br><span style="font-size:8px;opacity:.7">&gt;14/j</span></div>
+          <div class="hz-opt hz-red" onclick="selHz('bloque',this)">🔴 Bloqué<br><span style="font-size:8px;opacity:.6">&lt;5/j</span></div>
+          <div class="hz-opt hz-amb" onclick="selHz('perturbe',this)">🟡 Perturbé<br><span style="font-size:8px;opacity:.6">5–14/j</span></div>
+          <div class="hz-opt hz-grn sel" onclick="selHz('normal',this)">🟢 Normal<br><span style="font-size:8px;opacity:.6">&gt;14/j</span></div>
         </div>
       </div>
       <div class="mkt-section">
-        <div class="mkt-stitle">Cours actifs UCITS — optionnel</div>
+        <div class="mkt-stitle">Cours des actifs — optionnel</div>
         <div class="mkt-grid">
-          <div class="mf"><label class="mf-lbl">SGLN.L <span>£</span></label><input type="number" step="0.01" class="mf-in" id="mk-sgln" placeholder="ex: 47.20"></div>
-          <div class="mf"><label class="mf-lbl">INRG.L <span>£</span></label><input type="number" step="0.01" class="mf-in" id="mk-inrg" placeholder="ex: 8.06"></div>
-          <div class="mf"><label class="mf-lbl">IGDA.L <span>$</span></label><input type="number" step="0.01" class="mf-in" id="mk-igda" placeholder="ex: 34.78"></div>
-          <div class="mf"><label class="mf-lbl">PHSP.L <span>£</span></label><input type="number" step="0.01" class="mf-in" id="mk-phsp" placeholder="ex: 31.5"></div>
-          <div class="mf"><label class="mf-lbl">COPA.L/FCX <span>$</span></label><input type="number" step="0.01" class="mf-in" id="mk-copa" placeholder="ex: 44.2"></div>
-          <div class="mf"><label class="mf-lbl">XOM <span>$</span></label><input type="number" step="0.01" class="mf-in" id="mk-xom" placeholder="ex: 108.5"></div>
-          <div class="mf"><label class="mf-lbl">CVX <span>$</span></label><input type="number" step="0.01" class="mf-in" id="mk-cvx" placeholder="ex: 152.3"></div>
-          <div class="mf"><label class="mf-lbl">ISWD.L <span>GBp</span></label><input type="number" step="1" class="mf-in" id="mk-iswd" placeholder="ex: 4431"></div>
-          <div class="mf"><label class="mf-lbl">ASML (ASME-GY/ASML.AS) <span>€ · EUV monopole</span></label><input type="number" step="0.01" class="mf-in" id="mk-asml" placeholder="ex: 720.50"></div>
-          <div class="mf"><label class="mf-lbl">WGLD/PPFB <span>£ · Or #2</span></label><input type="number" step="0.01" class="mf-in" id="mk-wgld" placeholder="Redondance"></div>
-          <div class="mf"><label class="mf-lbl">Spread EM <span>bps</span></label><input type="number" step="1" class="mf-in" id="mk-spread" placeholder="ex: 350"></div>
-          <div class="mf"><label class="mf-lbl">NASDAQ vs pic <span>%</span></label><input type="number" step="0.1" class="mf-in" id="mk-ndx" placeholder="ex: -8.5"></div>
+          <div class="mf"><label class="mf-lbl">IGDA.L <span style="opacity:.5">£</span></label><input type="number" step="0.01" class="mf-in" id="mk-igda" placeholder="ex: 36.97"></div>
+          <div class="mf"><label class="mf-lbl">ISWD.L <span style="opacity:.5">GBp</span></label><input type="number" step="1" class="mf-in" id="mk-iswd" placeholder="ex: 4431"></div>
+          <div class="mf"><label class="mf-lbl">ISDE.L <span style="opacity:.5">$</span></label><input type="number" step="0.01" class="mf-in" id="mk-isde" placeholder="ex: 18.50"></div>
+          <div class="mf"><label class="mf-lbl">HIUS.L <span style="opacity:.5">$</span></label><input type="number" step="0.01" class="mf-in" id="mk-hius" placeholder="ex: 22.40"></div>
+          <div class="mf"><label class="mf-lbl">FCX <span style="opacity:.5">$</span></label><input type="number" step="0.01" class="mf-in" id="mk-fcx" placeholder="ex: 52.75"></div>
+          <div class="mf"><label class="mf-lbl">Spread EM <span style="opacity:.5">bps</span></label><input type="number" step="1" class="mf-in" id="mk-spread" placeholder="ex: 320"></div>
         </div>
       </div>
     </div>
@@ -453,54 +613,57 @@ body::after{content:'';position:fixed;inset:0;
     </div>
   </div>
 
-  <!-- ÉTAPE 2 — Régime -->
+  <!-- ÉTAPE 2 -->
   <div class="step" id="step-1">
     <div class="step-hdr">
-      <div class="step-num">Étape 02 / 05</div>
+      <div class="step-eyebrow">Étape 02 / 05</div>
       <div class="step-title">Régime détecté</div>
-      <div class="step-sub">Voici pourquoi et ce que ça implique pour ton portefeuille.</div>
+      <div class="step-sub">Analyse des signaux de marché et géopolitiques.</div>
     </div>
     <div class="step-body">
       <div class="regime-result">
         <div class="rr-hdr">
-          <div class="rr-label">Régime de marché</div>
+          <div class="rr-eyebrow">Régime de marché</div>
           <div class="rr-regime" id="rr-regime">—</div>
+          <div class="rr-score" id="rr-score">Score : —</div>
+          <div class="score-bar"><div class="score-fill" id="score-fill" style="width:0;background:var(--gold)"></div></div>
         </div>
         <div class="rr-body">
           <div class="rr-why" id="rr-why">—</div>
-          <div class="rr-signals" id="rr-sigs"></div>
-        <div id="r9-note" style="display:none;margin-top:10px;background:rgba(46,184,184,.08);border:1px solid rgba(46,184,184,.2);border-radius:3px;padding:8px 10px;font-family:var(--mono);font-size:10px;color:var(--teal);line-height:1.6">
-          ★ Règle 9 · Régime Détente<br>
-          <span style="color:var(--ink2)">Coherent 0LHO-LN + Lumentum 0JVV-LN activés · Max 3-5% chacun · IBKR LSE</span>
+          <div class="rr-sigs" id="rr-sigs"></div>
         </div>
-        </div>
+      </div>
+      <div class="or-warning" id="or-warning">
+        <strong>⚠ Rappel — Doctrine v3.2 sans or</strong>
+        Les indices halal baisseront ensemble en cas de crise systémique. Votre seul amortisseur : la réserve hors IBKR. Constituez-la en priorité avant tout versement.
       </div>
     </div>
     <div class="step-ftr">
-      <button class="btn-main" onclick="goStep(2)">Voir les actions à faire →</button>
+      <button class="btn-main" onclick="goStep(2)">Voir les actions prioritaires →</button>
       <button class="btn-sec" onclick="goStep(0)">← Modifier les cours</button>
     </div>
   </div>
 
-  <!-- ÉTAPE 3 — Actions -->
+  <!-- ÉTAPE 3 -->
   <div class="step" id="step-2">
     <div class="step-hdr">
-      <div class="step-num">Étape 03 / 05</div>
+      <div class="step-eyebrow">Étape 03 / 05</div>
       <div class="step-title">Quoi acheter</div>
       <div class="step-sub" id="step3-sub">—</div>
     </div>
     <div class="step-body">
-      <div class="mf" style="margin-bottom:4px">
-        <label class="mf-lbl" style="font-size:9px">Montant de ce versement (€)</label>
+      <div class="mf" style="margin-bottom:2px">
+        <label class="mf-lbl">Montant de ce versement (€)</label>
         <input type="number" class="mf-in" id="vers-amount" value="2000" min="100" step="100" oninput="renderActions()">
       </div>
       <div class="action-list" id="action-list"></div>
       <div class="total-row">
-        <span style="color:var(--ink3);font-family:var(--mono);font-size:10px">Investi · Réserve N3</span>
-        <div>
-          <span class="total-inv" id="total-inv">—</span>
-          <span class="total-res" id="total-res"> · —</span>
-        </div>
+        <span style="color:var(--ink3);font-family:var(--mono);font-size:10px">Investi · Réserve N3 IBKR</span>
+        <div><span class="total-inv" id="total-inv">—</span><span style="font-family:var(--mono);font-size:10px;color:var(--ink3)" id="total-res"> · —</span></div>
+      </div>
+      <div class="reserve-note">
+        ⚠ Réserve hors IBKR — <strong id="reserve-offibkr">—</strong><br>
+        Sur compte bancaire Sharia. Ne pas verser sur IBKR sauf déclencheur de choc.
       </div>
     </div>
     <div class="step-ftr">
@@ -509,21 +672,21 @@ body::after{content:'';position:fixed;inset:0;
     </div>
   </div>
 
-  <!-- ÉTAPE 4 — Date -->
+  <!-- ÉTAPE 4 -->
   <div class="step" id="step-3">
     <div class="step-hdr">
-      <div class="step-num">Étape 04 / 05</div>
+      <div class="step-eyebrow">Étape 04 / 05</div>
       <div class="step-title">Quand investir</div>
-      <div class="step-sub">Date calculée selon le régime et ton dernier versement.</div>
+      <div class="step-sub">Date calculée selon le régime et le dernier versement.</div>
     </div>
     <div class="step-body">
-      <div class="date-proposal">
-        <div class="dp-label">Date suggérée</div>
-        <div class="dp-date" id="dp-date">—</div>
-        <div class="dp-reason" id="dp-reason">—</div>
-        <div class="dp-interval" id="dp-interval">—</div>
+      <div class="date-card">
+        <div class="dc-eyebrow">Date suggérée</div>
+        <div class="dc-date" id="dp-date">—</div>
+        <div class="dc-reason" id="dp-reason">—</div>
+        <div class="dc-badge" id="dp-interval">—</div>
       </div>
-      <div class="date-adjust">
+      <div class="date-adj">
         <label>Ajuster si nécessaire</label>
         <input type="date" class="date-in" id="date-in">
       </div>
@@ -534,52 +697,46 @@ body::after{content:'';position:fixed;inset:0;
     </div>
   </div>
 
-  <!-- ÉTAPE 5 — Ordres IBKR -->
+  <!-- ÉTAPE 5 -->
   <div class="step" id="step-4">
     <div class="step-hdr">
-      <div class="step-num">Étape 05 / 05</div>
+      <div class="step-eyebrow">Étape 05 / 05</div>
       <div class="step-title">Passer les ordres</div>
-      <div class="step-sub">Connecte-toi à Interactive Brokers et saisis ces ordres un par un.</div>
+      <div class="step-sub">Connecte-toi à Interactive Brokers. Ordres à saisir manuellement.</div>
     </div>
     <div class="step-body">
       <div class="ibkr-list" id="ibkr-list"></div>
       <div class="ibkr-note">
-        <strong>Rappel :</strong> ordres Market ou Limit sur IBKR Web. Compte Cash Account uniquement. Virement préalable obligatoire.
+        <strong>Rappel IBKR :</strong> Compte Cash Account uniquement. Plan tarifaire Fixed (~1€/ordre). Ordres Market ou Limit. Virement préalable depuis ton compte bancaire.
       </div>
     </div>
     <div class="step-ftr">
-      <button class="btn-main" id="btn-execute" onclick="markExecuted()">✓ Marquer ce jalon exécuté</button>
-      <button class="btn-sec" onclick="startNewCycle()">Nouveau cycle →</button>
+      <button class="btn-main" onclick="markExecuted()">✓ Marquer ce jalon exécuté</button>
+      <button class="btn-sec" onclick="goStep(0)">Nouveau cycle →</button>
     </div>
   </div>
+</div>
 
-</div><!-- /wf-col -->
-
-<!-- ── TIMELINE (droite) ── -->
+<!-- TIMELINE -->
 <div class="tl-col">
   <div class="tl-hdr">
-    <div class="tl-title">Timeline · DCA</div>
+    <div class="tl-title">Timeline · DCA · Indices Halal</div>
     <div class="tl-stats">
-      <div class="ts-item">
-        <div class="ts-lbl">Investi</div>
-        <div class="ts-val" id="ts-investi" style="color:var(--gold)">—</div>
-      </div>
-      <div class="ts-item">
-        <div class="ts-lbl">Réserve</div>
-        <div class="ts-val" id="ts-reserve">—</div>
-      </div>
-      <div class="ts-item">
-        <div class="ts-lbl">Jalons</div>
-        <div class="ts-val" id="ts-jalons">—</div>
-      </div>
+      <div class="ts"><div class="ts-lbl">Investi</div><div class="ts-val" id="ts-inv" style="color:var(--gold)">—</div></div>
+      <div class="ts"><div class="ts-lbl">Réserve IBKR</div><div class="ts-val" id="ts-res">—</div></div>
+      <div class="ts"><div class="ts-lbl">Jalons</div><div class="ts-val" id="ts-jal">—</div></div>
     </div>
+  </div>
+  <div class="poudre-banner" id="poudre-banner">
+    ◈ Réserve hors IBKR : <strong id="poudre-val" style="margin-left:4px">—</strong>
+    <span style="margin-left:4px;opacity:.7">— sur compte bancaire Sharia · Inviolable</span>
   </div>
   <div class="tl-wrap" id="tl-wrap">
     <div class="tl-inner" id="tl-inner">
       <div id="tl-empty" class="tl-empty">
-        <div class="tl-empty-icon">◈</div>
+        <div class="tl-empty-ornament"></div>
         <div>Aucun jalon planifié</div>
-        <div style="font-size:10px;color:var(--ink3)">Complète les 5 étapes pour créer ton premier versement</div>
+        <div style="font-size:10px;color:var(--ink3);font-style:italic">Complète les 5 étapes pour créer ton premier versement</div>
       </div>
       <div class="tl-road" id="tl-road" style="display:none">
         <div class="road-prog" id="road-prog"></div>
@@ -592,71 +749,73 @@ body::after{content:'';position:fixed;inset:0;
     </div>
   </div>
   <div class="alerts-row">
-    <div class="al-item" id="al-gold"><div class="al-dot al-watch"></div><div class="al-txt"><strong>Or &lt;$4 400</strong></div><div class="al-arr"> → DCA SGLN.L</div></div>
-    <div class="al-item" id="al-brent"><div class="al-dot al-off"></div><div class="al-txt"><strong>Brent &gt;$100</strong></div><div class="al-arr"> → SGLN+XOM</div></div>
-    <div class="al-item" id="al-vix"><div class="al-dot al-off"></div><div class="al-txt"><strong>VIX &gt;35</strong></div><div class="al-arr"> → SGLN only</div></div>
+    <div class="al-item" id="al-brent"><div class="al-dot al-off"></div><div class="al-txt"><strong>Brent &gt;$100</strong></div><div class="al-arr"> → régime défensif</div></div>
+    <div class="al-item" id="al-vix"><div class="al-dot al-off"></div><div class="al-txt"><strong>VIX &gt;35</strong></div><div class="al-arr"> → réserve hors-IBKR</div></div>
+    <div class="al-item" id="al-ndx"><div class="al-dot al-off"></div><div class="al-txt"><strong>NASDAQ &lt;-15%</strong></div><div class="al-arr"> → DCA accéléré</div></div>
     <div class="al-item" id="al-hz"><div class="al-dot al-watch"></div><div class="al-txt"><strong>Hormuz</strong></div><div class="al-arr" id="al-hz-txt"> → surveiller</div></div>
-    <div class="al-item" id="al-ia" style="border-left:1px solid var(--line)"><div class="al-dot" style="background:var(--teal)"></div><div class="al-txt"><strong>Règle 9 · IA</strong></div><div class="al-arr" id="al-ia-txt"> → Coherent + Lumentum en Détente</div></div>
+    <div class="al-item" id="al-em"><div class="al-dot al-off"></div><div class="al-txt"><strong>Spread EM &gt;400bps</strong></div><div class="al-arr"> → réserve hors-IBKR</div></div>
   </div>
 </div>
 
-</div><!-- /layout -->
+</div>
 
 <script>
-const SK='hv5';
+const SK='hv32';
 let S=load();
-function load(){const s=localStorage.getItem(SK);if(s)try{return JSON.parse(s);}catch(e){}
-  return{capital:10000,regime:'wait',mkt:{},hormuz:'normal',milestones:[],mktTs:null,lastJalonId:null};}
+function load(){
+  const s=localStorage.getItem(SK);
+  if(s)try{return JSON.parse(s);}catch(e){}
+  return{capital:10000,regime:'wait',mkt:{},hormuz:'normal',milestones:[],mktTs:null,regimeCandidate:null,candidateSince:null,score:0};
+}
 function save(){localStorage.setItem(SK,JSON.stringify(S))}
 
-// ── RÉGIMES ──
+// ── RÉGIMES v3.2 — Indices halal uniquement ──
 const RG={
-  crise:{label:'🔴 DÉFENSIF · Score 5-7',col:'var(--red)',badge:'rb-crise',
-    why:'Zone défensive. Sortir ASML. Maintenir noyau. Renforcer or et XOM/CVX si Brent > $90.',
-    interval:21,intervalLabel:'3 semaines — défensif',
+  detente:{
+    label:'🟢 CROISSANCE',col:'var(--green)',badge:'rb-detente',
+    why:'Score bas. Environnement favorable. DCA régulier sur les 4 indices halal. FCX en position normale.',
+    interval:56,intervalLabel:'8 semaines · DCA long terme',
     alloc:[
-      {k:'SGLN',n:'Or SGLN.L',p:20,c:'var(--gold)',t:'buy'},
-      {k:'WGLD',n:'WGLD/PPFB (Or #2)',p:7,c:'#c48a2a',t:'buy'},
-      {k:'INRG',n:'Renouvelable INRG.L',p:20,c:'#2a6ab0',t:'hold'},
-      {k:'IGDA',n:'Indice halal IGDA.L',p:22,c:'var(--green)',t:'hold'},
-      {k:'XOM',n:'XOM + CVX',p:7,c:'var(--blue)',t:'buy'},
-      {k:'PHSP',n:'Argent PHSP.L',p:6,c:'#7a8090',t:'hold'},
-      {k:'COPA',n:'Cuivre COPA.L',p:4,c:'var(--amber)',t:'hold'},
-      {k:'ASML',n:'ASML — STOP-LOSS si NDX -15%',p:0,c:'var(--teal)',t:'reduce'},
+      {k:'IGDA',n:'DJ Islamic Global Developed',ticker:'IGDA.L',p:28,c:'var(--green)',t:'buy'},
+      {k:'ISWD',n:'MSCI World Islamic',ticker:'ISWD.L',p:22,c:'#2a7a5a',t:'buy'},
+      {k:'ISDE',n:'MSCI EM Islamic',ticker:'ISDE.L',p:18,c:'var(--teal)',t:'buy'},
+      {k:'HIUS',n:'HSBC USA Islamic ESG',ticker:'HIUS.L',p:17,c:'var(--blue)',t:'buy'},
+      {k:'FCX',n:'Freeport-McMoRan (cuivre)',ticker:'FCX/NYSE',p:5,c:'var(--amber)',t:'hold'},
     ]},
-  choc:{label:'⚡ ROBUSTESSE MAX · Score 7-10',col:'var(--teal)',badge:'rb-trans',
-    why:'Robustesse maximale. Sortir satellite complet sauf cuivre. Descendre la réserve hors-IBKR. Achat SGLN uniquement.',
-    interval:7,intervalLabel:'1 semaine — déclencheur réserve',
+  trans:{
+    label:'🟡 TRANSITION',col:'var(--amber)',badge:'rb-trans',
+    why:'Signaux mixtes. Maintenir les allocations. Pas d\'action urgente — continuer le DCA planifié.',
+    interval:35,intervalLabel:'5 semaines · Lissage équilibré',
     alloc:[
-      {k:'SGLN',n:'Or SGLN.L',p:35,c:'var(--gold)',t:'buy'},
-      {k:'WGLD',n:'WGLD/PPFB (Or #2)',p:10,c:'#c48a2a',t:'buy'},
-      {k:'INRG',n:'Renouvelable INRG.L',p:18,c:'#2a6ab0',t:'hold'},
-      {k:'IGDA',n:'Indice halal IGDA.L',p:18,c:'var(--green)',t:'hold'},
-      {k:'COPA',n:'Cuivre COPA.L',p:4,c:'var(--amber)',t:'hold'},
+      {k:'IGDA',n:'DJ Islamic Global Developed',ticker:'IGDA.L',p:28,c:'var(--green)',t:'hold'},
+      {k:'ISWD',n:'MSCI World Islamic',ticker:'ISWD.L',p:22,c:'#2a7a5a',t:'hold'},
+      {k:'ISDE',n:'MSCI EM Islamic',ticker:'ISDE.L',p:15,c:'var(--teal)',t:'hold'},
+      {k:'HIUS',n:'HSBC USA Islamic ESG',ticker:'HIUS.L',p:15,c:'var(--blue)',t:'hold'},
+      {k:'FCX',n:'Freeport-McMoRan (cuivre)',ticker:'FCX/NYSE',p:5,c:'var(--amber)',t:'hold'},
+      {k:'LIQD',n:'Liquidité IBKR',ticker:'Cash',p:5,c:'var(--ink3)',t:'hold'},
     ]},
-  trans:{label:'🟡 TRANSITION · Score 3-5',col:'var(--amber)',badge:'rb-trans',
-    why:'Zone de transition. Maintenir les allocations cibles du noyau. Satellite conservé sans renforcement.',
-    interval:35,intervalLabel:'5 semaines — lissage équilibré',
+  crise:{
+    label:'🔴 DÉFENSIF',col:'var(--red)',badge:'rb-crise',
+    why:'Score élevé. Zone défensive. Réduire la cadence DCA. Conserver la réserve hors IBKR intacte.',
+    interval:21,intervalLabel:'3 semaines · Versement réduit',
     alloc:[
-      {k:'SGLN',n:'Or SGLN.L',p:20,c:'var(--gold)',t:'hold'},
-      {k:'INRG',n:'Renouvelable INRG.L',p:20,c:'#2a6ab0',t:'hold'},
-      {k:'IGDA',n:'Indice halal IGDA.L',p:22,c:'var(--green)',t:'hold'},
-      {k:'WGLD',n:'WGLD/PPFB (Or #2)',p:6,c:'#c48a2a',t:'hold'},
-      {k:'PHSP',n:'Argent PHSP.L',p:4,c:'#7a8090',t:'hold'},
-      {k:'COPA',n:'Cuivre COPA.L',p:4,c:'var(--amber)',t:'hold'},
-      {k:'XOM',n:'XOM + CVX',p:4,c:'var(--blue)',t:'hold'},
+      {k:'IGDA',n:'DJ Islamic Global Developed',ticker:'IGDA.L',p:30,c:'var(--green)',t:'hold'},
+      {k:'ISWD',n:'MSCI World Islamic',ticker:'ISWD.L',p:25,c:'#2a7a5a',t:'hold'},
+      {k:'ISDE',n:'MSCI EM Islamic',ticker:'ISDE.L',p:12,c:'var(--teal)',t:'reduce'},
+      {k:'HIUS',n:'HSBC USA Islamic ESG',ticker:'HIUS.L',p:12,c:'var(--blue)',t:'reduce'},
+      {k:'FCX',n:'Freeport-McMoRan',ticker:'FCX/NYSE',p:3,c:'var(--amber)',t:'reduce'},
+      {k:'LIQD',n:'Liquidité IBKR renforcée',ticker:'Cash',p:8,c:'var(--ink3)',t:'hold'},
     ]},
-  detente:{label:'🟢 CROISSANCE · Score 0-3',col:'var(--green)',badge:'rb-detente',
-    why:'Score régime bas. Environnement favorable. Noyau 60% + redondance or 6% + satellite IA activé (stop-loss -15% NASDAQ).',
-    interval:56,intervalLabel:'8 semaines — DCA long terme',
+  choc:{
+    label:'⚡ CHOC LIQUIDITÉ',col:'var(--teal)',badge:'rb-trans',
+    why:'VIX > 35. Tout baisse simultanément. STOPPER le DCA. Descendre la réserve hors IBKR sur les indices les plus déprimés après stabilisation.',
+    interval:7,intervalLabel:'1 semaine · Attendre stabilisation',
     alloc:[
-      {k:'SGLN',n:'Or SGLN.L',p:18,c:'var(--gold)',t:'hold'},
-      {k:'INRG',n:'Renouvelable INRG.L',p:20,c:'#2a6ab0',t:'buy'},
-      {k:'IGDA',n:'Indice halal IGDA.L',p:22,c:'var(--green)',t:'buy'},
-      {k:'WGLD',n:'WGLD/PPFB (Or #2)',p:6,c:'#c48a2a',t:'hold'},
-      {k:'PHSP',n:'Argent PHSP.L',p:4,c:'#7a8090',t:'hold'},
-      {k:'COPA',n:'Cuivre COPA.L',p:4,c:'var(--amber)',t:'hold'},
-      {k:'ASML',n:'ASML (ASME-GY) ★EUV',p:4,c:'var(--teal)',t:'buy'},
+      {k:'IGDA',n:'DJ Islamic Global Developed',ticker:'IGDA.L',p:35,c:'var(--green)',t:'hold'},
+      {k:'ISWD',n:'MSCI World Islamic',ticker:'ISWD.L',p:30,c:'#2a7a5a',t:'hold'},
+      {k:'ISDE',n:'MSCI EM Islamic',ticker:'ISDE.L',p:10,c:'var(--teal)',t:'hold'},
+      {k:'HIUS',n:'HSBC USA Islamic ESG',ticker:'HIUS.L',p:10,c:'var(--blue)',t:'hold'},
+      {k:'LIQD',n:'Liquidité — attendre creux',ticker:'Cash',p:15,c:'var(--ink3)',t:'hold'},
     ]}
 };
 const tLbl={buy:'ACHETER',hold:'CONSERVER',reduce:'RÉDUIRE'};
@@ -664,25 +823,25 @@ const tCol={buy:'var(--green)',hold:'var(--amber)',reduce:'var(--red)'};
 
 // ── UTILS ──
 const fE=v=>'€'+Math.round(v).toLocaleString('fr-FR');
-const fDate=d=>new Date(d).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'2-digit'});
+const fDate=d=>new Date(d).toLocaleDateString('fr-FR',{month:'short',year:'2-digit'});
 const fDateFull=d=>new Date(d).toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'});
-const fDateInput=d=>{const dt=new Date(d);return dt.toISOString().split('T')[0];};
-function addDays(d,n){const dt=new Date(d);dt.setDate(dt.getDate()+n);return dt;}
-function closeOverlay(){const o=document.getElementById('overlay');o.classList.remove('open');o.innerHTML='';}
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeOverlay();});
+const fDateIn=d=>{const dt=new Date(d);return dt.toISOString().split('T')[0]};
+function addDays(d,n){const dt=new Date(d);dt.setDate(dt.getDate()+n);return dt}
+function closeOverlay(){const o=document.getElementById('overlay');o.classList.remove('open');o.innerHTML=''}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeOverlay()})
 
-// ── NAVIGATION ÉTAPES ──
+// ── NAVIGATION ──
 let currentStep=0;
 function goStep(n){
   for(let i=0;i<5;i++){
     document.getElementById('step-'+i).classList.toggle('active',i===n);
     const pb=document.getElementById('pb'+i);
-    if(i<n)pb.className='pb-step done';
-    else if(i===n)pb.className='pb-step active';
-    else pb.className='pb-step';
+    pb.className='pb-step'+(i<n?' done':i===n?' active':'');
   }
   currentStep=n;
   document.querySelector('.wf-col').scrollTop=0;
+  if(n===2)renderActions();
+  if(n===3)calcDate();
 }
 
 // ── HORMUZ ──
@@ -692,223 +851,128 @@ function selHz(v,el){
   document.querySelectorAll('.hz-opt').forEach(x=>x.classList.remove('sel'));
   el.classList.add('sel');
 }
-// init sel
-window.addEventListener('DOMContentLoaded',()=>{
-  document.querySelectorAll('.hz-opt').forEach(el=>{
-    if((hzVal==='bloque'&&el.classList.contains('hz-red'))||
-       (hzVal==='perturbe'&&el.classList.contains('hz-amb'))||
-       (hzVal==='normal'&&el.classList.contains('hz-grn')))el.classList.add('sel');
-    else el.classList.remove('sel');
-  });
-  // Pré-remplir si données existantes
-  const m=S.mkt;
-  ['brent','vix','gold','sgln','inrg','igda','phsp','copa','xom','cvx','iswd','asml','wgld','spread','ndx','t10y'].forEach(k=>{
-    const el=document.getElementById('mk-'+k);
-    if(el&&m[k]!=null)el.value=m[k];
-  });
-  if(S.capital)document.getElementById('cap-in').value=S.capital;
-  if(S.mktTs)document.getElementById('mkt-last').textContent=
-    'Mis à jour '+new Date(S.mktTs).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
-  renderTimeline();
-  updateStats();
-  if(S.regime&&S.regime!=='wait'){updateRegimeBadge();updateAlerts();}
-});
 
 // ── CALCUL RÉGIME ──
 function calcRegime(){
-  // Sauvegarder données
-  ['brent','vix','gold','sgln','inrg','igda','phsp','copa','xom','cvx','iswd','asml','wgld','spread','ndx','t10y'].forEach(k=>{
+  const fields=['brent','vix','t10y','ndx','igda','iswd','isde','hius','fcx','spread'];
+  fields.forEach(k=>{
     const v=parseFloat(document.getElementById('mk-'+k)?.value);
     if(!isNaN(v))S.mkt[k]=v;
   });
   S.hormuz=hzVal;
   S.mktTs=Date.now();
-  document.getElementById('mkt-last').textContent=
-    'Mis à jour '+new Date().toLocaleDateString('fr-FR',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
+  document.getElementById('mkt-last').textContent='Mis à jour '+new Date().toLocaleDateString('fr-FR',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
 
-  // v3.0 — Score continu 0-10 avec hystérèse
-  const b=S.mkt.brent,vix=S.mkt.vix,hz=S.hormuz,t10y=S.mkt.t10y,spread=S.mkt.spread;
+  const b=S.mkt.brent,vix=S.mkt.vix,hz=S.hormuz,t10y=S.mkt.t10y,spread=S.mkt.spread,ndx=S.mkt.ndx;
   const bs=b?Math.min(10,Math.max(0,(b-60)/6)):5;
   const vs=vix?Math.min(10,Math.max(0,(vix-10)/3)):3;
   const hs=hz==='bloque'?10:hz==='perturbe'?6:1;
   const ts=t10y?Math.min(10,Math.max(0,(t10y-2)/0.5)):5;
   const ss=spread?Math.min(10,Math.max(0,(spread-150)/50)):3;
-  const score=(0.35*bs+0.25*vs+0.20*hs+0.10*ts+0.10*ss);
-  S.score=score;
+  const score=parseFloat((0.35*bs+0.25*vs+0.20*hs+0.10*ts+0.10*ss).toFixed(1));
+  S.score=score;S.mkt.score=score;
+
   let reg;
-  if(score<3)reg='detente';
-  else if(score<5)reg='trans';
-  else if(score<7)reg='crise';
-  else reg='choc';
-  // Hystérèse simple — stocker candidat, confirmer après 7 jours si même zone
+  if(vix>35)reg='choc';
+  else if(score>=7)reg='crise';
+  else if(score>=4)reg='trans';
+  else reg='detente';
+
+  // Hystérèse 7 jours
   const now=Date.now();
-  if(S.regimeCandidate!==reg){
-    S.regimeCandidate=reg;
-    S.candidateSince=now;
-  }
+  if(S.regimeCandidate!==reg){S.regimeCandidate=reg;S.candidateSince=now;}
   const daysSince=S.candidateSince?(now-S.candidateSince)/864e5:0;
   const prev=S.regime;
-  // Confirmation : 7 jours OU premier calcul OU régime identique
-  if(daysSince>=7||!S.regime||S.regime===reg||prev==='wait'){
-    S.regime=reg;
-    S.candidateSince=now;
-  }
-  S.mkt.score=score;
+  if(daysSince>=7||!S.regime||S.regime==='wait'||S.regime===reg)S.regime=reg;
 
-  // Signaux détaillés
+  // Signaux
   const sigs=[];
-  if(b!=null){
-    if(b>100)sigs.push({s:'bad',t:`Brent $${b.toFixed(0)} — Au-dessus de $100`});
-    else if(b>80)sigs.push({s:'warn',t:`Brent $${b.toFixed(0)} — Zone de transition`});
-    else sigs.push({s:'ok',t:`Brent $${b.toFixed(0)} — Sous $80`});
-  }
-  if(vix!=null){
-    if(vix>35)sigs.push({s:'bad',t:`VIX ${vix.toFixed(1)} — Choc de liquidité`});
-    else if(vix>25)sigs.push({s:'warn',t:`VIX ${vix.toFixed(1)} — Stress élevé`});
-    else sigs.push({s:'ok',t:`VIX ${vix.toFixed(1)} — Calme`});
-  }
-  const hzMap={bloque:{s:'bad',t:'Hormuz bloqué — mode crise géopolitique'},
-    perturbe:{s:'warn',t:'Hormuz perturbé — régime transition'},
-    normal:{s:'ok',t:'Hormuz normal — flux rétablis'}};
-  sigs.push(hzMap[hz]);
-  // Règle 9 v3.1 — Signal ASML monopole EUV
-  if(S.mkt.asml){
-    sigs.push({s:'ok',t:`ASML (EUV monopole) : €${S.mkt.asml.toFixed(2)}`});
-  }
-  if(S.mkt.gold){
-    if(S.mkt.gold<4400)sigs.push({s:'warn',t:`Or $${Math.round(S.mkt.gold)} — Sous $4 400, opportunité`});
-    else sigs.push({s:'ok',t:`Or $${Math.round(S.mkt.gold)} — Niveau nominal`});
-  }
+  if(b!=null){sigs.push({s:b>100?'bad':b>80?'warn':'ok',t:`Brent $${b.toFixed(0)}/bbl${b>100?' → Défensif':b>80?' → Vigilance':' → Favorable'}`})}
+  if(vix!=null){sigs.push({s:vix>35?'bad':vix>25?'warn':'ok',t:`VIX ${vix.toFixed(1)}${vix>35?' → CHOC — stopper DCA':vix>25?' → Stress élevé':' → Calme'}`})}
+  sigs.push({s:hz==='bloque'?'bad':hz==='perturbe'?'warn':'ok',t:`Hormuz ${hz==='bloque'?'bloqué':hz==='perturbe'?'perturbé':'normal'}`});
+  if(spread!=null){sigs.push({s:spread>400?'bad':spread>300?'warn':'ok',t:`Spread EM ${spread}bps${spread>400?' → Fuite capitaux':spread>300?' → Tension':' → Normal'}`})}
+  if(ndx!=null&&ndx<-15){sigs.push({s:'warn',t:`NASDAQ ${ndx.toFixed(1)}% vs pic → Opportunité DCA accéléré`})}
 
   // Afficher étape 2
-  const r=RG[reg];
+  const r=RG[S.regime];
   document.getElementById('rr-regime').textContent=r.label;
   document.getElementById('rr-regime').style.color=r.col;
+  document.getElementById('rr-score').textContent=`Score : ${score}/10 ${S.regimeCandidate!==S.regime?' · Confirmation en cours (7j)':''}`;
+  document.getElementById('score-fill').style.width=(score*10)+'%';
+  document.getElementById('score-fill').style.background=score>7?'var(--red)':score>4?'var(--amber)':'var(--green)';
   document.getElementById('rr-why').textContent=r.why;
-  document.getElementById('rr-sigs').innerHTML=sigs.map(s=>`
-    <div class="rr-sig"><div class="sig-dot ${s.s==='ok'?'sig-ok':s.s==='warn'?'sig-warn':'sig-bad'}"></div>${s.t}</div>`).join('');
-
-  updateRegimeBadge();
-  updateAlerts();
-
-  // Proposer recalcul si régime changé
+  document.getElementById('rr-sigs').innerHTML=sigs.map(s=>`<div class="rr-sig"><div class="sig-dot sig-${s.s}"></div>${s.t}</div>`).join('');
+  updateRegimeBadge();updateAlerts();
   const futurs=S.milestones.filter(m=>new Date(m.date)>new Date()&&!m.done);
-  if(prev!=='wait'&&prev!==reg&&futurs.length>0){
-    save();
-    openConfirm(futurs.length,prev,()=>{doRecalc();goStep(1);},()=>{markStale();goStep(1);});
+  if(prev!=='wait'&&prev!==S.regime&&prev&&futurs.length>0){
+    save();openConfirm(futurs.length,prev,()=>{doRecalc();goStep(1);},()=>{markStale();goStep(1);});
   } else {save();goStep(1);}
 }
 
 function updateRegimeBadge(){
-  const r=RG[S.regime]||RG.detente;
-  const badge=document.getElementById('regime-badge');
-  badge.className='regime-badge '+r.badge;
+  const r=RG[S.regime]||{label:'—',badge:'rb-wait'};
+  const b=document.getElementById('regime-badge');
+  b.className='regime-badge '+r.badge;
+  b.querySelector('.rb-dot').style.background=
+    S.regime==='crise'?'var(--red)':S.regime==='choc'?'var(--teal)':
+    S.regime==='trans'?'var(--amber)':S.regime==='detente'?'var(--green)':'rgba(247,244,239,.3)';
   document.getElementById('regime-label').textContent=r.label;
 }
+
 function updateAlerts(){
   const m=S.mkt,hz=S.hormuz;
-  setAl('al-gold',m.gold&&m.gold<4400,'al-watch','al-on');
   setAl('al-brent',m.brent&&m.brent>100,'al-off','al-on');
   setAl('al-vix',m.vix&&m.vix>35,'al-off','al-on');
+  setAl('al-ndx',m.ndx&&m.ndx<-15,'al-off','al-watch');
   setAl('al-hz',hz==='bloque'||hz==='perturbe','al-off',hz==='bloque'?'al-on':'al-watch');
-  const hzTxt={bloque:'→ mode crise actif',perturbe:'→ maintenir défensif',normal:'→ flux normaux'};
-  // Règle 9 alerte IA
-  const iaEl=document.getElementById('al-ia');
-  const iaTxt=document.getElementById('al-ia-txt');
-  if(iaEl&&iaTxt){
-    if(S.regime==='detente'){
-      iaEl.querySelector('.al-dot').className='al-dot al-watch';
-      iaTxt.textContent=' → Acheter ASML (Xetra/Amsterdam) · Max 5%';
-    } else if(S.regime==='crise'||S.regime==='choc'){
-      iaEl.querySelector('.al-dot').className='al-dot al-on';
-      iaTxt.textContent=' → Sortir ASML · Renforcer SGLN';
-    } else {
-      iaEl.querySelector('.al-dot').className='al-dot al-off';
-      iaTxt.textContent=' → Neutre · Attendre Détente';
-    }
-  }
-  document.getElementById('al-hz-txt').textContent=hzTxt[hz]||'→ surveiller';
+  setAl('al-em',m.spread&&m.spread>400,'al-off','al-on');
+  const hzTxt={bloque:'→ mode crise actif',perturbe:'→ maintenir vigilance',normal:'→ flux normaux'};
+  document.getElementById('al-hz-txt').textContent=' '+hzTxt[hz];
 }
-function setAl(id,on,offCls,onCls){
+function setAl(id,on,off,onCls){
   const el=document.getElementById(id);if(!el)return;
   el.classList.toggle('triggered',!!on);
   const dot=el.querySelector('.al-dot');
-  if(dot)dot.className='al-dot '+(on?onCls:offCls);
+  if(dot)dot.className='al-dot '+(on?onCls:off);
 }
 
-// ── ÉTAPE 3 : ACTIONS ──
+// ── ÉTAPE 3 ──
 function renderActions(){
   const amt=parseFloat(document.getElementById('vers-amount')?.value)||2000;
   const r=RG[S.regime]||RG.detente;
   const inv=amt*0.85;
-  const sub=`Régime ${r.label} · Versement ${fE(amt)} · 85% investi, 15% réserve`;
-  document.getElementById('step3-sub').textContent=sub;
+  document.getElementById('step3-sub').textContent=`Régime ${r.label} · Versement ${fE(amt)} · 85% investi · 15% réserve IBKR`;
   document.getElementById('action-list').innerHTML=r.alloc.map((a,i)=>`
     <div class="action-item">
       <div class="ai-rank">${String(i+1).padStart(2,'0')}</div>
       <div class="ai-dot" style="background:${a.c}"></div>
       <div class="ai-info">
-        <div class="ai-action" style="color:${tCol[a.t]}">${tLbl[a.t]}</div>
+        <div class="ai-badge" style="color:${tCol[a.t]}">${tLbl[a.t]}</div>
         <div class="ai-name">${a.n}</div>
-        <div class="ai-pct">${a.p}% du versement</div>
+        <div class="ai-ticker">${a.ticker}</div>
       </div>
-      <div class="ai-amt" style="color:${a.t==='reduce'?'var(--red)':'var(--gold)'}">${fE(inv*a.p/100)}</div>
+      <div class="ai-amt" style="color:${a.t==='reduce'?'var(--red)':'var(--ink)'}">${fE(inv*a.p/100)}</div>
     </div>`).join('');
   document.getElementById('total-inv').textContent=fE(inv);
-  document.getElementById('total-res').textContent=' · '+fE(amt*0.15)+' N3';
+  document.getElementById('total-res').textContent=' · '+fE(amt*0.15);
+  const offIBKR=Math.max(0,S.capital*0.20-S.milestones.reduce((s,m)=>s+m.amount,0)*0.15);
+  document.getElementById('reserve-offibkr').textContent=fE(S.capital*0.20)+' cible';
 }
 
-// ── ÉTAPE 4 : DATE ──
+// ── ÉTAPE 4 ──
 function calcDate(){
   const r=RG[S.regime]||RG.detente;
-  // Trouver dernier jalon
   const last=S.milestones.length?new Date(S.milestones[S.milestones.length-1].date):new Date();
   const base=S.milestones.length?last:new Date();
   const proposed=addDays(base,r.interval);
-  const dateStr=fDateInput(proposed);
   document.getElementById('dp-date').textContent=proposed.toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'});
-  document.getElementById('dp-reason').textContent=
-    S.milestones.length?`${r.interval} jours après le dernier versement (${fDate(last)})`:'Premier versement · date suggérée';
+  document.getElementById('dp-reason').textContent=S.milestones.length?`${r.interval} jours après le dernier versement (${fDate(last)})`:'Premier versement — date suggérée';
   document.getElementById('dp-interval').textContent=r.intervalLabel;
-  document.getElementById('date-in').value=dateStr;
+  document.getElementById('date-in').value=fDateIn(proposed);
 }
 
-// ── ÉTAPE 5 : IBKR ──
+// ── AJOUTER JALON ──
 let currentJalonId=null;
-function buildIBKROrders(alloc,amount){
-  const inv=amount*0.85;
-  document.getElementById('ibkr-list').innerHTML=alloc
-    .filter(a=>a.t==='buy')
-    .map((a,i)=>`
-      <div class="ibkr-row" style="border-color:${a.c}">
-        <div class="ibkr-action" style="color:${a.c}">ACHETER</div>
-        <div class="ibkr-ticker">${a.n}</div>
-        <div class="ibkr-amount">${fE(inv*a.p/100)}</div>
-        <div class="ibkr-check" onclick="toggleCheck(this)" id="chk-${i}">○</div>
-      </div>`).join('')+
-    alloc.filter(a=>a.t==='hold').map((a,i)=>`
-      <div class="ibkr-row" style="border-color:${a.c};opacity:.5">
-        <div class="ibkr-action" style="color:${a.c}">CONSERVER</div>
-        <div class="ibkr-ticker">${a.n}</div>
-        <div class="ibkr-amount" style="color:var(--ink3)">—</div>
-        <div></div>
-      </div>`).join('');
-}
-function toggleCheck(el){
-  el.classList.toggle('checked');
-  el.textContent=el.classList.contains('checked')?'✓':'○';
-}
-function markExecuted(){
-  if(currentJalonId!=null){
-    const m=S.milestones.find(x=>x.id===currentJalonId);
-    if(m){m.done=true;m.stale=false;}
-    save();renderTimeline();updateStats();
-  }
-  startNewCycle();
-}
-function startNewCycle(){goStep(0);}
-
-// ── AJOUTER À LA TIMELINE ──
 function addToTimeline(){
   const date=document.getElementById('date-in').value;
   const amount=parseFloat(document.getElementById('vers-amount').value)||2000;
@@ -923,9 +987,31 @@ function addToTimeline(){
   S.milestones.sort((a,b)=>new Date(a.date)-new Date(b.date));
   currentJalonId=jalon.id;
   save();renderTimeline();updateStats();
-  // Construire ordres IBKR
-  buildIBKROrders(r.alloc,amount);
+  // Ordres IBKR
+  document.getElementById('ibkr-list').innerHTML=r.alloc.filter(a=>a.t==='buy').map((a,i)=>`
+    <div class="ibkr-row" style="border-color:${a.c}">
+      <div class="ibkr-act" style="color:${a.c}">ACHETER</div>
+      <div style="flex:1"><div class="ibkr-name">${a.n}</div><div class="ibkr-ticker">${a.ticker}</div></div>
+      <div class="ibkr-amt">${fE(amount*0.85*a.p/100)}</div>
+      <div class="ibkr-chk" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✓':'○'">○</div>
+    </div>`).join('')+
+    r.alloc.filter(a=>a.t==='hold'||a.t==='reduce').map(a=>`
+    <div class="ibkr-row" style="border-color:${a.c};opacity:.45">
+      <div class="ibkr-act" style="color:${tCol[a.t]}">${tLbl[a.t]}</div>
+      <div style="flex:1"><div class="ibkr-name">${a.n}</div><div class="ibkr-ticker">${a.ticker}</div></div>
+      <div class="ibkr-amt" style="color:var(--ink3)">—</div>
+      <div></div>
+    </div>`).join('');
   goStep(4);
+}
+
+function markExecuted(){
+  if(currentJalonId!=null){
+    const m=S.milestones.find(x=>x.id===currentJalonId);
+    if(m){m.done=true;m.stale=false;}
+    save();renderTimeline();updateStats();
+  }
+  goStep(0);
 }
 
 // ── TIMELINE ──
@@ -941,7 +1027,7 @@ function renderTimeline(){
   const start=new Date(ms[0].date);
   const totalDays=Math.max(180,(new Date(ms[ms.length-1].date)-start)/864e5+60);
   const todayD=Math.max(0,(today-start)/864e5);
-  const minW=Math.max(1100,window.innerWidth-460);
+  const minW=Math.max(1100,window.innerWidth-420);
   const totalW=Math.max(minW,totalDays*(minW/totalDays)+80);
   inner.style.width=totalW+'px';
   road.style.width=(totalW-40)+'px';
@@ -954,12 +1040,12 @@ function renderTimeline(){
   const zDate=new Date(start);zDate.setFullYear(zDate.getFullYear()+1);
   const zD=(zDate-start)/864e5;
   if(zD<=totalDays+30){
-    const zAmt=S.capital*0.37*0.025;
+    const zAmt=S.capital*0.85*0.025;
     const zm=document.createElement('div');zm.className='zakat-mk';
     zm.style.left=Math.min(93,(zD/totalDays)*100)+'%';
-    zm.innerHTML=`<div class="z-pin"><div class="z-dot"></div><div class="z-line"></div></div>
+    zm.innerHTML=`<div class="z-pin"><div class="z-diamond"></div><div class="z-line"></div></div>
       <div class="z-lbl"><div class="z-title">⚖ Zakat</div>
-      <div class="z-amount">${fE(zAmt)}</div>
+      <div class="z-amt">${fE(zAmt)}</div>
       <div class="z-sub">${zDate.toLocaleDateString('fr-FR',{month:'short',year:'numeric'})}</div></div>`;
     cont.appendChild(zm);
   }
@@ -969,34 +1055,32 @@ function renderTimeline(){
     const pct=Math.max(2,Math.min(95,(mD/totalDays)*100));
     const isFuture=new Date(m.date)>today;
     const r=RG[m.regime]||RG.detente;
-    const domBuy=m.alloc.reduce((a,x)=>x.t==='buy'?a+x.p:a,0);
-    const col=domBuy>30?r.col:'var(--ink3)';
+    const col=r.col;
     const isTop=i%2===0;
     const el=document.createElement('div');
-    el.className='milestone'+(m.stale?' stale':'')+(pct<10?' edge-l':'');
-    el.style.cssText=`left:${pct}%;margin-top:-6px`;
+    el.className='milestone'+(m.stale?' stale':'')+(pct<10?' el':'');
+    el.style.cssText=`left:${pct}%;margin-top:-7px`;
     el.innerHTML=`
-      <div class="m-pin" style="color:${col}">
-        <div class="m-pin-dot" style="background:${m.done?'var(--green)':col}"></div>
+      <div class="m-pin" style="color:${m.done?'var(--green)':col}">
+        <div class="m-pin-diamond" style="background:${m.done?'var(--green)':col};border-color:var(--bg2)"></div>
         <div class="m-pin-line"></div>
       </div>
       <div class="m-card ${isTop?'top':'bottom'}" onclick="openDetail('${m.id}')">
         ${m.stale?'<div class="m-stale-b">⟳ Réévaluer</div>':''}
         <div class="m-card-hdr">
           <div class="m-date">${fDate(m.date)}</div>
-          <div class="m-amount">${fE(m.amount)}</div>
+          <div class="m-amt">${fE(m.amount)}</div>
         </div>
         <div class="m-card-body">
           ${m.alloc.filter(a=>a.t==='buy').slice(0,3).map(a=>`
             <div class="m-row">
-              <div class="m-row-l"><div class="m-dot" style="background:${a.c}"></div>
-              <span>${a.n}</span></div>
+              <div class="m-row-l"><div class="m-dot" style="background:${a.c}"></div><span>${a.n.split(' ')[0]}</span></div>
               <div class="m-row-amt">${fE(a.amount)}</div>
             </div>`).join('')}
         </div>
         <div class="m-card-ftr">
           <div class="m-res">Réserve : <strong>${fE(m.amount*0.15)}</strong></div>
-          <div class="m-status ${m.done?'m-done-st':'m-plan-st'}">${m.done?'✓ Exécuté':isFuture?'○ Planifié':'○ À faire'}</div>
+          <div class="m-status ${m.done?'m-s-done':'m-s-plan'}">${m.done?'✓ Exécuté':isFuture?'○ Planifié':'○ À faire'}</div>
         </div>
       </div>`;
     cont.appendChild(el);
@@ -1005,10 +1089,16 @@ function renderTimeline(){
 
 function updateStats(){
   const total=S.milestones.reduce((s,m)=>s+m.amount,0);
-  const reserve=Math.max(0,S.capital-total);
-  document.getElementById('ts-investi').textContent=fE(total);
-  document.getElementById('ts-reserve').textContent=fE(reserve);
-  document.getElementById('ts-jalons').textContent=S.milestones.length;
+  const ibkrRes=total*0.15;
+  const offIBKR=S.capital*0.20;
+  document.getElementById('ts-inv').textContent=fE(total);
+  document.getElementById('ts-res').textContent=fE(ibkrRes);
+  document.getElementById('ts-jal').textContent=S.milestones.length;
+  // Poudre sèche banner
+  document.getElementById('poudre-val').textContent=fE(offIBKR);
+  const banner=document.getElementById('poudre-banner');
+  const pct=offIBKR/S.capital*100;
+  banner.className='poudre-banner'+(pct<15?' alert':pct<20?' warn':'');
 }
 
 // ── MODAL DÉTAIL ──
@@ -1031,9 +1121,9 @@ function openDetail(id){
         </div>`).join('')}
       </div>
       <div class="dm-ftr">
-        <div class="dm-row2"><span class="dm-lbl">Total investi</span><span class="dm-val">${fE(inv)}</span></div>
-        <div class="dm-row2"><span class="dm-lbl">Réserve N3</span><span class="dm-val" style="color:var(--green)">${fE(m.amount-inv)}</span></div>
-        <div class="dm-row2"><span class="dm-lbl">Régime</span><span class="dm-val" style="font-size:10px">${RG[m.regime]?.label||m.regime}</span></div>
+        <div class="dm-ftr-row"><span class="dm-ftr-lbl">Total investi</span><span class="dm-ftr-val">${fE(inv)}</span></div>
+        <div class="dm-ftr-row"><span class="dm-ftr-lbl">Réserve N3 IBKR</span><span class="dm-ftr-val" style="color:var(--green)">${fE(m.amount-inv)}</span></div>
+        <div class="dm-ftr-row"><span class="dm-ftr-lbl">Régime</span><span class="dm-ftr-val" style="font-size:10px">${RG[m.regime]?.label||m.regime}</span></div>
       </div>
       <div class="dm-actions">
         <button class="btn-done ${m.done?'undone':''}" onclick="toggleDone('${m.id}')">
@@ -1055,23 +1145,17 @@ function delM(id){
   }
 }
 
-// ── CONFIRM RECALC ──
+// ── RECALC ──
 function openConfirm(n,prevR,onYes,onNo){
   const ov=document.getElementById('overlay');
   ov.innerHTML=`<div class="confirm-modal">
     <div class="cm-title">Régime modifié</div>
-    <div class="cm-body">
-      Passage de <strong>${RG[prevR]?.label||prevR}</strong> vers <strong>${RG[S.regime].label}</strong>.<br><br>
-      <strong>${n} jalon(s) futur(s)</strong> non-exécutés détectés.<br>
-      Recalculer leurs allocations selon le nouveau régime ?
-    </div>
+    <div class="cm-body">Passage de <strong>${RG[prevR]?.label||prevR}</strong> vers <strong>${RG[S.regime].label}</strong>.<br><br><strong>${n} jalon(s) futur(s)</strong> non-exécutés. Recalculer leurs allocations ?</div>
     <div class="cm-ftr">
-      <button class="btn-cn" id="btn-cn">Garder actuels</button>
-      <button class="btn-cy" id="btn-cy">Recalculer →</button>
+      <button class="btn-cn" onclick="closeOverlay()">Garder actuels</button>
+      <button class="btn-cy" onclick="closeOverlay();doRecalc();goStep(1)">Recalculer →</button>
     </div>
   </div>`;
-  document.getElementById('btn-cy').onclick=()=>{closeOverlay();onYes();};
-  document.getElementById('btn-cn').onclick=()=>{closeOverlay();onNo();};
   ov.classList.add('open');
 }
 function doRecalc(){
@@ -1100,21 +1184,28 @@ function onCapChange(){
   if(v&&v>=100){S.capital=v;save();updateStats();}
 }
 
-// Hooks étapes
-document.getElementById('pb1').addEventListener('click',()=>{if(currentStep>1||S.regime!=='wait')goStep(1);});
-document.getElementById('pb2').addEventListener('click',()=>{if(currentStep>=2){renderActions();goStep(2);}});
-document.getElementById('pb3').addEventListener('click',()=>{if(currentStep>=3){calcDate();goStep(3);}});
-document.getElementById('pb4').addEventListener('click',()=>{if(currentStep>=4)goStep(4);});
-
-// Appeler calcDate et renderActions quand on navigue
-const origGoStep=goStep;
-window.goStep=function(n){
-  origGoStep(n);
-  if(n===2)renderActions();
-  if(n===3)calcDate();
-};
-
+document.getElementById('overlay').addEventListener('click',e=>{if(e.target===document.getElementById('overlay'))closeOverlay()});
 window.addEventListener('resize',()=>renderTimeline());
+
+// ── INIT ──
+window.addEventListener('DOMContentLoaded',()=>{
+  // Pré-remplir champs
+  const m=S.mkt;
+  ['brent','vix','t10y','ndx','igda','iswd','isde','hius','fcx','spread'].forEach(k=>{
+    const el=document.getElementById('mk-'+k);
+    if(el&&m[k]!=null&&!el.value)el.value=m[k];
+  });
+  // Sélectionner hormuz
+  const hzMap={bloque:0,perturbe:1,normal:2};
+  document.querySelectorAll('.hz-opt').forEach((el,i)=>{
+    const vals=['bloque','perturbe','normal'];
+    el.classList.toggle('sel',vals[i]===S.hormuz);
+  });
+  if(S.capital)document.getElementById('cap-in').value=S.capital;
+  if(S.mktTs)document.getElementById('mkt-last').textContent='Mis à jour '+new Date(S.mktTs).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
+  if(S.regime&&S.regime!=='wait')updateRegimeBadge();
+  renderTimeline();updateStats();updateAlerts();
+});
 </script>
 </body>
 </html>

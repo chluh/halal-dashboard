@@ -533,7 +533,7 @@ body::before{
 <div class="hdr">
   <div class="logo">
     <div class="logo-ornament"></div>
-    HALAL · ROBUSTE · v3.3
+    HALAL · ROBUSTE · v3.4
   </div>
   <div class="regime-badge rb-wait" id="regime-badge">
     <div class="rb-dot"></div>
@@ -571,24 +571,29 @@ body::before{
       <div class="links-row">
         <a class="lnk" href="https://finance.yahoo.com/quote/BZ=F" target="_blank">Brent</a>
         <a class="lnk" href="https://finance.yahoo.com/quote/%5EVIX" target="_blank">VIX</a>
+        <a class="lnk" href="https://finance.yahoo.com/quote/DX-Y.NYB" target="_blank">DXY $</a>
+        <a class="lnk" href="https://finance.yahoo.com/quote/%5EIRX" target="_blank">T2Y</a>
         <a class="lnk" href="https://finance.yahoo.com/quote/%5ETNX" target="_blank">T10Y</a>
-        <a class="lnk" href="https://finance.yahoo.com/quote/IGDA.L" target="_blank">IGDA.L</a>
-        <a class="lnk" href="https://finance.yahoo.com/quote/ISWD.L" target="_blank">ISWD.L</a>
-        <a class="lnk" href="https://finance.yahoo.com/quote/XOM" target="_blank">XOM</a>
-        <a class="lnk" href="https://finance.yahoo.com/quote/CVX" target="_blank">CVX</a>
-        <a class="lnk" href="https://finance.yahoo.com/quote/FCX" target="_blank">FCX</a>
+        <a class="lnk" href="https://fred.stlouisfed.org/series/BAMLH0A0HYM2EY" target="_blank">HY Spread</a>
+        <a class="lnk" href="https://finance.yahoo.com/quote/HG=F" target="_blank">Cuivre</a>
         <a class="lnk" href="https://finance.yahoo.com/quote/%5EIXIC" target="_blank">NASDAQ</a>
-        <a class="lnk" href="https://finance.yahoo.com/quote/ASML.AS" target="_blank">ASML.AS</a>
+        <a class="lnk" href="https://finance.yahoo.com/quote/IGDA.L" target="_blank">IGDA.L</a>
+        <a class="lnk" href="https://finance.yahoo.com/quote/XOM" target="_blank">XOM</a>
+        <a class="lnk" href="https://finance.yahoo.com/quote/FCX" target="_blank">FCX</a>
       </div>
       <div class="mkt-section">
-        <div class="mkt-stitle">Signaux régime — requis</div>
+        <div class="mkt-stitle">Signaux régime — 7 dimensions économiques mondiales</div>
         <div class="mkt-grid">
-          <div class="mf"><label class="mf-lbl">Brent <span style="opacity:.5">$/bbl</span></label><input type="number" step="0.1" class="mf-in" id="mk-brent" placeholder="ex: 95.4"></div>
-          <div class="mf"><label class="mf-lbl">VIX</label><input type="number" step="0.1" class="mf-in" id="mk-vix" placeholder="ex: 18.9"></div>
-          <div class="mf"><label class="mf-lbl">T10Y <span style="opacity:.5">%</span></label><input type="number" step="0.01" class="mf-in" id="mk-t10y" placeholder="ex: 4.39"></div>
+          <div class="mf"><label class="mf-lbl">Brent <span style="opacity:.5">$/bbl · Énergie</span></label><input type="number" step="0.1" class="mf-in" id="mk-brent" placeholder="ex: 95.4"></div>
+          <div class="mf"><label class="mf-lbl">VIX <span style="opacity:.5">Peur marchés</span></label><input type="number" step="0.1" class="mf-in" id="mk-vix" placeholder="ex: 18.9"></div>
+          <div class="mf"><label class="mf-lbl">DXY <span style="opacity:.5">Dollar · Liquidité</span></label><input type="number" step="0.01" class="mf-in" id="mk-dxy" placeholder="ex: 103.5"></div>
+          <div class="mf"><label class="mf-lbl">T2Y <span style="opacity:.5">% · 2 ans ^IRX</span></label><input type="number" step="0.01" class="mf-in" id="mk-t2y" placeholder="ex: 4.20"></div>
+          <div class="mf"><label class="mf-lbl">T10Y <span style="opacity:.5">% · 10 ans ^TNX</span></label><input type="number" step="0.01" class="mf-in" id="mk-t10y" placeholder="ex: 4.39"></div>
+          <div class="mf"><label class="mf-lbl">HY Spreads <span style="opacity:.5">bps · Crédit</span></label><input type="number" step="1" class="mf-in" id="mk-hy" placeholder="ex: 380"></div>
+          <div class="mf"><label class="mf-lbl">Cuivre <span style="opacity:.5">$/lb · HG=F÷100</span></label><input type="number" step="0.01" class="mf-in" id="mk-copper" placeholder="ex: 4.45"></div>
           <div class="mf"><label class="mf-lbl">NASDAQ vs pic <span style="opacity:.5">%</span></label><input type="number" step="0.1" class="mf-in" id="mk-ndx" placeholder="ex: -8.5"></div>
         </div>
-        <div class="mkt-stitle" style="margin-top:8px">Hormuz · État du trafic</div>
+        <div class="mkt-stitle" style="margin-top:8px">Hormuz · Ajustement qualitatif (+1.0 / +0.5 / +0)</div>
         <div class="hz-sel">
           <div class="hz-opt hz-red" onclick="selHz('bloque',this)">🔴 Bloqué<br><span style="font-size:8px;opacity:.6">&lt;5/j</span></div>
           <div class="hz-opt hz-amb" onclick="selHz('perturbe',this)">🟡 Perturbé<br><span style="font-size:8px;opacity:.6">5–14/j</span></div>
@@ -720,7 +725,7 @@ body::before{
 <!-- TIMELINE -->
 <div class="tl-col">
   <div class="tl-hdr">
-    <div class="tl-title">Timeline · DCA · Anti-Stagflation v3.3</div>
+    <div class="tl-title">Timeline · DCA · Score 7 dimensions · v3.4</div>
     <div class="tl-stats">
       <div class="ts"><div class="ts-lbl">Investi</div><div class="ts-val" id="ts-inv" style="color:var(--gold)">—</div></div>
       <div class="ts"><div class="ts-lbl">Réserve IBKR</div><div class="ts-val" id="ts-res">—</div></div>
@@ -848,7 +853,7 @@ function selHz(v,el){
 
 // ── CALCUL RÉGIME ──
 function calcRegime(){
-  const fields=['brent','vix','t10y','ndx','igda','iswd','xom','cvx','fcx','spread'];
+  const fields=['brent','vix','dxy','t2y','t10y','hy','copper','ndx','igda','xom','cvx','fcx'];
   fields.forEach(k=>{
     const v=parseFloat(document.getElementById('mk-'+k)?.value);
     if(!isNaN(v))S.mkt[k]=v;
@@ -857,13 +862,21 @@ function calcRegime(){
   S.mktTs=Date.now();
   document.getElementById('mkt-last').textContent='Mis à jour '+new Date().toLocaleDateString('fr-FR',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
 
-  const b=S.mkt.brent,vix=S.mkt.vix,hz=S.hormuz,t10y=S.mkt.t10y,spread=S.mkt.spread,ndx=S.mkt.ndx;
-  const bs=b?Math.min(10,Math.max(0,(b-60)/6)):5;
-  const vs=vix?Math.min(10,Math.max(0,(vix-10)/3)):3;
-  const hs=hz==='bloque'?10:hz==='perturbe'?6:1;
-  const ts=t10y?Math.min(10,Math.max(0,(t10y-2)/0.5)):5;
-  const ss=spread?Math.min(10,Math.max(0,(spread-150)/50)):3;
-  const score=parseFloat((0.35*bs+0.25*vs+0.20*hs+0.10*ts+0.10*ss).toFixed(1));
+  const b=S.mkt.brent,vix=S.mkt.vix,hz=S.hormuz;
+  const dxy=S.mkt.dxy,t2y=S.mkt.t2y,t10y=S.mkt.t10y;
+  const hy=S.mkt.hy,cu=S.mkt.copper,ndx=S.mkt.ndx;
+  // Normalisation 0-10 par dimension
+  const bs=b?Math.min(10,Math.max(0,(b-70)/5)):5;           // Brent
+  const vs=vix?Math.min(10,Math.max(0,(vix-15)/2.5)):3;      // VIX
+  const ds=dxy?Math.min(10,Math.max(0,(dxy-95)/2)):5;        // DXY haut = stress
+  const cs=(t2y&&t10y)?Math.min(10,Math.max(0,5-(t10y-t2y)*5)):5; // Courbe inv = bad
+  const hys=hy?Math.min(10,Math.max(0,(hy-300)/40)):3;       // HY spread haut = stress
+  const cus=cu?Math.min(10,Math.max(0,(4.5-cu)/0.15)):5;     // Cuivre bas = bad
+  const ns=ndx?Math.min(10,Math.max(0,-ndx*0.35)):2;         // NASDAQ bas = bad
+  // Ajustement Hormuz qualitatif
+  const ha=hz==='bloque'?1.0:hz==='perturbe'?0.5:0;
+  const rawScore=0.20*bs+0.15*vs+0.15*ds+0.15*cs+0.15*hys+0.10*cus+0.10*ns+ha;
+  const score=parseFloat(Math.min(10,rawScore).toFixed(1));
   S.score=score;S.mkt.score=score;
 
   let reg;
@@ -879,19 +892,22 @@ function calcRegime(){
   const prev=S.regime;
   if(daysSince>=7||!S.regime||S.regime==='wait'||S.regime===reg)S.regime=reg;
 
-  // Signaux
+  // Signaux détaillés v3.4
   const sigs=[];
-  if(b!=null){sigs.push({s:b>100?'bad':b>80?'warn':'ok',t:`Brent $${b.toFixed(0)}/bbl${b>100?' → Défensif':b>80?' → Vigilance':' → Favorable'}`})}
-  if(vix!=null){sigs.push({s:vix>35?'bad':vix>25?'warn':'ok',t:`VIX ${vix.toFixed(1)}${vix>35?' → CHOC — stopper DCA':vix>25?' → Stress élevé':' → Calme'}`})}
-  sigs.push({s:hz==='bloque'?'bad':hz==='perturbe'?'warn':'ok',t:`Hormuz ${hz==='bloque'?'bloqué':hz==='perturbe'?'perturbé':'normal'}`});
-  if(spread!=null){sigs.push({s:spread>400?'bad':spread>300?'warn':'ok',t:`Spread EM ${spread}bps${spread>400?' → Fuite capitaux':spread>300?' → Tension':' → Normal'}`})}
-  if(ndx!=null&&ndx<-15){sigs.push({s:'warn',t:`NASDAQ ${ndx.toFixed(1)}% vs pic → Opportunité DCA accéléré`})}
+  if(b!=null)sigs.push({s:b>100?'bad':b>80?'warn':'ok',t:`Brent $${b.toFixed(0)} · Énergie${b>100?' → Défensif':b>80?' → Vigilance':' → Favorable'}`});
+  if(vix!=null)sigs.push({s:vix>35?'bad':vix>25?'warn':'ok',t:`VIX ${vix.toFixed(1)} · Peur${vix>35?' → CHOC LIQUIDITÉ':vix>25?' → Stress élevé':' → Calme'}`});
+  if(dxy!=null)sigs.push({s:dxy>110?'bad':dxy>105?'warn':'ok',t:`DXY ${dxy.toFixed(1)} · Dollar${dxy>110?' → Liquidité contractée (crise)':dxy>105?' → Vigilance':' → Liquidité normale'}`});
+  if(t2y!=null&&t10y!=null){const sp=(t10y-t2y).toFixed(2);sigs.push({s:t10y<t2y?'bad':parseFloat(sp)<0.5?'warn':'ok',t:`Courbe 2Y-10Y : ${sp}%${t10y<t2y?' → INVERSÉE — récession 12-18m':parseFloat(sp)<0.5?' → Quasi-plate — vigilance':' → Saine'}`});}
+  if(hy!=null)sigs.push({s:hy>500?'bad':hy>400?'warn':'ok',t:`HY Spreads ${hy}bps · Crédit${hy>500?' → CRISE CRÉDIT — bulle IA risk':hy>400?' → Stress crédit':' → Marché sain'}`});
+  if(cu!=null)sigs.push({s:cu<3.5?'bad':cu<4.0?'warn':'ok',t:`Cuivre $${cu.toFixed(2)}/lb · Économie réelle${cu<3.5?' → Récession industrielle':cu<4.0?' → Ralentissement':' → Expansion'}`});
+  if(ndx!=null)sigs.push({s:ndx<-20?'bad':ndx<-10?'warn':'ok',t:`NASDAQ ${ndx?.toFixed(1)}% vs pic${ndx<-20?' → Crash tech possible':ndx<-10?' → Correction':' → Stable'}`});
+  sigs.push({s:hz==='bloque'?'bad':hz==='perturbe'?'warn':'ok',t:`Hormuz ${hz==='bloque'?'bloqué (+1.0 score)':hz==='perturbe'?'perturbé (+0.5 score)':'normal (+0)'}`});
 
   // Afficher étape 2
   const r=RG[S.regime];
   document.getElementById('rr-regime').textContent=r.label;
   document.getElementById('rr-regime').style.color=r.col;
-  document.getElementById('rr-score').textContent=`Score : ${score}/10 ${S.regimeCandidate!==S.regime?' · Confirmation en cours (7j)':''}`;
+      const hystLabel=S.regimeCandidate!==S.regime?' · ⟳ Confirmation 7j':'';document.getElementById('rr-score').textContent=`Score : ${score}/10${hystLabel} · 7 dimensions · Hormuz +${ha.toFixed(1)}`;
   document.getElementById('score-fill').style.width=(score*10)+'%';
   document.getElementById('score-fill').style.background=score>7?'var(--red)':score>4?'var(--amber)':'var(--green)';
   document.getElementById('rr-why').textContent=r.why;
@@ -919,9 +935,14 @@ function updateAlerts(){
   setAl('al-vix',m.vix&&m.vix>35,'al-off','al-on');
   setAl('al-ndx',m.ndx&&m.ndx<-15,'al-off','al-watch');
   setAl('al-hz',hz==='bloque'||hz==='perturbe','al-off',hz==='bloque'?'al-on':'al-watch');
-  setAl('al-em',m.spread&&m.spread>400,'al-off','al-on');
-  const hzTxt={bloque:'→ mode crise actif',perturbe:'→ maintenir vigilance',normal:'→ flux normaux'};
+  setAl('al-em',m.hy&&m.hy>500,'al-off','al-on');
+  const hzTxt={bloque:'→ crise (+1.0)',perturbe:'→ vigilance (+0.5)',normal:'→ neutre (+0)'};
   document.getElementById('al-hz-txt').textContent=' '+hzTxt[hz];
+  // Alertes nouvelles
+  const dxyEl=document.getElementById('al-brent');
+  if(dxyEl&&m.dxy){dxyEl.querySelector('.al-arr').textContent=m.dxy>110?' → DXY crise':m.dxy>105?' → DXY vigilance':' → XOM+CVX renforcer';}
+  const emEl=document.getElementById('al-em');
+  if(emEl){emEl.querySelector('.al-txt').innerHTML='<strong>HY Spreads &gt;500bps</strong>';}
 }
 function setAl(id,on,off,onCls){
   const el=document.getElementById(id);if(!el)return;

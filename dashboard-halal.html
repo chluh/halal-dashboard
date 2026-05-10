@@ -654,8 +654,7 @@ body::before{
           <div class="mf"><label class="mf-lbl">T10Y <span style="opacity:.5">% · 10 ans ^TNX</span></label><input type="number" step="0.01" class="mf-in" id="mk-t10y" placeholder="ex: 4.39"></div>
           <div class="mf"><label class="mf-lbl">HY Spreads <span style="opacity:.5">% OAS · BAMLH0A0HYM2</span></label><input type="number" step="0.01" class="mf-in" id="mk-hy" placeholder="ex: 2.79"></div>
           <div class="mf"><label class="mf-lbl">Cuivre <span style="opacity:.5">$/lb · HG=F÷100</span></label><input type="number" step="0.01" class="mf-in" id="mk-copper" placeholder="ex: 4.45"></div>
-          <div class="mf"><label class="mf-lbl">NASDAQ niveau <span style="opacity:.5">points (ex: 26247)</span></label><input type="number" step="1" class="mf-in" id="mk-ndx" placeholder="ex: 26247"></div>
-          <div class="mf"><label class="mf-lbl">NASDAQ pic 52s <span style="opacity:.5">points</span></label><input type="number" step="1" class="mf-in" id="mk-ndxHigh" placeholder="ex: 26248"></div>
+          <div class="mf"><label class="mf-lbl">NASDAQ <span style="opacity:.5">points · pic auto-mémorisé</span></label><input type="number" step="1" class="mf-in" id="mk-ndx" placeholder="ex: 26247"></div>
         </div>
         <div class="mkt-stitle" style="margin-top:8px">Hormuz · Ajustement qualitatif (+1.0 / +0.5 / +0)</div>
         <div class="hz-sel">
@@ -943,7 +942,7 @@ function selHz(v,el){
 
 // ── CALCUL RÉGIME ──
 function calcRegime(){
-  const fields=['brent','vix','dxy','t2y','t10y','hy','copper','ndx','ndxHigh','igda','xom','cvx','fcx'];
+  const fields=['brent','vix','dxy','t2y','t10y','hy','copper','ndx','igda','xom','cvx','fcx'];
   fields.forEach(k=>{
     const v=parseFloat(document.getElementById('mk-'+k)?.value);
     if(!isNaN(v))S.mkt[k]=v;
@@ -965,7 +964,9 @@ function calcRegime(){
   const cus=cu?Math.min(10,Math.max(0,(4.5-cu)/0.15)):5;             // Cuivre $/lb
   // NASDAQ: utilisateur saisit le niveau absolu (ex: 26247)
   // On calcule le % vs le plus haut 52 semaines (stocké ou par défaut 26248)
-  const ndxHigh=S.mkt.ndxHigh||26248;
+  // Auto-mémoriser le plus haut NASDAQ saisi comme référence 52 semaines
+  if(ndx&&ndx>0) S.mkt.ndxHigh=Math.max(ndx,S.mkt.ndxHigh||0);
+  const ndxHigh=S.mkt.ndxHigh||ndx||26248;
   const ndxPct=ndx?((ndx-ndxHigh)/ndxHigh*100):0;
   const ns=Math.min(10,Math.max(0,-ndxPct*0.35));                     // NASDAQ % vs pic
   // Ajustement Hormuz qualitatif
@@ -1019,7 +1020,7 @@ function renderPeda(){
   const m=S.mkt,score=S.score||0,reg=S.regime;
   const b=m.brent,vix=m.vix,dxy=m.dxy,t2y=m.t2y,t10y=m.t10y;
   const hy=m.hy,cu=m.copper,ndx=m.ndx;
-  const ndxHigh=m.ndxHigh||26248;
+  const ndxHigh=m.ndxHigh||m.ndx||26248;
   const ndxPct=ndx?((ndx-ndxHigh)/ndxHigh*100):0;
   const ha=S.hormuz==='bloque'?1.0:S.hormuz==='perturbe'?0.5:0;
 

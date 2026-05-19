@@ -533,7 +533,7 @@ body::before{
 <div class="hdr">
   <div class="logo">
     <div class="logo-ornament"></div>
-    HALAL · ROBUSTE · v3.5
+    HALAL · ROBUSTE · v3.6
   </div>
   <div class="regime-badge rb-wait" id="regime-badge">
     <div class="rb-dot"></div>
@@ -582,6 +582,8 @@ body::before{
         <a class="lnk" href="https://finance.yahoo.com/quote/ASML.AS" target="_blank">ASML.AS</a>
         <a class="lnk" href="https://finance.yahoo.com/quote/XOM" target="_blank">XOM</a>
         <a class="lnk" href="https://finance.yahoo.com/quote/FCX" target="_blank">FCX</a>
+        <a class="lnk" href="https://finance.yahoo.com/quote/CCJ" target="_blank">Cameco/CCJ</a>
+        <a class="lnk" href="https://finance.yahoo.com/quote/UX=F" target="_blank">Uranium UX=F</a>
       </div>
       <div class="mkt-section">
         <div class="mkt-stitle">Signaux régime — 7 dimensions économiques mondiales</div>
@@ -612,6 +614,7 @@ body::before{
           <div class="mf"><label class="mf-lbl">XOM <span style="opacity:.5">$</span></label><input type="number" step="0.01" class="mf-in" id="mk-xom" placeholder="ex: 108.5"></div>
           <div class="mf"><label class="mf-lbl">CVX <span style="opacity:.5">$</span></label><input type="number" step="0.01" class="mf-in" id="mk-cvx" placeholder="ex: 152.3"></div>
           <div class="mf"><label class="mf-lbl">FCX <span style="opacity:.5">$</span></label><input type="number" step="0.01" class="mf-in" id="mk-fcx" placeholder="ex: 52.75"></div>
+          <div class="mf"><label class="mf-lbl">Cameco (CCJ) <span style="opacity:.5">$ NYSE</span></label><input type="number" step="0.01" class="mf-in" id="mk-ccj" placeholder="ex: 58.40"></div>
           <div class="mf"><label class="mf-lbl">Spread EM <span style="opacity:.5">bps</span></label><input type="number" step="1" class="mf-in" id="mk-spread" placeholder="ex: 320"></div>
         </div>
       </div>
@@ -729,7 +732,7 @@ body::before{
 <!-- TIMELINE -->
 <div class="tl-col">
   <div class="tl-hdr">
-    <div class="tl-title">Timeline · DCA · IA Explicite · v3.5</div>
+    <div class="tl-title">Timeline · DCA · Goulot Energetique IA · v3.6</div>
     <div class="tl-stats">
       <div class="ts"><div class="ts-lbl">Investi</div><div class="ts-val" id="ts-inv" style="color:var(--gold)">—</div></div>
       <div class="ts"><div class="ts-lbl">Réserve IBKR</div><div class="ts-val" id="ts-res">—</div></div>
@@ -781,48 +784,52 @@ function save(){localStorage.setItem(SK,JSON.stringify(S))}
 // ── RÉGIMES v3.2 — Indices halal uniquement ──
 const RG={
   detente:{label:'🟢 CROISSANCE',col:'var(--green)',badge:'rb-detente',
-    why:'Score bas. DCA actif toutes lignes. TSMC + ASML en déploiement progressif (3 versements mensuels).',
+    why:'Score bas. DCA actif toutes lignes. TSMC+ASML en deploiement progressif. Cameco en entree (uranium nucleaire IA).',
     interval:56,intervalLabel:'8 semaines · DCA long terme',
     alloc:[
-      {k:'IGDA',n:'DJ Islamic Global Developed',ticker:'IGDA.L',p:35,c:'var(--green)',t:'buy'},
+      {k:'IGDA',n:'DJ Islamic Global Developed',ticker:'IGDA.L',p:30,c:'var(--green)',t:'buy'},
       {k:'AMAP',n:'Saturna Al-Kawthar (Healthcare 25%)',ticker:'AMAP.L',p:25,c:'#2a7a5a',t:'buy'},
-      {k:'TSMC',n:'TSMC — Fonderie 3nm monopole',ticker:'TSM/NYSE',p:8,c:'var(--teal)',t:'buy'},
-      {k:'ASML',n:'ASML — Lithographie EUV monopole',ticker:'ASME-GY/Xetra',p:7,c:'#4a8fd4',t:'buy'},
-      {k:'XOM',n:'ExxonMobil + Chevron',ticker:'XOM+CVX/NYSE',p:13,c:'var(--red)',t:'hold'},
-      {k:'FCX',n:'Freeport-McMoRan (cuivre)',ticker:'FCX/NYSE',p:5,c:'var(--amber)',t:'hold'},
+      {k:'TSMC',n:'TSMC - Fonderie 3nm monopole',ticker:'TSM/NYSE',p:7,c:'var(--teal)',t:'buy'},
+      {k:'ASML',n:'ASML - Lithographie EUV monopole',ticker:'ASME-GY/Xetra',p:6,c:'#4a8fd4',t:'buy'},
+      {k:'XOM',n:'ExxonMobil + Chevron',ticker:'XOM+CVX/NYSE',p:20,c:'var(--red)',t:'hold'},
+      {k:'FCX',n:'Freeport-McMoRan (cuivre grid IA)',ticker:'FCX/NYSE',p:5,c:'var(--amber)',t:'hold'},
+      {k:'CCJ',n:'Cameco - Uranium nucleaire IA',ticker:'CCJ/NYSE',p:5,c:'#8b4513',t:'buy'},
     ]},
   trans:{label:'🟡 TRANSITION',col:'var(--amber)',badge:'rb-trans',
-    why:'Signaux mixtes. Maintenir toutes positions. Ne pas renforcer TSMC/ASML. XOM/CVX renforce pour inflation.',
+    why:'Signaux mixtes. Maintenir. XOM+CVX renforce. Cameco maintenu - rarete uranium structurelle independante du cycle.',
     interval:35,intervalLabel:'5 semaines · Lissage equilibre',
     alloc:[
-      {k:'IGDA',n:'DJ Islamic Global Developed',ticker:'IGDA.L',p:35,c:'var(--green)',t:'hold'},
+      {k:'IGDA',n:'DJ Islamic Global Developed',ticker:'IGDA.L',p:30,c:'var(--green)',t:'hold'},
       {k:'AMAP',n:'Saturna Al-Kawthar (Healthcare 25%)',ticker:'AMAP.L',p:25,c:'#2a7a5a',t:'hold'},
-      {k:'TSMC',n:'TSMC — Fonderie 3nm',ticker:'TSM/NYSE',p:7,c:'var(--teal)',t:'hold'},
-      {k:'ASML',n:'ASML — EUV',ticker:'ASME-GY/Xetra',p:6,c:'#4a8fd4',t:'hold'},
-      {k:'XOM',n:'ExxonMobil + Chevron',ticker:'XOM+CVX/NYSE',p:14,c:'var(--red)',t:'buy'},
+      {k:'TSMC',n:'TSMC - Fonderie 3nm',ticker:'TSM/NYSE',p:7,c:'var(--teal)',t:'hold'},
+      {k:'ASML',n:'ASML - EUV',ticker:'ASME-GY/Xetra',p:6,c:'#4a8fd4',t:'hold'},
+      {k:'XOM',n:'ExxonMobil + Chevron',ticker:'XOM+CVX/NYSE',p:20,c:'var(--red)',t:'buy'},
       {k:'FCX',n:'Freeport-McMoRan (cuivre)',ticker:'FCX/NYSE',p:5,c:'var(--amber)',t:'hold'},
+      {k:'CCJ',n:'Cameco - Uranium',ticker:'CCJ/NYSE',p:5,c:'#8b4513',t:'hold'},
     ]},
   crise:{label:'🔴 DEFENSIF',col:'var(--red)',badge:'rb-crise',
-    why:'Zone defensive. Reduire TSMC et ASML de 50%. Renforcer AMAP Healthcare et XOM/CVX.',
+    why:'Zone defensive. Reduire TSMC+ASML 50%. XOM+CVX et Cameco restent - goulot energetique persiste en crise.',
     interval:21,intervalLabel:'3 semaines · Defensif renforce',
     alloc:[
-      {k:'IGDA',n:'DJ Islamic Global Developed',ticker:'IGDA.L',p:33,c:'var(--green)',t:'hold'},
+      {k:'IGDA',n:'DJ Islamic Global Developed',ticker:'IGDA.L',p:28,c:'var(--green)',t:'hold'},
       {k:'AMAP',n:'Saturna Al-Kawthar (Healthcare)',ticker:'AMAP.L',p:30,c:'#2a7a5a',t:'buy'},
-      {k:'TSMC',n:'TSMC — REDUIRE 50%',ticker:'TSM/NYSE',p:4,c:'var(--teal)',t:'reduce'},
-      {k:'ASML',n:'ASML — REDUIRE 50%',ticker:'ASME-GY/Xetra',p:3,c:'#4a8fd4',t:'reduce'},
-      {k:'XOM',n:'ExxonMobil + Chevron',ticker:'XOM+CVX/NYSE',p:15,c:'var(--red)',t:'buy'},
+      {k:'TSMC',n:'TSMC - REDUIRE 50%',ticker:'TSM/NYSE',p:3,c:'var(--teal)',t:'reduce'},
+      {k:'ASML',n:'ASML - REDUIRE 50%',ticker:'ASME-GY/Xetra',p:3,c:'#4a8fd4',t:'reduce'},
+      {k:'XOM',n:'ExxonMobil + Chevron',ticker:'XOM+CVX/NYSE',p:22,c:'var(--red)',t:'buy'},
       {k:'FCX',n:'Freeport-McMoRan',ticker:'FCX/NYSE',p:5,c:'var(--amber)',t:'hold'},
+      {k:'CCJ',n:'Cameco - Uranium (defensif)',ticker:'CCJ/NYSE',p:5,c:'#8b4513',t:'hold'},
     ]},
   choc:{label:'CHOC LIQUIDITE',col:'var(--teal)',badge:'rb-trans',
-    why:'VIX >35. STOPPER DCA. SORTIR TSMC et ASML totalement. Attendre stabilisation puis deployer reserve hors IBKR.',
+    why:'VIX >35. Stopper DCA. Sortir TSMC+ASML totalement. XOM+CVX+Cameco maintenus - actifs reels tangibles.',
     interval:7,intervalLabel:'1 semaine · Attendre stabilisation',
     alloc:[
-      {k:'IGDA',n:'DJ Islamic Global Developed',ticker:'IGDA.L',p:42,c:'var(--green)',t:'hold'},
-      {k:'AMAP',n:'Saturna Al-Kawthar',ticker:'AMAP.L',p:33,c:'#2a7a5a',t:'hold'},
-      {k:'TSMC',n:'TSMC — SORTIE TOTALE',ticker:'TSM/NYSE',p:0,c:'var(--teal)',t:'reduce'},
-      {k:'ASML',n:'ASML — SORTIE TOTALE',ticker:'ASME-GY/Xetra',p:0,c:'#4a8fd4',t:'reduce'},
-      {k:'XOM',n:'ExxonMobil + Chevron',ticker:'XOM+CVX/NYSE',p:13,c:'var(--red)',t:'hold'},
+      {k:'IGDA',n:'DJ Islamic Global Developed',ticker:'IGDA.L',p:35,c:'var(--green)',t:'hold'},
+      {k:'AMAP',n:'Saturna Al-Kawthar',ticker:'AMAP.L',p:28,c:'#2a7a5a',t:'hold'},
+      {k:'TSMC',n:'TSMC - SORTIE TOTALE',ticker:'TSM/NYSE',p:0,c:'var(--teal)',t:'reduce'},
+      {k:'ASML',n:'ASML - SORTIE TOTALE',ticker:'ASME-GY/Xetra',p:0,c:'#4a8fd4',t:'reduce'},
+      {k:'XOM',n:'ExxonMobil + Chevron',ticker:'XOM+CVX/NYSE',p:22,c:'var(--red)',t:'hold'},
       {k:'FCX',n:'Freeport-McMoRan',ticker:'FCX/NYSE',p:5,c:'var(--amber)',t:'hold'},
+      {k:'CCJ',n:'Cameco - Uranium (refuge)',ticker:'CCJ/NYSE',p:5,c:'#8b4513',t:'hold'},
     ]}
 };
 const tLbl={buy:'ACHETER',hold:'CONSERVER',reduce:'RÉDUIRE'};
@@ -861,7 +868,7 @@ function selHz(v,el){
 
 // ── CALCUL RÉGIME ──
 function calcRegime(){
-  const fields=['brent','vix','dxy','t2y','t10y','hy','copper','ndx','igda','xom','cvx','fcx','tsmc','asml'];
+  const fields=['brent','vix','dxy','t2y','t10y','hy','copper','ndx','igda','xom','cvx','fcx','tsmc','asml','ccj'];
   fields.forEach(k=>{
     const v=parseFloat(document.getElementById('mk-'+k)?.value);
     if(!isNaN(v))S.mkt[k]=v;

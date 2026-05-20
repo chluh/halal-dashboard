@@ -614,6 +614,7 @@ body::before{
           <div class="mf"><label class="mf-lbl">CVX <span style="opacity:.5">$</span></label><input type="number" step="0.01" class="mf-in" id="mk-cvx" placeholder="ex: 152.3"></div>
           <div class="mf"><label class="mf-lbl">FCX <span style="opacity:.5">$</span></label><input type="number" step="0.01" class="mf-in" id="mk-fcx" placeholder="ex: 52.75"></div>
           <div class="mf"><label class="mf-lbl">Cameco (CCJ) <span style="opacity:.5">$ NYSE</span></label><input type="number" step="0.01" class="mf-in" id="mk-ccj" placeholder="ex: 58.40"></div>
+          <div class="mf"><label class="mf-lbl">Uranium spot <span style="opacity:.5">$/lb · UX=F</span></label><input type="number" step="0.01" class="mf-in" id="mk-uranium" placeholder="ex: 78.50"></div>
           <div class="mf"><label class="mf-lbl">Spread EM <span style="opacity:.5">bps</span></label><input type="number" step="1" class="mf-in" id="mk-spread" placeholder="ex: 320"></div>
         </div>
       </div>
@@ -867,7 +868,7 @@ function selHz(v,el){
 
 // ── CALCUL RÉGIME ──
 function calcRegime(){
-  const fields=['brent','vix','dxy','t2y','t10y','hy','copper','ndx','igda','xom','cvx','fcx','tsmc','asml','ccj'];
+  const fields=['brent','vix','dxy','t2y','t10y','hy','copper','ndx','igda','xom','cvx','fcx','tsmc','asml','ccj','uranium'];
   fields.forEach(k=>{
     const v=parseFloat(document.getElementById('mk-'+k)?.value);
     if(!isNaN(v))S.mkt[k]=v;
@@ -915,6 +916,8 @@ function calcRegime(){
   if(hy!=null)sigs.push({s:hy>500?'bad':hy>400?'warn':'ok',t:`HY Spreads ${hy}bps · Crédit${hy>500?' → CRISE CRÉDIT — bulle IA risk':hy>400?' → Stress crédit':' → Marché sain'}`});
   if(cu!=null)sigs.push({s:cu<3.5?'bad':cu<4.0?'warn':'ok',t:`Cuivre $${cu.toFixed(2)}/lb · Économie réelle${cu<3.5?' → Récession industrielle':cu<4.0?' → Ralentissement':' → Expansion'}`});
   if(ndx!=null)sigs.push({s:ndx<-20?'bad':ndx<-10?'warn':'ok',t:`NASDAQ ${ndx?.toFixed(1)}% vs pic${ndx<-20?' → Crash tech possible':ndx<-10?' → Correction':' → Stable'}`});
+  const uranium=S.mkt.uranium;
+  if(uranium!=null)sigs.push({s:uranium<70?'bad':uranium<80?'warn':'ok',t:`Uranium $${uranium.toFixed(2)}/lb${uranium<70?' → Rarete critique (demande IA)':uranium<80?' → Zone tendue':' → Marche equilibre'}`});
   sigs.push({s:hz==='bloque'?'bad':hz==='perturbe'?'warn':'ok',t:`Hormuz ${hz==='bloque'?'bloqué (+1.0 score)':hz==='perturbe'?'perturbé (+0.5 score)':'normal (+0)'}`});
 
   // Afficher étape 2

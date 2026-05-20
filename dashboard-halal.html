@@ -608,7 +608,6 @@ body::before{
         <div class="mkt-stitle">Cours des actifs — optionnel</div>
         <div class="mkt-grid">
           <div class="mf"><label class="mf-lbl">IGDA.L <span style="opacity:.5">£</span></label><input type="number" step="0.01" class="mf-in" id="mk-igda" placeholder="ex: 36.97"></div>
-          <div class="mf"><label class="mf-lbl">ISWD.L <span style="opacity:.5">GBp</span></label><input type="number" step="1" class="mf-in" id="mk-iswd" placeholder="ex: 4431"></div>
           <div class="mf"><label class="mf-lbl">TSMC (TSM) <span style="opacity:.5">$ NYSE</span></label><input type="number" step="0.01" class="mf-in" id="mk-tsmc" placeholder="ex: 195.50"></div>
           <div class="mf"><label class="mf-lbl">ASML (ASME-GY) <span style="opacity:.5">EUR Xetra</span></label><input type="number" step="0.01" class="mf-in" id="mk-asml" placeholder="ex: 720.00"></div>
           <div class="mf"><label class="mf-lbl">XOM <span style="opacity:.5">$</span></label><input type="number" step="0.01" class="mf-in" id="mk-xom" placeholder="ex: 108.5"></div>
@@ -1221,7 +1220,7 @@ window.addEventListener('resize',()=>renderTimeline());
 window.addEventListener('DOMContentLoaded',()=>{
   // Pré-remplir champs
   const m=S.mkt;
-  ['brent','vix','t10y','ndx','igda','iswd','isde','hius','fcx','spread'].forEach(k=>{
+  ['brent','vix','dxy','t2y','t10y','hy','copper','ndx','igda','xom','cvx','fcx','tsmc','asml','ccj'].forEach(k=>{
     const el=document.getElementById('mk-'+k);
     if(el&&m[k]!=null&&!el.value)el.value=m[k];
   });

@@ -523,6 +523,43 @@ body::before{
   .wf-col{height:auto;position:static;border-right:none;border-bottom:1px solid var(--line)}
   .tl-col{min-height:400px}
 }
+
+/* ── PORTEFEUILLE ── */
+.pf-wrap{padding:0 0 24px}
+.pf-total{background:var(--card);border-radius:12px;padding:16px 20px;margin-bottom:16px;border:1px solid var(--border)}
+.pf-total-label{font-size:11px;letter-spacing:.08em;opacity:.6;text-transform:uppercase;margin-bottom:6px}
+.pf-total-main{font-size:28px;font-weight:700;color:var(--gold);font-family:'Playfair Display',serif}
+.pf-total-sub{font-size:12px;opacity:.6;margin-top:2px}
+.pf-bar-wrap{background:var(--border);border-radius:4px;height:8px;margin:10px 0 4px;overflow:hidden}
+.pf-bar-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--gold));border-radius:4px;transition:width .6s ease}
+.pf-table{width:100%;border-collapse:collapse;font-size:13px;background:var(--card);border-radius:12px;overflow:hidden;border:1px solid var(--border)}
+.pf-table th{padding:10px 12px;text-align:left;font-size:10px;letter-spacing:.08em;text-transform:uppercase;opacity:.5;font-weight:600;border-bottom:1px solid var(--border)}
+.pf-table td{padding:10px 12px;border-bottom:1px solid var(--border)}
+.pf-table tr:last-child td{border-bottom:none}
+.pf-table tr.pf-total-row td{background:rgba(180,147,82,.08);font-weight:700;border-top:2px solid var(--gold)}
+.pf-asset-name{font-weight:600;font-size:13px}
+.pf-asset-sub{font-size:10px;opacity:.5;margin-top:2px}
+.pf-input{width:72px;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:4px 8px;color:var(--ink);font-size:13px;text-align:center}
+.pf-input:focus{outline:none;border-color:var(--gold)}
+.pf-prog-wrap{width:80px;background:var(--border);border-radius:4px;height:6px;overflow:hidden;display:inline-block;vertical-align:middle}
+.pf-prog-fill{height:100%;border-radius:4px;transition:width .4s}
+.pf-pct{font-size:11px;opacity:.6;margin-left:6px;vertical-align:middle}
+.pf-green{color:#43d692}
+.pf-amber{color:var(--amber)}
+.pf-red{color:var(--red)}
+.pf-save{width:100%;margin-top:16px;padding:14px;background:var(--teal);border:none;border-radius:10px;color:#fff;font-size:14px;font-weight:700;letter-spacing:.06em;cursor:pointer;transition:opacity .2s}
+.pf-save:active{opacity:.8}
+.pf-saved{color:var(--green);font-size:12px;text-align:center;margin-top:8px;opacity:0;transition:opacity .4s}
+.dca-table{width:100%;border-collapse:collapse;font-size:13px;background:var(--card);border-radius:12px;overflow:hidden;border:1px solid var(--border);margin-top:16px}
+.dca-table th{padding:10px 12px;text-align:left;font-size:10px;letter-spacing:.08em;text-transform:uppercase;opacity:.5;font-weight:600;border-bottom:1px solid var(--border)}
+.dca-table td{padding:10px 12px;border-bottom:1px solid var(--border)}
+.dca-table tr:last-child td{border-bottom:none}
+.dca-v{font-weight:700;color:var(--gold);font-family:'Playfair Display',serif}
+.dca-done{color:#43d692;font-weight:600}
+.dca-cur{color:var(--amber);font-weight:600}
+.dca-next{opacity:.5}
+.pf-section-title{font-size:11px;letter-spacing:.1em;text-transform:uppercase;opacity:.5;margin:20px 0 8px;font-weight:600}
+
 </style>
 </head>
 <body>
@@ -533,7 +570,7 @@ body::before{
 <div class="hdr">
   <div class="logo">
     <div class="logo-ornament"></div>
-    HALAL · ROBUSTE · v3.6
+    HALAL · ROBUSTE · v3.7
   </div>
   <div class="regime-badge rb-wait" id="regime-badge">
     <div class="rb-dot"></div>
@@ -558,6 +595,7 @@ body::before{
     <div class="pb-step" id="pb2">03·Actions</div>
     <div class="pb-step" id="pb3">04·Date</div>
     <div class="pb-step" id="pb4">05·IBKR</div>
+        <div class="pb-step" id="pb5">06·Portefeuille</div>
   </div>
 
   <!-- ÉTAPE 1 -->
@@ -727,12 +765,60 @@ body::before{
       <button class="btn-sec" onclick="goStep(0)">Nouveau cycle →</button>
     </div>
   </div>
+
+  <div class="step" id="step-5">
+    <div class="step-hdr">
+      <div class="step-eyebrow">Étape 06 / 06</div>
+      <div class="step-title">Suivi du portefeuille</div>
+      <div class="step-sub">50 000 € · 8 actifs · Doctrine v3.7</div>
+    </div>
+    <div class="step-body">
+      <div class="pf-wrap">
+        <div class="pf-total">
+          <div class="pf-total-label">Déploiement total</div>
+          <div class="pf-total-main" id="pf-total-inv">—</div>
+          <div class="pf-total-sub" id="pf-total-sub">sur 50 000 € · — % déployé</div>
+          <div class="pf-bar-wrap"><div class="pf-bar-fill" id="pf-bar-fill" style="width:0%"></div></div>
+          <div id="pf-total-pct" style="font-size:11px;opacity:.5;text-align:right">0%</div>
+        </div>
+
+        <div class="pf-section-title">Positions par actif</div>
+        <table class="pf-table" id="pf-table">
+          <thead>
+            <tr>
+              <th>Actif</th>
+              <th>Cible €</th>
+              <th>Actions</th>
+              <th>Investi €</th>
+              <th>Reste €</th>
+              <th>Avancement</th>
+            </tr>
+          </thead>
+          <tbody id="pf-tbody"></tbody>
+        </table>
+
+        <div class="pf-section-title">Calendrier DCA</div>
+        <table class="dca-table">
+          <thead>
+            <tr><th>Versement</th><th>Date prévue</th><th>Montant</th><th>Priorités</th><th>Statut</th></tr>
+          </thead>
+          <tbody id="dca-tbody"></tbody>
+        </table>
+
+        <button class="pf-save" onclick="savePortfolio()">💾 Sauvegarder les positions</button>
+        <div class="pf-saved" id="pf-saved">✓ Positions sauvegardées</div>
+      </div>
+    </div>
+    <div class="step-ftr">
+      <button class="btn-sec" onclick="goStep(4)">← Ordres IBKR</button>
+    </div>
+  </div>
 </div>
 
 <!-- TIMELINE -->
 <div class="tl-col">
   <div class="tl-hdr">
-    <div class="tl-title">Timeline · DCA · Goulot Energetique IA · v3.6</div>
+    <div class="tl-title">Timeline · DCA · Goulot Energetique IA · v3.7</div>
     <div class="tl-stats">
       <div class="ts"><div class="ts-lbl">Investi</div><div class="ts-val" id="ts-inv" style="color:var(--gold)">—</div></div>
       <div class="ts"><div class="ts-lbl">Réserve IBKR</div><div class="ts-val" id="ts-res">—</div></div>
@@ -847,7 +933,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeOverlay()})
 // ── NAVIGATION ──
 let currentStep=0;
 function goStep(n){
-  for(let i=0;i<5;i++){
+  for(let i=0;i<6;i++){
     document.getElementById('step-'+i).classList.toggle('active',i===n);
     const pb=document.getElementById('pb'+i);
     pb.className='pb-step'+(i<n?' done':i===n?' active':'');
@@ -856,6 +942,7 @@ function goStep(n){
   document.querySelector('.wf-col').scrollTop=0;
   if(n===2)renderActions();
   if(n===3)calcDate();
+  if(n===5)renderPortfolio();
 }
 
 // ── HORMUZ ──
@@ -1238,6 +1325,228 @@ window.addEventListener('DOMContentLoaded',()=>{
   if(S.regime&&S.regime!=='wait')updateRegimeBadge();
   renderTimeline();updateStats();updateAlerts();
 });
+
+
+// Initialiser avec les positions actuelles si localStorage vide
+(function(){
+  const existing = localStorage.getItem('pf_positions');
+  if(!existing){
+    const defaults = {
+      xom: 9.995,
+      cvx: 8,
+      fcx: 16,
+      ccj: 9,
+      tsmc: 2,
+      igda: 0,
+      amap: 0,
+      asml: 0
+    };
+    localStorage.setItem('pf_positions', JSON.stringify(defaults));
+  }
+})();
+
+// ── PORTEFEUILLE v3.7 ──
+const PF_ASSETS = [
+  {k:'igda', name:'IGDA.L', sub:'Invesco DJ Islamic World', target:15000, priceKey:'igda', gbp:true},
+  {k:'amap', name:'AMAP.L', sub:'Saturna Al-Kawthar', target:12500, priceKey:'amap', gbp:true},
+  {k:'xom',  name:'XOM', sub:'ExxonMobil Corp', target:5000, priceKey:'xom', usd:true},
+  {k:'cvx',  name:'CVX', sub:'Chevron Corp', target:5000, priceKey:'cvx', usd:true},
+  {k:'tsmc', name:'TSM', sub:'TSMC ADR NYSE', target:3500, priceKey:'tsmc', usd:true},
+  {k:'asml', name:'ASML', sub:'ASML Holding Xetra', target:3000, priceKey:'asml', eur:true},
+  {k:'fcx',  name:'FCX', sub:'Freeport-McMoRan', target:2500, priceKey:'fcx', usd:true},
+  {k:'ccj',  name:'CCJ', sub:'Cameco Corp NYSE', target:2500, priceKey:'ccj', usd:true},
+];
+
+const DCA_PLAN = [
+  {v:'V0', date:'20-23 mai 2026', amount:0, label:'Cash USD existant', acts:'TSMC 2 + CCJ 5 + CCJ 4', done:true},
+  {v:'V1', date:'27 mai 2026', amount:5000, label:'IGDA.L 45 · AMAP.L 2 · CCJ 4', cur:true},
+  {v:'V2', date:'22 juillet 2026', amount:8000, label:'ASML 2 · IGDA.L · AMAP.L · XOM/CVX'},
+  {v:'V3', date:'16 sept. 2026', amount:8000, label:'IGDA.L · AMAP.L · FCX · CCJ'},
+  {v:'V4', date:'11 nov. 2026', amount:8000, label:'IGDA.L fin · AMAP.L fin · TSMC'},
+  {v:'V5', date:'7 janv. 2027', amount:8000, label:'Solde XOM/CVX · TSMC · Rééquilibrage'},
+  {v:'V6', date:'3 fév. 2027', amount:6522, label:'Solde final toutes positions'},
+];
+
+function loadPortfolio(){
+  try{ return JSON.parse(localStorage.getItem('pf_positions')||'{}'); }catch(e){return{};}
+}
+
+function savePortfolio(){
+  const pos={};
+  PF_ASSETS.forEach(a=>{
+    const el=document.getElementById('pf-inp-'+a.k);
+    if(el) pos[a.k]=parseFloat(el.value)||0;
+  });
+  localStorage.setItem('pf_positions',JSON.stringify(pos));
+  const msg=document.getElementById('pf-saved');
+  msg.style.opacity='1';
+  setTimeout(()=>msg.style.opacity='0',2000);
+  renderPortfolio();
+}
+
+function getAssetPrice(a){
+  // Essayer depuis les données marchés saisies dans S.mkt
+  const m = S && S.mkt ? S.mkt : {};
+  const EURUSD = 1.163; // taux de référence
+  const EURGBP = 0.8706;
+  if(a.usd){
+    const p = m[a.priceKey];
+    return p ? p / EURUSD : null;
+  }
+  if(a.gbp){
+    const p = m[a.priceKey];
+    // IGDA en GBp (centimes), AMAP en GBp
+    if(p){
+      const gbp = p / 100; // convertir GBp → GBP
+      return gbp / EURGBP;
+    }
+    return null;
+  }
+  if(a.eur){
+    return m[a.priceKey] || null;
+  }
+  return null;
+}
+
+// Prix de référence si pas encore saisi dans step 1
+const REF_PRICES = {
+  igda:39.165, amap:886.30, xom:157.09, cvx:192.39,
+  tsmc:405.63, asml:1383.6, fcx:60.83, ccj:103.00
+};
+const EURUSD_REF = 1.163;
+const EURGBP_REF = 0.8706;
+
+function getAssetPriceEUR(a){
+  const m = S && S.mkt ? S.mkt : {};
+  let raw = m[a.priceKey];
+  
+  // Si non disponible, utiliser prix de référence
+  if(!raw && REF_PRICES[a.k]) raw = REF_PRICES[a.k];
+  if(!raw) return null;
+  
+  if(a.usd) return raw / EURUSD_REF;
+  if(a.gbp) return (raw / 100) / EURGBP_REF; // GBp → GBP → EUR
+  if(a.eur) return raw;
+  return null;
+}
+
+function renderPortfolio(){
+  const pos = loadPortfolio();
+  const tbody = document.getElementById('pf-tbody');
+  if(!tbody) return;
+  tbody.innerHTML = '';
+  
+  let totalInvested = 0;
+  const totalTarget = 50000;
+  
+  PF_ASSETS.forEach(a=>{
+    const shares = pos[a.k] || 0;
+    const priceEUR = getAssetPriceEUR(a);
+    const invested = priceEUR ? shares * priceEUR : 0;
+    const remaining = Math.max(0, a.target - invested);
+    const pct = Math.min(100, (invested / a.target * 100));
+    totalInvested += invested;
+    
+    const color = pct >= 80 ? '#43d692' : pct >= 40 ? 'var(--amber)' : 'var(--teal)';
+    const priceLabel = priceEUR ? `(~€${priceEUR.toFixed(0)}/action)` : '(saisir cours)';
+    
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>
+        <div class="pf-asset-name">${a.name}</div>
+        <div class="pf-asset-sub">${a.sub}</div>
+      </td>
+      <td style="font-weight:600">€${a.target.toLocaleString('fr')}</td>
+      <td>
+        <input class="pf-input" type="number" id="pf-inp-${a.k}" 
+          value="${shares||''}" placeholder="0" min="0" step="0.001"
+          onchange="updatePFRow('${a.k}')">
+        <div style="font-size:10px;opacity:.4;margin-top:2px">${priceLabel}</div>
+      </td>
+      <td style="font-weight:600;color:${invested>0?'var(--gold)':'var(--ink3)'}">
+        €${invested.toFixed(0)}
+      </td>
+      <td style="opacity:.7">€${remaining.toFixed(0)}</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:4px">
+          <div class="pf-prog-wrap">
+            <div class="pf-prog-fill" style="width:${pct}%;background:${color}"></div>
+          </div>
+          <span class="pf-pct">${pct.toFixed(0)}%</span>
+        </div>
+      </td>`;
+    tbody.appendChild(tr);
+  });
+  
+  // Ligne total
+  const totalPct = Math.min(100, totalInvested / totalTarget * 100);
+  const totalRemaining = Math.max(0, totalTarget - totalInvested);
+  const trTotal = document.createElement('tr');
+  trTotal.className = 'pf-total-row';
+  trTotal.innerHTML = `
+    <td><div class="pf-asset-name">TOTAL</div></td>
+    <td>€50 000</td>
+    <td>—</td>
+    <td style="color:var(--gold)">€${totalInvested.toFixed(0)}</td>
+    <td>€${totalRemaining.toFixed(0)}</td>
+    <td>
+      <div style="display:flex;align-items:center;gap:4px">
+        <div class="pf-prog-wrap">
+          <div class="pf-prog-fill" style="width:${totalPct}%;background:var(--gold)"></div>
+        </div>
+        <span class="pf-pct">${totalPct.toFixed(1)}%</span>
+      </div>
+    </td>`;
+  tbody.appendChild(trTotal);
+  
+  // Mettre à jour header total
+  const totalEl = document.getElementById('pf-total-inv');
+  const subEl = document.getElementById('pf-total-sub');
+  const barEl = document.getElementById('pf-bar-fill');
+  const pctEl = document.getElementById('pf-total-pct');
+  if(totalEl) totalEl.textContent = '€' + Math.round(totalInvested).toLocaleString('fr');
+  if(subEl) subEl.textContent = `sur €50 000 · ${totalPct.toFixed(1)}% déployé · Reste €${Math.round(totalRemaining).toLocaleString('fr')}`;
+  if(barEl) barEl.style.width = totalPct + '%';
+  if(pctEl) pctEl.textContent = totalPct.toFixed(1) + '%';
+  
+  // DCA calendar
+  renderDCA();
+}
+
+function updatePFRow(key){
+  renderPortfolio();
+}
+
+function renderDCA(){
+  const tbody = document.getElementById('dca-tbody');
+  if(!tbody) return;
+  tbody.innerHTML = '';
+  const today = new Date();
+  
+  DCA_PLAN.forEach(d=>{
+    const tr = document.createElement('tr');
+    let statusHtml, rowStyle='';
+    if(d.done){
+      statusHtml = '<span class="dca-done">✅ Terminé</span>';
+      rowStyle = 'opacity:.6';
+    } else if(d.cur){
+      statusHtml = '<span class="dca-cur">⏳ En cours</span>';
+      rowStyle = 'background:rgba(180,147,82,.05)';
+    } else {
+      statusHtml = '<span class="dca-next">○ Prévu</span>';
+    }
+    const amtLabel = d.amount > 0 ? `<strong>€${d.amount.toLocaleString('fr')}</strong>` : '<span style="opacity:.5">Cash existant</span>';
+    tr.setAttribute('style', rowStyle);
+    tr.innerHTML = `
+      <td><span class="dca-v">${d.v}</span></td>
+      <td>${d.date}</td>
+      <td>${amtLabel}</td>
+      <td style="font-size:11px;opacity:.7">${d.label}</td>
+      <td>${statusHtml}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
 </script>
 </body>
 </html>

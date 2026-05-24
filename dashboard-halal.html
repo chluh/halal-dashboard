@@ -1378,10 +1378,16 @@ function savePortfolio(){
     if(el) pos[a.k]=parseFloat(el.value)||0;
   });
   localStorage.setItem('pf_positions',JSON.stringify(pos));
+  // Re-render APRÈS avoir sauvegardé les nouvelles valeurs
+  renderPortfolio();
+  // Restaurer les valeurs dans les champs après re-render
+  PF_ASSETS.forEach(a=>{
+    const el=document.getElementById('pf-inp-'+a.k);
+    if(el && pos[a.k]) el.value=pos[a.k];
+  });
   const msg=document.getElementById('pf-saved');
   msg.style.opacity='1';
   setTimeout(()=>msg.style.opacity='0',2000);
-  renderPortfolio();
 }
 
 function getAssetPrice(a){
@@ -1460,7 +1466,7 @@ function renderPortfolio(){
       <td>
         <input class="pf-input" type="number" id="pf-inp-${a.k}" 
           value="${shares||''}" placeholder="0" min="0" step="0.001"
-          onchange="updatePFRow('${a.k}')">
+          >
         <div style="font-size:10px;opacity:.4;margin-top:2px">${priceLabel}</div>
       </td>
       <td style="font-weight:600;color:${invested>0?'var(--gold)':'var(--ink3)'}">
@@ -1513,9 +1519,7 @@ function renderPortfolio(){
   renderDCA();
 }
 
-function updatePFRow(key){
-  renderPortfolio();
-}
+function updatePFRow(key){/* handled by savePortfolio */}
 
 function renderDCA(){
   const tbody = document.getElementById('dca-tbody');
